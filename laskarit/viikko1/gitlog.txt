@@ -1,0 +1,115 @@
+Fizzclarence:tiedostoja turre$ git log --stat | cat
+commit c75b788129d4172ea19d5314d723d425831da22e
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:40:32 2021 +0200
+
+    miksi vaihtuu väärän tiedoston nimi???
+
+ tiedostoja/file2.txt                 | 0
+ tiedostoja/{file1.txt => file22.txt} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit de02dcc1c7d97a14bc0a76e9178827c45de1e76e
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:32:25 2021 +0200
+
+    uusi hakemisto
+
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit ab22a1b15093d8d21d264f5f74e8d766950ae2b3
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:27:06 2021 +0200
+
+    muutoksia muutoksia
+
+ eka.txt    | 8 ++++++--
+ kolmas.txt | 8 +++++++-
+ 2 files changed, 13 insertions(+), 3 deletions(-)
+
+commit e05d6935ea2adfcffe6736b147a43ca0c70968b3
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:24:09 2021 +0200
+
+    tiedosto.txt -> eka.txt
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit f3108a238e1b6a7c6e10b478a17288765247e22f
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:21:38 2021 +0200
+
+    toinen poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 4e2317c19f2db734e2f9773e30cb9d670440ec6a
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:19:17 2021 +0200
+
+    lisätty ja poistettu tekstiä tiedosto.txt
+
+ tiedosto.txt | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
+
+commit b30755dcfd04e14a39d08d277655018316e5be31
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:16:36 2021 +0200
+
+    tekstiä lisätty tiedosto.txt
+
+ tiedosto.txt | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+commit 803fe15563a28f27b8325069019daef1ef458900
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:08:33 2021 +0200
+
+    hakemisto stuff lisätty
+
+ stuff/testijeejee.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 380774e509e319ece6eb4b4b44b86e2b797cf110
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:02:36 2021 +0200
+
+    sisältöjä muutettu
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit fe79cf42ff82a107fdf513ed86115c1b342bddae
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 21:00:48 2021 +0200
+
+    kolmas tiedosto luotu
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1cc945ce252c191d6f6f5e8e65f650390e138643
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 20:58:36 2021 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 9b441e90bbed79c4682b6a63ecb51b84f98df6ef
+Author: meri saynatkari <meri.saynatkari@gmail.com>
+Date:   Tue Mar 23 20:55:17 2021 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+Fizzclarence:tiedostoja turre$ 
