@@ -8,10 +8,12 @@
 
 [gitlog.txt](https://github.com/nuclearkittens/ot-projekti/blob/master/laskarit/viikko1/gitlog.txt)
 
-tässä nyt vähän testaillaan tätä *markdownin* ihmeellistä maailmaa (--:
+### wk 2:
+
+[laskarit] (https://github.com/nuclearkittens/ot-projekti/tree/master/laskarit/viikko2)
+
+[coverage screenshot] (https://github.com/nuclearkittens/ot-projekti/blob/master/laskarit/viikko2/coverage_screenshot.png>)
 
 > "The future came and went in the mildly
 > discouraging way that futures do."
 > 
-
-**testi**
