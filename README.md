@@ -1,19 +1,28 @@
 # moikkelis koikkelis ! ohjelmistotekniikka k21
 
-## tehtävät:
+> "The future came and went in the mildly
+> discouraging way that futures do."
+>     *– from Good Omens*
 
-### wk 1:
+## laskarit
+
+### wk 1
 
 [komentorivi.txt](https://github.com/nuclearkittens/ot-projekti/blob/master/laskarit/viikko1/komentorivi.txt)
 
 [gitlog.txt](https://github.com/nuclearkittens/ot-projekti/blob/master/laskarit/viikko1/gitlog.txt)
 
-### wk 2:
+### wk 2
 
-[laskarit](https://github.com/nuclearkittens/ot-projekti/tree/master/laskarit/viikko2)
+[laskarit/wk2](https://github.com/nuclearkittens/ot-projekti/tree/master/laskarit/viikko2)
 
 [coverage screenshot](https://github.com/nuclearkittens/ot-projekti/blob/master/laskarit/viikko2/coverage_screenshot.png>)
 
-> "The future came and went in the mildly
-> discouraging way that futures do."
-> 
+
+## harjoitustyö (vielä nimeämätön peli)
+
+### dokumentaatio
+
+[alustava vaatimusmäärittely](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/requirementspecification.md)
+
+[tuntikirjanpito](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/studylog.md)
