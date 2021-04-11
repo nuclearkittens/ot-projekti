@@ -1,4 +1,4 @@
-import pygame as pg
+import pygame
 from clock import Clock
 from game import Game
 from renderer import Renderer
@@ -12,17 +12,19 @@ POWDER_ROSE = (201, 143, 143)
 DARK_ROSE = (189, 113, 130)
 
 def main():
-    screen = pg.Surface((DISPLAY_W, DISPLAY_H))
-    display = pg.display.set_mode((DISPLAY_W, DISPLAY_H))
+    pygame.init()
 
-    pg.set_caption("untitled rpg: battle demo")
+    # screen = pygame.Surface((DISPLAY_W, DISPLAY_H))
+    display = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
+
+    pygame.display.set_caption("untitled rpg: battle demo")
 
     clock = Clock()
     renderer = Renderer(display)
-    game = Game()
+    game = Game(clock, renderer)
 
-    pygame.init()
     game.start()
+    game.game_loop()
 
 if __name__ == 'main':
     main()

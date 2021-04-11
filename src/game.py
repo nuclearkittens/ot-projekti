@@ -1,4 +1,4 @@
-import pygame as pg
+import pygame
 
 class Game:
     def __init__(self, clock, renderer):
@@ -22,21 +22,21 @@ class Game:
             self._clock.tick(60)
 
     def check_events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_UP or event.key == pg.K_W:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP or event.key == pygame.K_w:
                     self.UP = True
-                if event.key == pg.K_DOWN or event.key == pg.K_S:
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     self.DOWN = True
-                if event.key == pg.K_RIGHT or event.key == pg.K_D:
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     self.RIGHT = True
-                if event.key == pg.K_LEFT or event.key == pg.K_A:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     self.LEFT = True
-                if event.key == pg.K_RETURN:
+                if event.key == pygame.K_RETURN:
                     self.SELECT = True
-                if event.key == pg.K_P:
+                if event.key == pygame.K_p:
                     self.PAUSE = True
 
     def reset_keys(self):

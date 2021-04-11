@@ -1,4 +1,4 @@
-import pygame as pg
+import pygame
 
 class Renderer:
     def __init__(self, display):
@@ -6,4 +6,4 @@ class Renderer:
         
 
     def render(self):
-        pg.display.update()
+        pygame.display.update()
