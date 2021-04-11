@@ -1,28 +1,25 @@
 import pygame as pg
 
 class Game:
-    def __init__(self):
+    def __init__(self, clock, renderer):
         self.running = True
         self.playing = False
 
-        self.DISPLAY_W = 512
-        self.DISPLAY_H = 448
-        self.display = pg.Surface((self.DISPLAY_W, self.DISPLAY_H))
-        self.window = pg.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
+        self._clock = clock
+        self._renderer = renderer
 
         self.UP, self.DOWN, self.RIGHT, self.LEFT = False, False, False, False
         self.SELECT, self.START, self.BACK, self.PAUSE = False, False, False, False
 
-        self.font_name = '/assets/m5x7.ttf'
-        self.DARK_PURPLE = (66, 30, 66)
-        self.POWDER_ROSE = (201, 143, 143)
-        self.DARK_ROSE = (189, 113, 130)
+    def start(self):
+        self.playing = True
 
     def game_loop(self):
         while self.playing:
             self.check_events()
-            self.update()
+            self._render()
             self.reset_keys()
+            self._clock.tick(60)
 
     def check_events(self):
         for event in pg.event.get():
@@ -45,6 +42,9 @@ class Game:
     def reset_keys(self):
         self.UP, self.DOWN, self.RIGHT, self.LEFT = False, False, False, False
         self.SELECT, self.START, self.BACK, self.PAUSE = False, False, False, False
+
+    def _render(self):
+        self._renderer.render()
 
 
         
