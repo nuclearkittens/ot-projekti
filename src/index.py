@@ -25,4 +25,4 @@ def main():
     game.start()
 
 if __name__ == 'main':
-    pass
+    main()
