@@ -7,7 +7,7 @@ an exciting storyline in the future.
 
 ## UI draft
 
-![UI sketch v.1](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/uisketch.png)
+![UI sketch v.1](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/uisketch.png)
 
 ## Demo / Basic functionality
 
