@@ -1,12 +1,23 @@
 import pygame
 
 class Game:
-    def __init__(self, clock, renderer):
+    def __init__(self, clock):
         self.running = True
         self.playing = False
 
         self._clock = clock
-        self._renderer = renderer
+        self.DISPLAY_W = 512
+        self.DISPLAY_H = 448
+
+        self.FONT_NAME = '/assets/m5x7.ttf'
+        self.DARK_PURPLE = (66, 30, 66)
+        self.POWDER_ROSE = (201, 143, 143)
+        self.DARK_ROSE = (189, 113, 130)
+
+        self.screen = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
+        self.display = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
+
+        pygame.display.set_caption("untitled rpg: battle demo")
 
         self.UP, self.DOWN, self.RIGHT, self.LEFT = False, False, False, False
         self.SELECT, self.START, self.BACK, self.PAUSE = False, False, False, False
@@ -17,10 +28,13 @@ class Game:
     def game_loop(self):
         while self.playing:
             self.check_events()
-            self._render()
+            self.screen.fill(self.DARK_PURPLE)
+            self.display.blit(self.screen, (0,0))
+            pygame.display.udate()
             self.reset_keys()
-            self._clock.tick(60)
-
+            # self._clock.tick(60)
+            
+            
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -43,8 +57,6 @@ class Game:
         self.UP, self.DOWN, self.RIGHT, self.LEFT = False, False, False, False
         self.SELECT, self.START, self.BACK, self.PAUSE = False, False, False, False
 
-    def _render(self):
-        self._renderer.render()
 
 
         
