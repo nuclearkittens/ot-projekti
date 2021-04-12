@@ -1,62 +1,64 @@
 import pygame
+from renderer import Renderer
+from titlescreen import TitleScreen
+from helpmenu import HelpMenu
+from creditsmenu import CreditsMenu
 
-class Game:
-    def __init__(self, clock):
+
+class Game():
+    def __init__(self):
         self.running = True
-        self.playing = False
-
-        self._clock = clock
-        self.DISPLAY_W = 512
-        self.DISPLAY_H = 448
-
-        self.FONT_NAME = '/assets/m5x7.ttf'
+        self.battle = False
+        
+        self.SCREEN_W = 512
+        self.SCREEN_H = 448
+        self.FONT_NAME = 'assets/m5x7.ttf'
         self.DARK_PURPLE = (66, 30, 66)
         self.POWDER_ROSE = (201, 143, 143)
         self.DARK_ROSE = (189, 113, 130)
 
-        self.screen = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
-        self.display = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
+        self.UP_K, self.DOWN_K, self.RIGHT_K, self.LEFT_K = False, False, False, False
+        self.SELECT_K, self.START_K, self.BACK_K, self.PAUSE_K = False, False, False, False
 
-        pygame.display.set_caption("untitled rpg: battle demo")
+        self.display = pygame.Surface((self.SCREEN_W,self.SCREEN_H))
+        self.window = pygame.display.set_mode(((self.SCREEN_W,self.SCREEN_H)))
 
-        self.UP, self.DOWN, self.RIGHT, self.LEFT = False, False, False, False
-        self.SELECT, self.START, self.BACK, self.PAUSE = False, False, False, False
+        self._renderer = Renderer(self)
 
-    def start(self):
-        self.playing = True
+        self.titlescreen = TitleScreen(self)
+        self.help = HelpMenu(self)
+        self.credits = CreditsMenu(self)
+        self.curr_menu = self.titlescreen
 
     def game_loop(self):
-        while self.playing:
+        while self.battle:
             self.check_events()
-            self.screen.fill(self.DARK_PURPLE)
-            self.display.blit(self.screen, (0,0))
-            pygame.display.udate()
+            if self.START_K:
+                self.battle = False
+            self.display.fill(self.DARK_PURPLE)
+            self._renderer.draw_text('battle', 32, self.SCREEN_W//2, self.SCREEN_H//2)
+            self.window.blit(self.display, (0,0))
+            pygame.display.update()
             self.reset_keys()
-            # self._clock.tick(60)
-            
-            
+
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.running, self.playing = False, False
+                self.running, self.battle = False, False
+                self.curr_menu.run_display = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    self.UP = True
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    self.DOWN = True
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    self.RIGHT = True
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    self.LEFT = True
                 if event.key == pygame.K_RETURN:
-                    self.SELECT = True
-                if event.key == pygame.K_p:
-                    self.PAUSE = True
+                    self.START_K = True
+                if event.key == pygame.K_BACKSPACE:
+                    self.BACK_K = True
+                if event.key == pygame.K_DOWN:
+                    self.DOWN_K = True
+                if event.key == pygame.K_UP:
+                    self.UP_K = True
 
     def reset_keys(self):
-        self.UP, self.DOWN, self.RIGHT, self.LEFT = False, False, False, False
-        self.SELECT, self.START, self.BACK, self.PAUSE = False, False, False, False
+        self.UP_K, self.DOWN_K, self.RIGHT_K, self.LEFT_K = False, False, False, False
+        self.SELECT_K, self.START_K, self.BACK_K, self.PAUSE_K = False, False, False, False
 
 
 
-        

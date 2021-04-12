@@ -1,18 +1,15 @@
 import pygame
-from clock import Clock
 from game import Game
-from renderer import Renderer
 
 def main():
     pygame.init()
 
-    clock = Clock()
-    # renderer = Renderer(display)
-    game = Game(clock)
+    game = Game()
 
-    game.start()
     while game.running:
+        game.curr_menu.display_menu()
         game.game_loop()
 
-if __name__ == 'main':
+
+if __name__ == "__main__":
     main()
