@@ -10,7 +10,7 @@ class CreditsMenu(Menu):
         while self.run_display:
             self.game.check_events()
             if self.game.START_K or self.game.BACK_K:
-                self.game.curr_menu = self.game.titlescreen
+                self.game.current = self.game.titlescreen
                 self.run_display = False
             self.game.display.fill(self.game.DARK_PURPLE)
             self.game._renderer.draw_text('credits', 32, self.mid_w, self.mid_h - 20)

@@ -7,7 +7,7 @@ def main():
     game = Game()
 
     while game.running:
-        game.curr_menu.display_menu()
+        game.current.display_menu()
         game.game_loop()
 
 

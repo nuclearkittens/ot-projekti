@@ -5,9 +5,9 @@ class TitleScreen(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = 'start'
-        self.start_x, self.start_y = self.mid_w, self.mid_h + 30
-        self.help_x, self.help_y = self.mid_w, self.mid_h + 50
-        self.credits_x, self.credits_y = self.mid_w, self.mid_h + 70
+        self.start_x, self.start_y = self.mid_w, self.mid_h + 40
+        self.help_x, self.help_y = self.mid_w, self.mid_h + 60
+        self.credits_x, self.credits_y = self.mid_w, self.mid_h + 80
         self.cursor_rect.midtop = (self.start_x + self.offset, self.start_y)
 
     def display_menu(self):
@@ -51,7 +51,7 @@ class TitleScreen(Menu):
             if self.state == 'start':
                 self.game.battle = True
             elif self.state == 'help':
-                self.game.curr_menu = self.game.help
+                self.game.current = self.game.help
             elif self.state == 'credits':
-                self.game.curr_menu = self.game.credits
+                self.game.current = self.game.credits
             self.run_display = False

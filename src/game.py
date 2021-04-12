@@ -5,7 +5,7 @@ from helpmenu import HelpMenu
 from creditsmenu import CreditsMenu
 
 
-class Game():
+class Game:
     def __init__(self):
         self.running = True
         self.battle = False
@@ -28,7 +28,7 @@ class Game():
         self.titlescreen = TitleScreen(self)
         self.help = HelpMenu(self)
         self.credits = CreditsMenu(self)
-        self.curr_menu = self.titlescreen
+        self.current = self.titlescreen
 
     def game_loop(self):
         while self.battle:
@@ -45,7 +45,7 @@ class Game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.battle = False, False
-                self.curr_menu.run_display = False
+                self.current.run_display = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     self.START_K = True
