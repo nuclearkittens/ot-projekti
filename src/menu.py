@@ -13,15 +13,6 @@ class Menu:
 
         self.run_menu = True
 
-
-    # def draw_cursor(self):
-    #     self._game._renderer.draw_text('>', 32, self.cursor.rect.x, self.cursor.rect.y)
-
-    # def blit_screen(self):
-    #     self._game._renderer.screen.blit(self._game.display, (0, 0))
-    #     pygame.display.update()
-    #     self._game.reset_keys()
-
     def blit(self):
         self._renderer.blit_screen()
         self._renderer.update()

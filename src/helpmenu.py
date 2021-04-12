@@ -6,7 +6,6 @@ class HelpMenu(Menu):
         Menu.__init__(self, game)
 
     def display_menu(self):
-        # self.run_menu = True
         while self.run_menu:
             self._game.check_events()
             if self._game.START_K or self._game.BACK_K:

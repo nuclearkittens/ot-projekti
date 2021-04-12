@@ -9,19 +9,9 @@ class Game:
     def __init__(self):
         self.running = True
         self.battle = False
-        
-        # self.SCREEN_W = 512
-        # self.SCREEN_H = 448
-        # self.FONT_NAME = 'assets/m5x7.ttf'
-        # self.DARK_PURPLE = (66, 30, 66)
-        # self.POWDER_ROSE = (201, 143, 143)
-        # self.DARK_ROSE = (189, 113, 130)
 
         self.UP_K, self.DOWN_K, self.RIGHT_K, self.LEFT_K = False, False, False, False
         self.SELECT_K, self.START_K, self.BACK_K, self.PAUSE_K = False, False, False, False
-
-        # self.screen = pygame.Surface((self.SCREEN_W,self.SCREEN_H))
-        # self.display = pygame.display.set_mode(((self.SCREEN_W,self.SCREEN_H)))
 
         self._renderer = Renderer()
         self._screen_w = self._renderer.SCREEN_W
