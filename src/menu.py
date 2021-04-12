@@ -1,18 +1,29 @@
 import pygame
+from cursor import Cursor
 
-class Menu():
-    def __init__(self, game):
-        self.game = game
-        self.mid_w, self.mid_h = self.game.SCREEN_W / 2, self.game.SCREEN_H / 2
-        self.run_display = True
-        self.cursor_rect = pygame.Rect(0, 0, 20, 20)
-        self.offset = - 100
+class Menu:
+    def __init__(self, game, w=512, h=448, offset=-100):
+        self._game = game
+        self._renderer = self._game._renderer
+        self.mid_w = w // 2
+        self.mid_h = h // 2
+        self.offset = offset
 
-    def draw_cursor(self):
-        self.game._renderer.draw_text('>', 32, self.cursor_rect.x, self.cursor_rect.y)
+        self.cursor = Cursor('>')
 
-    def blit_screen(self):
-        self.game.window.blit(self.game.display, (0, 0))
-        pygame.display.update()
-        self.game.reset_keys()
+        self.run_menu = True
+
+
+    # def draw_cursor(self):
+    #     self._game._renderer.draw_text('>', 32, self.cursor.rect.x, self.cursor.rect.y)
+
+    # def blit_screen(self):
+    #     self._game._renderer.screen.blit(self._game.display, (0, 0))
+    #     pygame.display.update()
+    #     self._game.reset_keys()
+
+    def blit(self):
+        self._renderer.blit_screen()
+        self._renderer.update()
+        self._game.reset_keys()
 
