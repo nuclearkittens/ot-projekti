@@ -8,7 +8,8 @@
 | 11/04/21 | 6 | character design, drawing, animation |
 | 11/04/21 | 6 | research, mock-up title screen, menu mechanics | 
 | 12/04/21 | 4 | title screen & menu bases redone | 
+| 12/04/21 | 2 | refactoring (and fixing all I broke) |
 
-total hours (12/04/21): 29
+total hours (12/04/21): 31
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
