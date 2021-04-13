@@ -1,28 +1,27 @@
-# moikkelis koikkelis ! ohjelmistotekniikka k21
+# (still an) untitled rpg
 
-> "The future came and went in the mildly
-> discouraging way that futures do."
->     *– from Good Omens*
+In this game, you will share an adventure with the main hero in a contemporary environment. The world resembles our own, but in this reality magic and weird monsters exist (I mean, squirrels with human feet? Wouldn't want to encounter them in the city streets).
 
-## laskarit
+The game is programmed using Python (v.3.8) and its Pygame library. As the game develops, it will have explorable maps and a turn-based battle system. Currently, the only functionality is a mock-up of the title screen. If you want to check out the art style, take a look at the first character sprites in the [assets](https://github.com/nuclearkittens/ot-projekti/tree/master/src/assets) folder!
 
-### wk 1
+This game is developed as a part of the University of Helsinki's *Ohjelmistotekniikka* course.
 
-[komentorivi.txt](https://github.com/nuclearkittens/ot-projekti/blob/master/laskarit/viikko1/komentorivi.txt)
+### documentation
 
-[gitlog.txt](https://github.com/nuclearkittens/ot-projekti/blob/master/laskarit/viikko1/gitlog.txt)
++ [requirement specification](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/requirementspecification.md)
++ [study log](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/studylog.md)
++ [credits](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/temp-credits.md)
 
-### wk 2
+### installation
 
-[laskarit/wk2](https://github.com/nuclearkittens/ot-projekti/tree/master/laskarit/viikko2)
+1) install dependencies using the following command: `poetry install` 
+2) run initialisation: `poetry run invoke build``
+3) run the game: `poetry run invoke start`
 
-[coverage screenshot](https://github.com/nuclearkittens/ot-projekti/blob/master/laskarit/viikko2/coverage_screenshot.png>)
+### command line tools
 
++ run the game: `poetry run invoke start`
++ run tests: `poetry run invoke test`
++ generate a test coverage report: `poetry run invoke coverage-report`
+  + report can be found in *htmlcov* directory
 
-## harjoitustyö (vielä nimeämätön peli)
-
-### dokumentaatio
-
-[alustava vaatimusmäärittely](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/requirementspecification.md)
-
-[tuntikirjanpito](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/studylog.md)
