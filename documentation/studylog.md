@@ -10,7 +10,8 @@
 | 12/04/21 | 4 | title screen & menu bases redone | 
 | 12/04/21 | 2 | refactoring (and fixing all I broke) |
 | 13/04/21 | 3 | refactoring the spaghetti | 
+| 13/04/21 | 5 | writing tests, updating documentation, initialising invoke etc |
 
-total hours (12/04/21): 34
+total hours (12/04/21): 39
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
