@@ -15,8 +15,7 @@ This game is developed as a part of the University of Helsinki's *Ohjelmistotekn
 ### installation
 
 1) install dependencies using the following command: `poetry install` 
-2) run initialisation: `poetry run invoke build`
-3) run the game: `poetry run invoke start`
+2) run the game: `poetry run invoke start`
 
 ### command line tools
 
