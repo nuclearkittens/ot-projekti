@@ -10,6 +10,7 @@ This game is developed as a part of the University of Helsinki's *Ohjelmistotekn
 
 + [requirement specification](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/requirementspecification.md)
 + [study log](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/studylog.md)
++ [newest coverage report](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/coverage-report-210413.png)
 + [credits](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/temp-credits.md)
 
 ### installation
