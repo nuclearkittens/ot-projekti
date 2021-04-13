@@ -11,6 +11,10 @@ an exciting storyline in the future.
 
 ## Demo / Basic functionality
 
+### Title screen
+
+Start/load game, see controls, check the credits.
+
 ### Exploration
 
 The player can move around the map(s) freely, finding items and encountering enemies.
