@@ -1,8 +1,8 @@
 class GameState:
     def __init__(self):
-        self.running = True
+        self.running = False
         self.battle = False
-        self.title = True
+        self.title = False
         self.menu1 = False
         self.menu2 = False
 
