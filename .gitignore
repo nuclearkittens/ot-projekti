@@ -10,3 +10,6 @@
 /src/__pycache__/
 /src/.vscode/
 /src/.venv/
+.pytest_cache/
+/src/tests/__pycache__/
+
