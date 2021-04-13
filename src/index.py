@@ -1,14 +1,10 @@
 import pygame
-from game import Game
+from maingame import MainGame
 
 def main():
     pygame.init()
 
-    game = Game()
-
-    while game.running:
-        game.current.display_menu()
-        game.game_loop()
+    game = MainGame()
 
 
 if __name__ == "__main__":

@@ -2,9 +2,8 @@ import pygame
 from menu import Menu
 
 class TitleScreen(Menu):
-    def __init__(self, game):
-        Menu.__init__(self, game)
-        self._renderer = self._game._renderer
+    def __init__(self, renderer, keys, gamestate, eventcheck):
+        Menu.__init__(self, renderer, keys, gamestate, eventcheck)
 
         self.state = 'start'
         self.start_x, self.start_y = self.mid_w, self.mid_h + 40
@@ -13,9 +12,8 @@ class TitleScreen(Menu):
         self.cursor.rect.midtop = (self.start_x + self.offset, self.start_y)
 
     def display_menu(self):
-        self.run_menu = True
-        while self.run_menu:
-            self._game.check_events()
+        while self._gamestate.title:
+            self._eventcheck.check()
             self.check_input()
             self._renderer.fill()
             self._renderer.draw_text('untitled rpg: battle demo', 48, self.mid_w, self.mid_h - 20)
@@ -26,7 +24,7 @@ class TitleScreen(Menu):
             self.blit()
 
     def move_cursor(self):
-        if self._game.DOWN_K:
+        if self._keys.DOWN_K:
             if self.state == 'start':
                 self.cursor.rect.midtop = (self.help_x + self.offset, self.help_y)
                 self.state = 'help'
@@ -36,7 +34,7 @@ class TitleScreen(Menu):
             elif self.state == 'credits':
                 self.cursor.rect.midtop = (self.start_x + self.offset, self.start_y)
                 self.state = 'start'
-        elif self._game.UP_K:
+        elif self._keys.UP_K:
             if self.state == 'start':
                 self.cursor.rect.midtop = (self.credits_x + self.offset, self.credits_y)
                 self.state = 'credits'
@@ -49,11 +47,11 @@ class TitleScreen(Menu):
 
     def check_input(self):
         self.move_cursor()
-        if self._game.START_K:
+        if self._keys.START_K:
             if self.state == 'start':
-                self._game.battle = True
+                self._gamestate.battle = True
             elif self.state == 'help':
-                self._game.current = self._game._help
+                self._gamestate.menu1 = True
             elif self.state == 'credits':
-                self._game.current = self._game._credits
-            self.run_menu = False
+                self._gamestate.menu2 = True
+            self._gamestate.title = False
