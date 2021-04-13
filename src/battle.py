@@ -10,7 +10,8 @@ class Battle:
 
     def game_loop(self):
         while self._gamestate.battle:
-            self.check_events()
+            if self.check_events() == False:
+                pygame.quit()
             if self._keys.START_K:
                 self._gamestate.battle = False
                 self._gamestate.title = True

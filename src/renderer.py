@@ -1,16 +1,18 @@
 import pygame
+from load_util import load_font
 
 class Renderer:
     def __init__(self):
         self.SCREEN_W = 512
         self.SCREEN_H = 448
-        self.FONT_NAME = 'assets/m5x7.ttf'
+        self.FONT_NAME = load_font('m5x7.ttf')
         self.DARK_PURPLE = (66, 30, 66)
         self.POWDER_ROSE = (201, 143, 143)
         self.DARK_ROSE = (189, 113, 130)
 
         self.screen = pygame.Surface((self.SCREEN_W,self.SCREEN_H))
         self.display = pygame.display.set_mode(((self.SCREEN_W,self.SCREEN_H)))
+        pygame.display.set_caption('untitled rpg')
 
 
     def draw_text(self, text, size, x, y, colour=None):
@@ -35,6 +37,5 @@ class Renderer:
         if not colour:
             colour = self.DARK_PURPLE
         self.screen.fill(colour)
-
 
     

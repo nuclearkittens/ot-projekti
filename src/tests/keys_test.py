@@ -5,7 +5,7 @@ class TestKeys(unittest.TestCase):
     def setUp(self):
         self.keys = Keys()
 
-    def test_initialise_keys_work(self):
+    def test_initialise_keys(self):
         self.assertFalse(self.keys.UP_K)
         self.assertFalse(self.keys.DOWN_K)
         self.assertFalse(self.keys.RIGHT_K)
@@ -15,7 +15,7 @@ class TestKeys(unittest.TestCase):
         self.assertFalse(self.keys.BACK_K)
         self.assertFalse(self.keys.PAUSE_K)
 
-    def test_reset_keys_work(self):
+    def test_reset_keys(self):
         self.keys.UP_K, self.keys.DOWN_K = True, True
         self.keys.RIGHT_K, self.keys.LEFT_K = True, True
         self.keys.SELECT_K, self.keys.START_K = True, True

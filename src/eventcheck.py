@@ -10,7 +10,8 @@ class EventCheck:
             if event.type == pygame.QUIT:
                 self._gamestate.set_all_false()
                 pygame.quit()
-            if event.type == pygame.KEYDOWN:
+                return False
+            elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     self._keys.START_K = True
                 if event.key == pygame.K_BACKSPACE:

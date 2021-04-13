@@ -16,7 +16,7 @@ class TitleScreen(Menu):
             self._eventcheck.check()
             self.check_input()
             self._renderer.fill()
-            self._renderer.draw_text('untitled rpg: battle demo', 48, self.mid_w, self.mid_h - 20)
+            self._renderer.draw_text('untitled rpg: battle demo', 48, self.mid_w, self.mid_h - 40)
             self._renderer.draw_text('start', 32, self.start_x, self.start_y)
             self._renderer.draw_text('help', 32, self.help_x, self.help_y)
             self._renderer.draw_text('credits', 32, self.credits_x, self.credits_y)
