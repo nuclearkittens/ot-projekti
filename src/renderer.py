@@ -1,5 +1,5 @@
 import pygame
-from load_util import load_font
+from load_util import load_font, load_img
 
 class Renderer:
     def __init__(self):
@@ -37,5 +37,9 @@ class Renderer:
         if not colour:
             colour = self.DARK_PURPLE
         self.screen.fill(colour)
+
+    def draw_bg(self, filename):
+        bg = load_img(f'backgrounds/{filename}')
+        self.screen.blit(bg, (0,0))
 
     

@@ -15,8 +15,9 @@ class Battle:
             if self._keys.START_K:
                 self._gamestate.battle = False
                 self._gamestate.title = True
-            self._renderer.fill()
-            self._renderer.draw_text('battle', 32, self._renderer.SCREEN_W//2, self._renderer.SCREEN_H//2)
+            # self._renderer.fill()
+            # self._renderer.draw_text('battle', 32, self._renderer.SCREEN_W//2, self._renderer.SCREEN_H//2)
+            self._renderer.draw_bg('battlebg1.png')
             self._renderer.blit_screen()
             self._renderer.update()
             self._keys.reset_keys()
