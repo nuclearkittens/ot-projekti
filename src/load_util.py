@@ -1,4 +1,5 @@
 import pygame
+import json
 import os.path
 from constants import *
 
@@ -11,3 +12,9 @@ def load_img(filename, img_class, spritename=None):
 
 def load_font(filename, size):
     return pygame.font.Font(os.path.join(SRC_DIR, filename), size)
+
+def load_file(filename):
+    with open(filename) as f:
+        data = json.load(f)
+    return data
+

@@ -1,0 +1,36 @@
+{
+    "name": "Ikorni",
+    "type": "normal",
+    "description": "A squirrel with human feet, mostly found near parks and forests. Very fast creatures.",
+    "stats": {
+        "hp": 60,
+        "mp": 10,
+        "str": 6,
+        "mag": 1,
+        "def": 2,
+        "mdef": 28,
+        "agi": 1,
+        "acc": 1,
+        "eva": 3,
+        "lck": 7
+    },
+    "elemental affinities": {
+        "fire": 1.5,
+        "ice": 1,
+        "wind": 1,
+        "thunder": 1
+    },
+    "loot": {
+        "money": 15,
+        "items": null
+    },
+    "attacks": [
+        {
+            "name": "Kick"
+        },
+        {
+            "name": "Double Claw"
+        }
+    ]
+    
+}

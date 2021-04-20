@@ -4,20 +4,8 @@ from constants import *
 
 class Renderer:
     def __init__(self, display):
-        # self.SCREEN_W = 512
-        # self.SCREEN_H = 448
-        # self.FONT_NAME = load_font('m5x7.ttf')
-        # self.DARK_PURPLE = (66, 30, 66)
-        # self.POWDER_ROSE = (201, 143, 143)
-        # self.DARK_ROSE = (189, 113, 130)
-
-        # self.screen = pygame.Surface((self.SCREEN_W,self.SCREEN_H))
-        # self.display = pygame.display.set_mode(((self.SCREEN_W,self.SCREEN_H)))
-        # pygame.display.set_caption('untitled rpg')
-
         self._display = display
         self.screen = pygame.display.get_surface()
-
 
     def draw_text(self, text, size, x, y, colour=None):
         if not colour:
@@ -42,4 +30,8 @@ class Renderer:
             colour = DARK_PURPLE
         self.screen.fill(colour)
 
+    def draw_img(self, image, x=0, y=0):
+        self.screen.blit(image, (x, y))
     
+    def draw_rect(self, x, y, w, h, colour=DARK_PURPLE):
+        pygame.draw.rect(self.screen, colour, (x, y, w, h))

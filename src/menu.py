@@ -3,13 +3,13 @@ from cursor import Cursor
 from constants import *
 
 class Menu:
-    def __init__(self, renderer, keys, gamestate, eventcheck, offset=-100):
+    def __init__(self, renderer, keys, gamestate, eventcheck, offset=-100, w=SCREEN_W, h=SCREEN_H):
         self._renderer = renderer
         self._keys = keys
         self._gamestate = gamestate
         self._eventcheck = eventcheck
-        self.mid_w = SCREEN_W // 2
-        self.mid_h = SCREEN_H // 2
+        self.mid_w = w // 2
+        self.mid_h = h // 2
         self.offset = offset
 
         self.cursor = Cursor('>')
@@ -19,4 +19,3 @@ class Menu:
         self._renderer.blit_screen()
         self._renderer.update()
         self._keys.reset_keys()
-

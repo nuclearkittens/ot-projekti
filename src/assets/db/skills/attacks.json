@@ -1,0 +1,18 @@
+{
+    "attacks": [
+        {
+            "name": "Kick",
+            "mp": 0,
+            "base_dmg": 1,
+            "type": "physical",
+            "hits": 1
+        },
+        {
+            "name": "Double Claw",
+            "mp": 2,
+            "base_dmg": 0.8,
+            "type": "physical",
+            "hits": 2
+        }
+    ]
+}
