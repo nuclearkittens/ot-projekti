@@ -13,6 +13,6 @@
 | 13/04/21 | 5 | writing tests, updating documentation, initialising invoke etc |
 | 20/04/21 | 8 | trying to write the actual battle demo but failed miserably |
 
-total hours (12/04/21): 47
+total hours (20/04/21): 47
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
