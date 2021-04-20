@@ -1,5 +1,6 @@
 import pygame
 from cursor import Cursor
+from constants import *
 
 class Menu:
     def __init__(self, renderer, keys, gamestate, eventcheck, offset=-100):
@@ -7,8 +8,8 @@ class Menu:
         self._keys = keys
         self._gamestate = gamestate
         self._eventcheck = eventcheck
-        self.mid_w = self._renderer.SCREEN_W // 2
-        self.mid_h = self._renderer.SCREEN_H // 2
+        self.mid_w = SCREEN_W // 2
+        self.mid_h = SCREEN_H // 2
         self.offset = offset
 
         self.cursor = Cursor('>')

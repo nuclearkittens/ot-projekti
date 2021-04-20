@@ -1,4 +1,5 @@
 import pygame
+from constants import *
 from maingame import MainGame
 from eventcheck import EventCheck
 from battle import Battle
@@ -12,8 +13,11 @@ from keys import Keys
 def main():
     pygame.init()
 
+    display = pygame.display.set_mode((SCREEN_W, SCREEN_H))
+    pygame.display.set_caption('untitled rpg: battle demo')
+
     gamestate = GameState()
-    renderer = Renderer()
+    renderer = Renderer(display)
     keys = Keys()
     eventcheck = EventCheck(gamestate, keys)
     battle = Battle(gamestate, renderer, keys, eventcheck)

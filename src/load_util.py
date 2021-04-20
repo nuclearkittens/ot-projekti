@@ -1,10 +1,13 @@
 import pygame
-import os
+import os.path
+from constants import *
 
-dirname = os.path.dirname(__file__)
+def load_img(filename, img_class, spritename=None):
+    if img_class == 'background':
+        relative_path = f'backgrounds/{filename}'
+    elif img_class == 'sprite':
+        relative_path = f'sprites/{spritename}/{filename}'
+    return pygame.image.load(os.path.join(GFX_DIR, relative_path)).convert_alpha
 
-def load_img(filename):
-    return pygame.image.load(os.path.join(dirname, 'assets', filename)).convert_alpha()
-
-def load_font(filename):
-    return os.path.join(dirname, 'assets', filename)
+def load_font(filename, size):
+    return pygame.font.Font(os.path.join(SRC_DIR, filename), size)

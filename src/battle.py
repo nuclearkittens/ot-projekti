@@ -1,5 +1,6 @@
 import pygame
 from keys import Keys
+from constants import *
 
 class Battle:
     def __init__(self, gamestate, renderer, keys, eventcheck):
@@ -16,7 +17,7 @@ class Battle:
                 self._gamestate.battle = False
                 self._gamestate.title = True
             self._renderer.fill()
-            self._renderer.draw_text('battle', 32, self._renderer.SCREEN_W//2, self._renderer.SCREEN_H//2)
+            self._renderer.draw_text('battle', 32, SCREEN_W//2, SCREEN_H//2)
             self._renderer.blit_screen()
             self._renderer.update()
             self._keys.reset_keys()
