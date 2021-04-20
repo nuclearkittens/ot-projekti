@@ -1,0 +1,33 @@
+{
+    "name": "The Witch",
+    "type": "human",
+    "description": "",
+    "stats": {
+        "hp": 360,
+        "mp": 85,
+        "str": 10,
+        "mag": 10,
+        "def": 6,
+        "mdef": 8,
+        "agi": 10,
+        "acc": 10,
+        "eva": 10,
+        "lck": 17
+    },
+    "elemental affinities": {
+        "fire": 1,
+        "ice": 1,
+        "wind": 1,
+        "thunder": 1
+    },
+    "loot": {
+        "money": null,
+        "items": null
+    },
+    "attacks": [
+        {
+            "name": "Attack"
+        }
+    ]
+    
+}

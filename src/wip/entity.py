@@ -1,10 +1,7 @@
 import pygame
 
 from attacks import Attack
-from src.constants import DB_DIR
 from src.load_util import load_img, load_file
-
-dirname = f'{DB_DIR}/monsters'
 
 class Entity(pygame.sprite.Sprite):
     def __init__(self, name):
@@ -33,6 +30,8 @@ class Entity(pygame.sprite.Sprite):
             'hurt': None,
             'dead': None
         }
+
+        self.alive = True
 
     def _load_imgs(self):
         for k, v in self.imgs.items():
