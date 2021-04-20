@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from entity import Entity
 from src.constants import DB_DIR
@@ -17,3 +18,8 @@ class Monster(Entity):
 
         self.main_img = self.imgs['idle1']
         self.rect = self.main_img.get_rect()
+
+    def attack(self, target):
+        n = random.randint(0, len(self.attacks)-1)
+        dmg = 
+
