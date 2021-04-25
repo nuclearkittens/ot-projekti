@@ -1,37 +1,33 @@
-import pygame
-from load_util import load_font
-from constants import *
+import pygame as pg
+import os.path
+
+from config import DIRNAME, FONT, DARK_PURPLE
 
 class Renderer:
     def __init__(self, display):
         self._display = display
-        self.screen = pygame.display.get_surface()
 
-    def draw_text(self, text, size, x, y, colour=None):
-        if not colour:
-            colour = POWDER_ROSE
-        font = load_font(FONT1, size)
+    def load_img(self, relative_path):
+        return pg.image.load(os.path.join(DIRNAME, relative_path)).convert_alpha()
+
+    def blit(self, surf, pos=(0, 0)):
+        self._display.blit(surf, pos)
+
+    def fill(self, surf, colour=DARK_PURPLE):
+        surf.fill(colour)
+
+    def draw_text(self, text, size, pos, colour):
+        font = pg.font.Font(os.path.join(DIRNAME, FONT), size)
         text_surf = font.render(text, False, colour)
         text_rect = text_surf.get_rect()
-        text_rect.center = (x,y)
-        self.screen.blit(text_surf, text_rect)
+        text_rect.center = pos
+        self.blit(text_surf, text_rect)
 
-    def draw_cursor(self, cursor, size=32):
-        self.draw_text(cursor.cursor, size, cursor.rect.x, cursor.rect.y)
+    def draw_cursor(self, cursor):
+        self.blit(cursor.image, cursor.rect)
 
-    def blit_screen(self):
-        self._display.blit(self.screen, (0,0))
-
-    def update(self):
-        pygame.display.update()
-
-    def fill(self, colour=None):
-        if not colour:
-            colour = DARK_PURPLE
-        self.screen.fill(colour)
-
-    def draw_img(self, image, x=0, y=0):
-        self.screen.blit(image, (x, y))
-    
-    def draw_rect(self, x, y, w, h, colour=DARK_PURPLE):
-        pygame.draw.rect(self.screen, colour, (x, y, w, h))
+    def draw_bar(self, bar):
+        self.fill(bar.base, DARK_PURPLE)
+        self.blit(bar.base, bar.rect)
+        self.fill(bar.top_bar, bar.colour)
+        self.blit(bar.top_bar, bar.top_rect)

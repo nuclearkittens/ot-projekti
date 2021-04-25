@@ -1,0 +1,18 @@
+{
+    "potion": {
+        "name": "Potion",
+        "category": "healing",
+        "descr": "Restores 20 HP to one character",
+        "effects": {
+            "hp": 20
+            }
+    },
+    "witch_potion": {
+            "name": "Witch potion",
+            "category": "healing",
+            "descr": "Restores 5 MP to one character",
+            "effects": {
+                "mp": 5
+            }
+    }
+}
