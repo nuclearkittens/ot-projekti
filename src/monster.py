@@ -16,7 +16,7 @@ class Monster(Character):
 
     def set_tick_speed(self):
         rand = random.randint(-3, 3)
-        self._tick_spd = 100 // self._agi + rand
+        self._tick_spd = 100 // (self._agi + rand)
         return self._tick_spd
 
     def make_decision(self, target_list):

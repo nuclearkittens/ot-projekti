@@ -35,9 +35,10 @@ class BattleActionHandler:
             self._turns[char] = char.set_tick_speed()
 
     def tick(self):
-        for counter in self._turns.values():
-            if counter > 0:
-                counter -= 1
+        print(self._turns)
+        for char in self._turns:
+            if self._turns[char] > 0:
+                self._turns[char] -= 1
 
     def check_turn(self):
         self._reset_current()

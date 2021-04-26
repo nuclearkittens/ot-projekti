@@ -35,7 +35,7 @@ class Menu:
 
     def _create_buttons(self):
         for option in self.options:
-            new_button = MenuButton(self.name, option, FONT_SIZE, POWDER_ROSE)
+            new_button = MenuButton(option, option, FONT_SIZE, POWDER_ROSE)
             self.buttons.add(new_button)
         self._calc_button_placement()
 

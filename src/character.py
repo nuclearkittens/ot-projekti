@@ -52,7 +52,7 @@ class Character(pg.sprite.Sprite):
         self.rect.midbottom = (x, y)
 
     def set_tick_speed(self):
-        pass
+        return self._agi
 
     def reset_tick_speed(self):
         self._tick_spd = None

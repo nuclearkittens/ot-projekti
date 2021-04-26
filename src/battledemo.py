@@ -39,7 +39,10 @@ class BattleDemo:
         self.event_handler = EventHandler(self.keys)
         self.sprite_handler = BattleSpriteHandler(self.clock, self.renderer, self.party_obj)
         self.menu_handler = BattleMenuHandler(self.keys, self.renderer, self.party_obj)
-        self.action_handler = BattleActionHandler(self.sprite_handler.participants, self.item_cntr.items, self.skill_cntr.skills, self.magic_cntr.skills)
+        self.action_handler = BattleActionHandler(
+            self.sprite_handler.participants, self.item_cntr.items,
+            self.skill_cntr.skills, self.magic_cntr.skills
+            )
 
         self.enemies = self.sprite_handler.enemies
 
@@ -57,18 +60,19 @@ class BattleDemo:
             self.action_handler.tick()
             self.action_handler.check_turn()
             current = self.action_handler.current
+            print(current)
             if current in self.party:
                 action, target = self._player_turn(current)
             elif current in self.enemies:
                 action, target = current.make_decision(self.party)
             if target:
-                self.action_handler.target.set(target)
+                self.action_handler.target = target
             if self.action_handler.execute_action(action):
                 print('action executed!')
             self.sprite_handler.draw_sprites()
             self.clock.tick()
             pg.display.update()
-            
+
     def _player_turn(self, current):
         menu = True
         while True:
@@ -80,8 +84,6 @@ class BattleDemo:
                 return action, target
             self.sprite_handler.draw_sprites()
             self.clock.tick()
-            
-
 
 class BattleState:
     def __init__(self):
