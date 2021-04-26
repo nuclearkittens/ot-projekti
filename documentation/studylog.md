@@ -11,7 +11,8 @@
 | 12/04/21 | 2 | refactoring (and fixing all I broke) |
 | 13/04/21 | 3 | refactoring the spaghetti | 
 | 13/04/21 | 5 | writing tests, updating documentation, initialising invoke etc |
+| 20/04/21 | 8 | trying to write the actual battle demo but failed miserably |
 
-total hours (12/04/21): 39
+total hours (20/04/21): 47
 
 *countless of hours of research has been done before starting the study log on 30/03/21*

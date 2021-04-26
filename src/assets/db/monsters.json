@@ -1,0 +1,37 @@
+{
+    "ikorni": {
+        "name": "Ikorni",
+        "category": "normal",
+        "descr": "A squirrel with human feet, mostly found near parks and forests. Look out for its claws.",
+        "stats": {
+            "hp": 40,
+            "mp": 10,
+            "str": 12,
+            "mag": 1,
+            "def": 1,
+            "mdef": 20,
+            "agi": 8,
+            "res": {
+                "physical": 1.0,
+                "fire": 1.5,
+                "ice": 1.0,
+                "lightning": 1.0,
+                "wind": 0.5,
+                "light": 1.0,
+                "dark": 0.5
+            }
+        },
+        "tech": {
+            "skills": ["kick", "dbl_claw"],
+            "blk_mag": [],
+            "wht_mag": []
+        },
+        "items": {
+            "potion": 1
+        },
+        "drops": {
+            "money": 15,
+            "loot": []
+        }
+    }
+}
