@@ -13,6 +13,23 @@ class Skill:
 
         self.magic = False
 
+    @property
+    def skill(self):
+        skill = [
+            self._name, self._descr, self._element,
+            self._effects, self._hits, self._mp_cost,
+            self._multiplier, self._crit_rate
+        ]
+        return skill
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def cost(self):
+        return self._mp_cost
+
     def use(self, user, target):
         pass
 

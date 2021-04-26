@@ -9,21 +9,21 @@ class Monster(Character):
         Character.__init__(self, clock, renderer, name)
         self.hp_bar_center = True
 
-        self.category = None
-        self.drops = None
+        self._category = None
+        self._drops = None
 
         self._load_data()
 
     def set_tick_speed(self):
         rand = random.randint(-3, 3)
-        self.tick_spd = 100 // self.agi + rand
+        self._tick_spd = 100 // self._agi + rand
 
     def make_decision(self, target_list):
-        if self.curr_hp < self.max_hp // 4 and self.items:
-            action = random.choice(self.items)
+        if self._curr_hp < self._max_hp // 4 and self._items:
+            action = random.choice(self._items)
             target = self
         else:
-            action = random.choice(self.skills) # hox! remember to add magics to random.choices
+            action = random.choice(self._skills) # hox! remember to add magics to random.choices
             target = random.choice(target_list)
         return action, target
 
@@ -31,15 +31,15 @@ class Monster(Character):
         data = load_file(ENEM_DB)
         for key, val in data.items():
             if key == self.name:
-                self.proper_name = val['name']
-                self.category = val['category']
-                self.descr = val['descr']
-                self.drops = val['drops']
+                self._proper_name = val['name']
+                self._category = val['category']
+                self._descr = val['descr']
+                self._drops = val['drops']
                 self._set_stats(val['stats'])
                 # self._fetch_skills(val['tech'])
                 # self._fetch_items(val['items'])
                 self._set_skills(val['tech'])
-                self.items = val['items']
+                self._items = val['items']
                 break
 
     # def _fetch_items(self, items):

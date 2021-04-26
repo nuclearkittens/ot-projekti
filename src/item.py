@@ -5,6 +5,10 @@ class Item:
         self._descr = descr
         self._effects = effects
 
+    @property
+    def item(self):
+        return [self._name, self._category, self._descr, self._effects]
+
     def use(self, target):
         if self._category == 'healing':
             self._use_healing_item(target)
@@ -23,4 +27,3 @@ class Item:
                 target.curr_mp += amount
             else:
                 target.curr_mp += amount * target.max_mp
-                

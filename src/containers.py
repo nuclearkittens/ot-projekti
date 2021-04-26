@@ -6,7 +6,7 @@ from magic import BlackMagic
 
 class ItemContainer:
     def __init__(self):
-        self.items = self._load_all_items()
+        self._items = self._load_all_items()
 
     # def add(self, item, qty=1):
     #     if item not in self.items:
@@ -22,6 +22,15 @@ class ItemContainer:
     #         self.items.pop(item._name)
     #         self.items_lst.remove(item)
 
+    @property
+    def items(self):
+        return self._items
+
+    def fetch_item(self, item):
+        if item in self._items:
+            return self._items[item].item
+        return ValueError
+
     def _load_all_items(self):
         dct = {}
         data = load_file(ITEMS_DB)
@@ -33,7 +42,7 @@ class ItemContainer:
 class SkillContainer:
     def __init__(self, category):
         self.category = category
-        self.skills = self._load_skills()
+        self._skills = self._load_skills()
 
     # def add(self, skill):
     #     if skill not in self.skills:
@@ -41,6 +50,14 @@ class SkillContainer:
 
     # def use(self, skill, target):
     #     skill.use(self._owner, target)
+    @property
+    def skills(self):
+        return self._skills
+
+    def fetch_skill(self, skill):
+        if skill in self._skills:
+            return self._skills[skill].skill
+        return ValueError
 
     def _load_skills(self):
         if self.category == 'skill':
@@ -52,13 +69,16 @@ class SkillContainer:
     def _load_all_offensive_skills(self):
         dct = {}
         data = load_file(ATKS_DB)
+        # print(data)
         for key, skill in data.items():
+            # print(key, skill)
             new_skill = OffensiveSkill(
                 skill['name'], skill['descr'], skill['element'],
                 skill['effects'], skill['hits'], skill['mp_cost'],
                 skill['multiplier'], skill['crit_rate']
                 )
             dct[key] = new_skill
+        # print(dct)
         return dct
 
     def _load_all_blk_magic(self):
@@ -71,5 +91,16 @@ class SkillContainer:
                 skill['multiplier'], skill['crit_rate']
                 )
             dct[key] = new_skill
+        # print(dct)
         return dct
         
+if __name__ == "__main__":
+    new_sc = SkillContainer('skill')
+    print(new_sc.skills)
+
+    new_ic = ItemContainer()
+    print(new_ic.items)
+
+    print(new_ic.fetch_item('potion'))
+
+    print(new_sc.fetch_skill('dbl_claw'))

@@ -28,7 +28,7 @@ class Menu:
         self.state = self.actions[0]
         self.buttons = pg.sprite.Group()
         self.cursor_pos = []
-        self.cursor = self._create_cursor(cursor_size, cursor_colour)
+        self.cursor = Cursor(cursor_size, cursor_colour)
         self._create_buttons()
 
     def _create_buttons(self):
@@ -51,10 +51,10 @@ class Menu:
                     self.cursor_pos.append((x_cursor, y))
                     y += y
 
-    def _create_cursor(self, size, colour):
-        new_cursor = Cursor(size, colour)
-        self.buttons.add(new_cursor)
-        return new_cursor
+    # def _create_cursor(self, size, colour):
+    #     new_cursor = Cursor(size, colour)
+    #     self.buttons.add(new_cursor)
+    #     return new_cursor
 
     def _move_cursor(self):
         n = len(self.options)
@@ -89,6 +89,7 @@ class Menu:
     def draw_menu(self):
         self.base.fill(self.bg_colour)
         self.buttons.draw(self.base)
+        self._renderer.draw_cursor(self.cursor, self.base)
         self._renderer.blit(self.base, self.rect)
 
     def _check_input(self):
@@ -113,4 +114,4 @@ class BattleMenu(Menu):
         # n = len(self.options)
         if self._keys.SELECT:
             return self.state
-        return
+        return self.active

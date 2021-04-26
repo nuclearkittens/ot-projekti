@@ -23,11 +23,14 @@ class Renderer:
         text_rect.center = pos
         self.blit(text_surf, text_rect)
 
-    def draw_cursor(self, cursor):
-        self.blit(cursor.image, cursor.rect)
+    def draw_cursor(self, cursor, dest):
+        dest.blit(cursor.image, cursor.rect)
 
     def draw_bar(self, bar):
         self.fill(bar.base, DARK_PURPLE)
         self.blit(bar.base, bar.rect)
         self.fill(bar.top_bar, bar.colour)
         self.blit(bar.top_bar, bar.top_rect)
+
+    def draw_sprites(self, spritegroup):
+        spritegroup.draw(self._display)

@@ -17,6 +17,10 @@ class Party:
 
         self._create_party()
 
+    @property
+    def current_party(self):
+        return self.group.sprites()
+
     def _create_party(self):
         # TODO: create all party members here even when they haven't joined yet;
         # add to group when joined
