@@ -21,3 +21,4 @@ class EventCheck:
                     self._keys.LEFT = True
                 if event.key == pg.K_RIGHT:
                     self._keys.RIGHT = True
+                    

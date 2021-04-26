@@ -1,9 +1,15 @@
 import pygame as pg
-from config import *
+
+from config import SCREEN_W, SCREEN_H, CURSOR_SIZE, FONT_SIZE, DARK_PURPLE, POWDER_ROSE
 from buttons import Cursor, MenuButton
 
 class Menu:
-    def __init__(self, name, renderer, keys, w, h, bg_colour, options, actions, margin, gutter, x=0, y=0, cursor_size=CURSOR_SIZE, cursor_colour=POWDER_ROSE):
+    def __init__(self, name, renderer, keys,
+                 w, h, bg_colour,
+                 options, actions,
+                 margin, gutter, x=0, y=0,
+                 cursor_size=CURSOR_SIZE, cursor_colour=POWDER_ROSE
+                ):
         self._renderer = renderer
         self._keys = keys
 
@@ -15,7 +21,7 @@ class Menu:
         self.margin = margin
         self.gutter = gutter
         self.bg_colour = bg_colour
-        
+
         self.active = False
         self.options = options
         self.actions = actions
@@ -24,7 +30,7 @@ class Menu:
         self.cursor_pos = []
         self.cursor = self._create_cursor(cursor_size, cursor_colour)
         self._create_buttons()
-        
+
     def _create_buttons(self):
         for option in self.options:
             new_button = MenuButton(self.name, option, FONT_SIZE, POWDER_ROSE)
@@ -32,7 +38,7 @@ class Menu:
         self._calc_button_placement()
 
     def _calc_button_placement(self):
-        area_w = self.rect.w
+        # area_w = self.rect.w
         area_h = self.rect.h
         qty = len(self.options)
         x_cursor = self.rect.x + self.margin
@@ -76,7 +82,7 @@ class Menu:
     def update(self):
         self._move_cursor()
         action = self._check_input()
-        self._draw_menu()
+        self.draw_menu()
         self._keys.reset_keys()
         return action
 
@@ -84,9 +90,9 @@ class Menu:
         self.base.fill(self.bg_colour)
         self.buttons.draw(self.base)
         self._renderer.blit(self.base, self.rect)
-        
+
     def _check_input(self):
-        pass    
+        return False
 
 class BattleMenu(Menu):
     def __init__(self, name, owners, renderer, keys, options, actions, x, y):
@@ -95,12 +101,16 @@ class BattleMenu(Menu):
         bg_colour = DARK_PURPLE
         margin = int(0.1 * w)
         gutter = margin // 2
-        Menu.__init__(self, name, renderer, keys, w, h, bg_colour, options, actions, margin, gutter, x, y)
+        Menu.__init__(
+            self, name, renderer, keys,
+            w, h, bg_colour,
+            options, actions,
+            margin, gutter, x, y
+            )
         self.owners = owners
 
     def _check_input(self):
-        n = len(self.options)
+        # n = len(self.options)
         if self._keys.SELECT:
             return self.state
         return
-

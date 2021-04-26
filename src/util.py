@@ -5,7 +5,6 @@ from magic import BlackMagic
 from item import Item
 from config import ITEMS_DB, ATKS_DB, BLK_MAG_DB
 
-
 def load_file(filename):
     with open(filename) as f:
         data = json.load(f)
@@ -23,7 +22,11 @@ def fetch_skill(skill):
     data = load_file(ATKS_DB)
     if skill in data:
         data = data[skill]
-        return OffensiveSkill(data['name'], data['descr'], data['element'], data['effects'], data['hits'], data['mp_cost'], data['multiplier'], data['crit_rate'])
+        return OffensiveSkill(
+            data['name'], data['descr'], data['element'],
+            data['effects'], data['hits'], data['mp_cost'],
+            data['multiplier'], data['crit_rate']
+            )
     else:
         raise KeyError
 
@@ -31,8 +34,10 @@ def fetch_blk_spell(skill):
     data = load_file(BLK_MAG_DB)
     if skill in data:
         data = data[skill]
-        return BlackMagic(data['name'], data['descr'], data['element'], data['effects'], data['hits'], data['mp_cost'], data['multiplier'], data['crit_rate'])
+        return BlackMagic(
+            data['name'], data['descr'], data['element'],
+            data['effects'], data['hits'], data['mp_cost'],
+            data['multiplier'], data['crit_rate']
+            )
     else:
         raise KeyError
-
-

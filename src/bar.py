@@ -42,7 +42,7 @@ class HPBar(Bar):
         elif ratio < 0.2:
             self.colour = HP_RED
         else:
-            self.colour = HP_YELLOW    
+            self.colour = HP_YELLOW
         new_w = int(ratio*self.w)
         pg.transform.scale(self.top_bar, (new_w, self.h))
 
@@ -54,6 +54,6 @@ class MPBar(Bar):
         self._curr_mp = curr_mp
 
     def update(self):
-        ratio = self._curr_mp / self._max_mp 
+        ratio = self._curr_mp / self._max_mp
         new_w = int(ratio*self.w)
         pg.transform.scale(self.top_bar, (new_w, self.h))

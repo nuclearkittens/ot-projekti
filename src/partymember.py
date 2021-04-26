@@ -1,12 +1,9 @@
-import pygame as pg
 import random
-import math
 
 from character import Character
 from buttons import Button
-from bar import HPBar, MPBar
-from containers import SkillContainer
-from util import load_file, fetch_blk_spell, fetch_item, fetch_skill
+from bar import MPBar
+from util import load_file
 from config import PARTY_DB, FONT_SIZE, DARK_PURPLE
 
 class PartyMember(Character):

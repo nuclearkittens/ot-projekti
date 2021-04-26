@@ -7,7 +7,7 @@ from magic import BlackMagic
 class ItemContainer:
     def __init__(self):
         self.items = self._load_all_items()
-        
+
     # def add(self, item, qty=1):
     #     if item not in self.items:
     #         self.items[item._name] = qty
@@ -53,7 +53,11 @@ class SkillContainer:
         dct = {}
         data = load_file(ATKS_DB)
         for key, skill in data.items():
-            new_skill = OffensiveSkill(skill['name'], skill['descr'], skill['element'], skill['effects'], skill['hits'], skill['mp_cost'], skill['multiplier'], skill['crit_rate'])
+            new_skill = OffensiveSkill(
+                skill['name'], skill['descr'], skill['element'],
+                skill['effects'], skill['hits'], skill['mp_cost'],
+                skill['multiplier'], skill['crit_rate']
+                )
             dct[key] = new_skill
         return dct
 
@@ -61,6 +65,11 @@ class SkillContainer:
         dct = {}
         data = load_file(BLK_MAG_DB)
         for key, skill in data.items():
-            new_skill = BlackMagic(skill['name'], skill['descr'], skill['element'], skill['effects'], skill['hits'], skill['mp_cost'], skill['multiplier'], skill['crit_rate'])
+            new_skill = BlackMagic(
+                skill['name'], skill['descr'], skill['element'],
+                skill['effects'], skill['hits'], skill['mp_cost'],
+                skill['multiplier'], skill['crit_rate']
+                )
             dct[key] = new_skill
         return dct
+        

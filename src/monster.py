@@ -1,17 +1,12 @@
-import pygame as pg
-import json
-from random import choice
+import random
 
 from character import Character
-from bar import HPBar
-from containers import ItemContainer, SkillContainer
-from util import load_file, fetch_blk_spell, fetch_item, fetch_skill
+from util import load_file
 from config import ENEM_DB
 
 class Monster(Character):
     def __init__(self, clock, renderer, name):
         Character.__init__(self, clock, renderer, name)
-        self.items = {}
         self.hp_bar_center = True
 
         self.category = None
@@ -25,11 +20,11 @@ class Monster(Character):
 
     def make_decision(self, target_list):
         if self.curr_hp < self.max_hp // 4 and self.items:
-            action = choice(self.items)
+            action = random.choice(self.items)
             target = self
         else:
-            action = choice(self.skills) # hox! remember to add magics to choices
-            target = choice(target_list)
+            action = random.choice(self.skills) # hox! remember to add magics to random.choices
+            target = random.choice(target_list)
         return action, target
 
     def _load_data(self):
@@ -51,6 +46,3 @@ class Monster(Character):
     #     for item, qty in items.items():
     #         new_item = fetch_item(item)
     #         self.items.add(new_item, qty)
-
-
-        

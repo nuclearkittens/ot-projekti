@@ -1,5 +1,5 @@
-import pygame as pg
 import os.path
+import pygame as pg
 
 from config import DIRNAME, FONT, DARK_PURPLE
 

@@ -1,3 +1,5 @@
+import random
+
 class Skill:
     def __init__(self, name, descr, element, effects, hits, mp_cost, multiplier, crit_rate):
         self._name = name
@@ -13,7 +15,7 @@ class Skill:
 
     def use(self, user, target):
         pass
-    
+
     def _use_offensive(self, user, target):
         if self._check_mp(user):
             mult = target.res[self._element] * self._multiplier
@@ -38,9 +40,10 @@ class Skill:
 
     def _calc_damage(self, atk, defs, mult):
         rand = random.uniform(0.8, 1.2)
-        if self._is_critical(crit_rate):
+        if self._is_critical():
             mult *= 1.5
         return int(rand * (mult * (atk-defs)))
 
     def _is_critical(self):
-        return random.random() < self.crit_rate
+        return random.random() < self._crit_rate
+        

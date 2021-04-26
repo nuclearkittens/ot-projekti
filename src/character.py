@@ -1,8 +1,7 @@
 import pygame as pg
 
 from bar import HPBar
-from containers import SkillContainer
-from util import *
+from util import fetch_blk_spell, fetch_skill
 
 class Character(pg.sprite.Sprite):
     def __init__(self, clock, renderer, name):
@@ -39,7 +38,7 @@ class Character(pg.sprite.Sprite):
         self.image = self.anim_lst[0][0]
         self.rect = self.image.get_rect()
 
-        self.items = None
+        self.items = {}
         # self.skills = SkillContainer(self)
         # self.magic = SkillContainer(self)
         self.skills = []
@@ -104,24 +103,22 @@ class Character(pg.sprite.Sprite):
 
     def _fetch_items(self):
         pass
-        
+
     def _set_stats(self, stats):
-        for stat in stats:
-            self.max_hp = stats['hp']
-            self.curr_hp = stats['hp']
-            self.max_mp = stats['mp']
-            self.curr_mp = stats['mp']
-            self.str = stats['str']
-            self.mag = stats['mag']
-            self.defs = stats['def']
-            self.mdef = stats['mdef']
-            self.agi = stats['agi']
-            self.res = stats['res']
+        self.max_hp = stats['hp']
+        self.curr_hp = stats['hp']
+        self.max_mp = stats['mp']
+        self.curr_mp = stats['mp']
+        self.str = stats['str']
+        self.mag = stats['mag']
+        self.defs = stats['def']
+        self.mdef = stats['mdef']
+        self.agi = stats['agi']
+        self.res = stats['res']
 
     def _set_skills(self, skills):
-        for skill in skills:
-            self.skills = skills['skills']
-            self.magic = skills['blk_mag']
+        self.skills = skills['skills']
+        self.magic = skills['blk_mag']
 
     def _fetch_skills(self, tech):
         for skill in tech['skills']:
@@ -130,3 +127,4 @@ class Character(pg.sprite.Sprite):
         for skill in tech['blk_mag']:
             new_skill = fetch_blk_spell(skill)
             self.magic.add(new_skill)
+            

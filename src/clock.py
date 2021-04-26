@@ -9,3 +9,4 @@ class Clock:
 
     def get_ticks(self):
         return pg.time.get_ticks()
+        

@@ -1,7 +1,6 @@
 import pygame as pg
 
 from partymember import PartyMember
-from containers import ItemContainer
 
 class Party:
     def __init__(self, clock, renderer):
@@ -19,7 +18,8 @@ class Party:
         self._create_party()
 
     def _create_party(self):
-        # TODO: create all party members here even when they haven't joined yet; add to group when joined
+        # TODO: create all party members here even when they haven't joined yet;
+        # add to group when joined
         self.ej = PartyMember(self._clock, self._renderer, 'ej', self.items)
         self.witch = PartyMember(self._clock, self._renderer, 'witch', self.items)
         # self.items.set_owner(self.ej)

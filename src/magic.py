@@ -15,3 +15,4 @@ class WhiteMagic(Skill):
 
     def use(self, user, target):
         return self._use_defensive(user, target)
+        

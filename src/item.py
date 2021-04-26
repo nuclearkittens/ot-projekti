@@ -8,7 +8,6 @@ class Item:
     def use(self, target):
         if self._category == 'healing':
             self._use_healing_item(target)
-        pass
 
     def _use_healing_item(self, target):
         if 'hp' in self._effects:
@@ -24,3 +23,4 @@ class Item:
                 target.curr_mp += amount
             else:
                 target.curr_mp += amount * target.max_mp
+                

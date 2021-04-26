@@ -6,3 +6,4 @@ class OffensiveSkill(Skill):
 
     def use(self, user, target):
         return self._use_offensive(user, target)
+        

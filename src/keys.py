@@ -10,3 +10,4 @@ class Keys:
         self.RIGHT, self.LEFT = False, False
         self.SELECT, self.START = False, False
         self.BACK, self.PAUSE = False, False
+        

@@ -1,13 +1,9 @@
-import pygame as pg
 import random
+import pygame as pg
 
-from config import *
-from util import *
-from magic import BlackMagic
-from techniques import OffensiveSkill
+from config import SCREEN_W, SCREEN_H, BAR_W, BAR_H, SCALE
 from clock import Clock
 from renderer import Renderer
-from character import Character
 from party import Party
 from monster import Monster
 from containers import ItemContainer, SkillContainer
@@ -20,7 +16,7 @@ class BattleDemo:
         pg.init()
         self.clock = Clock()
         self.running = True
-        
+
         self.screen = pg.display.set_mode((SCREEN_W, SCREEN_H))
         pg.display.set_caption('battle demo')
 
@@ -40,8 +36,13 @@ class BattleDemo:
 
         self.spritehandler = BattleSpriteHandler(self.clock, self.renderer, self.party)
         participants = self.spritehandler.get_participants()
-        self.actionhandler = BattleActionHandler(participants, self.item_container, self.skill_container, self.magic_container)
-        self.menuhandler = BattleMenuHandler(self.keys, self.renderer, self.item_container, self.skill_container, self.magic_container, self.party)
+        self.actionhandler = BattleActionHandler(
+            participants, self.item_container, self.skill_container, self.magic_container)
+        self.menuhandler = BattleMenuHandler(
+            self.keys, self.renderer,
+            self.item_container, self.skill_container, self.magic_container,
+            self.party
+            )
 
         self.enemies = self.spritehandler.get_enemies()
         self.players = self.spritehandler.get_party()
@@ -66,8 +67,8 @@ class BattleDemo:
                     self.keys.reset_keys()
                     action = self._player_turn(current)
                 if self.actionhandler.execute_action(action):
-                        self.actionhandler.reset_current()
-                        self.actionhandler.reset_target()
+                    self.actionhandler.reset_current()
+                    self.actionhandler.reset_target()
             pg.display.update()
         pg.quit()
 
@@ -111,7 +112,7 @@ class BattleMenuHandler:
         self.magic_menus = {}
         self.item_menu = self._create_item_menu()
         self.all_menus.append(self.item_menu)
-        
+
         self._create_char_menus()
 
     def draw_menus(self, current):
@@ -152,18 +153,24 @@ class BattleMenuHandler:
                 text = f'{val[0]:20}{val[1]}'
                 temp_actions.append(skill)
                 temp_options.append(text)
-            new_menu = BattleMenu('skill', [char], self._renderer, self._keys, temp_options, temp_actions, x, y)
+            new_menu = BattleMenu(
+                'skill', [char], self._renderer, self._keys,
+                temp_options, temp_actions, x, y
+                )
             self.all_menus.append(new_menu)
             self.skill_menus[char] = new_menu
             temp_options = []
-            for mag, cost in temp_mag.items():
+            for mag, val in temp_mag.items():
                 text = f'{val[0]:20}{val[1]}'
                 temp_actions.append(mag)
                 temp_options.append(text)
-            new_menu = BattleMenu('magic', [char], self._renderer, self._keys, temp_options, temp_actions, x, y)
+            new_menu = BattleMenu(
+                'magic', [char], self._renderer, self._keys,
+                temp_options, temp_actions, x, y
+                )
             self.all_menus.append(new_menu)
             self.magic_menus[char] = new_menu
-        
+
     def _create_item_menu(self):
         x = self.menu_pos[1][0]
         y = self.menu_pos[1][1]
@@ -182,7 +189,12 @@ class BattleMenuHandler:
                 itm_frames.append(text)
             temp_frames.append(itm_frames)
 
-        new_menu = BattleMenu('item', self._party.group.sprites(), self._renderer, self._keys, temp_options, temp_actions, x, y)
+        new_menu = BattleMenu(
+            'item', self._party.group.sprites(),
+            self._renderer, self._keys,
+            temp_options, temp_actions, x, y
+            )
+
         for button in new_menu.buttons.sprites():
             if hasattr(button, 'text'):
                 for frames in temp_frames:
@@ -192,7 +204,7 @@ class BattleMenuHandler:
                             button.add_frame(frame)
                         frames = None
         return new_menu
-        
+
     def _create_options(self, char):
         temp_skills = {}
         temp_mag = {}
@@ -203,14 +215,18 @@ class BattleMenuHandler:
         for mag in char.magic:
             if mag in self._magics:
                 name, cost = self._magics[mag]._name, self._magics[mag]._mp_cost
-                temp_magic[mag] = (name, cost)
+                temp_mag[mag] = (name, cost)
         return temp_skills, temp_mag
-        
+
     def _create_main_menu(self):
         options = ['Attack', 'Skill', 'Magic', 'Item']
         actions = [option.lower() for option in options]
         x, y = self.menu_pos[0][0], self.menu_pos[0][1]
-        return BattleMenu('main', self._party.group.sprites(), self._renderer, self._keys, options, actions, x, y)
+        return BattleMenu(
+            'main', self._party.group.sprites(),
+            self._renderer, self._keys,
+            options, actions, x, y
+            )
 
 class BattleSpriteHandler:
     def __init__(self, clock, renderer, party, demo=True):
@@ -227,7 +243,9 @@ class BattleSpriteHandler:
         self._setup()
 
     def _setup(self):
-        # TODO: random encounter creator; fetch monsters for a certain area, initialise them here; 1-3 monsters per battle
+        # TODO: random encounter creator;
+        # fetch monsters for a certain area, initialise them here;
+        # 1-3 monsters per battle
         if self._demo:
             monster1 = Monster(self._clock, self._renderer, 'ikorni')
             monster2 = Monster(self._clock, self._renderer, 'ikorni')
@@ -300,11 +318,7 @@ class BattleSpriteHandler:
         self._renderer.draw_bar(bar)
 
     def get_participants(self):
-        temp = []
-        for sprite in self.all.sprites():
-            if sprite in (self.party or self.monsters):
-                temp.append(sprite)
-        return temp
+        return self.enemies.sprites() + self.party.sprites()
 
     def get_inventory(self, sprite, cat):
         values = ['skill', 'magic', 'item']
@@ -385,7 +399,6 @@ class BattleActionHandler:
 
     def reset_target(self):
         self.target = None
-    
 
 if __name__ == '__main__':
     demo = BattleDemo()
