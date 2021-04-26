@@ -1,11 +1,11 @@
 import pygame as pg
 
-class EventCheck:
+class EventHandler:
     def __init__(self, keys):
         self._keys = keys
 
-    def check(self):
-        for event in pg.event.get():
+    def check_input(self):
+        for event in self._event_queue():
             if event.type == pg.QUIT:
                 pg.quit()
             elif event.type == pg.KEYDOWN:
@@ -22,3 +22,11 @@ class EventCheck:
                 if event.key == pg.K_RIGHT:
                     self._keys.RIGHT = True
                     
+    def _event_queue(self):
+        return pg.event.get()
+
+    def quit(self):
+        for event in self._event_queue():
+            if event.type == pg.QUIT:
+                return True
+        return False

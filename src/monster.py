@@ -17,6 +17,7 @@ class Monster(Character):
     def set_tick_speed(self):
         rand = random.randint(-3, 3)
         self._tick_spd = 100 // self._agi + rand
+        return self._tick_spd
 
     def make_decision(self, target_list):
         if self._curr_hp < self._max_hp // 4 and self._items:
@@ -26,6 +27,8 @@ class Monster(Character):
             action = random.choice(self._skills) # hox! remember to add magics to random.choices
             target = random.choice(target_list)
         return action, target
+
+    
 
     def _load_data(self):
         data = load_file(ENEM_DB)

@@ -10,19 +10,25 @@ class BattleActionHandler:
         self._items = items
         self._skills = skills
         self._magics = magics
-        self._menus = ['skill', 'magic', 'item']
+        self._menus = ['main', 'skill', 'magic', 'item']
 
     def execute_action(self, action):
         if action in self._items:
-            self.current.remove_item(action)
-            self._items[action].use(self.target)
+            self._current.remove_item(action)
+            self._items[action].use(self._target)
+            return True
         elif action in self._skills:
-            self._skills[action].use(self.current, self.target)
+            self._skills[action].use(self._current, self._target)
+            return True
         elif action in self._magics:
-            self._magics[action].use(self.current, self.target)
-        elif action in self._menus:
-            return False
-        return True
+            self._magics[action].use(self._current, self._target)
+            return True
+        return False
+
+    def check_action(self, action):
+        if action in self._menus or action == 'no action':
+            return True
+        return False
 
     def _generate_turns(self):
         for char in self._participants:
@@ -34,23 +40,24 @@ class BattleActionHandler:
                 counter -= 1
 
     def check_turn(self):
+        self._reset_current()
+        self._reset_target()
         for char in self._turns:
             if self._turns[char] == 0:
                 self._current = char
                 self._reset_counter()
-                return self._current
 
     def _reset_counter(self):
         self._turns[self._current] = self._current.set_tick_speed()
 
-    def reset_current(self):
-        self.current = None
+    def _reset_current(self):
+        self._current = None
 
     # def set_target(self, target):
     #     self.target = target
 
-    def reset_target(self):
-        self.target = None
+    def _reset_target(self):
+        self._target = None
 
     @property
     def target(self):

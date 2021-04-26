@@ -6,7 +6,7 @@ from buttons import Cursor, MenuButton
 class Menu:
     def __init__(self, name, renderer, keys,
                  w, h, bg_colour,
-                 options, actions,
+                 parent, options, actions,
                  margin, gutter, x=0, y=0,
                  cursor_size=CURSOR_SIZE, cursor_colour=POWDER_ROSE
                 ):
@@ -23,9 +23,11 @@ class Menu:
         self.bg_colour = bg_colour
 
         self.active = False
+        self.parent = parent
         self.options = options
         self.actions = actions
         self.state = self.actions[0]
+
         self.buttons = pg.sprite.Group()
         self.cursor_pos = []
         self.cursor = Cursor(cursor_size, cursor_colour)
@@ -38,7 +40,6 @@ class Menu:
         self._calc_button_placement()
 
     def _calc_button_placement(self):
-        # area_w = self.rect.w
         area_h = self.rect.h
         qty = len(self.options)
         x_cursor = self.rect.x + self.margin
@@ -51,33 +52,29 @@ class Menu:
                     self.cursor_pos.append((x_cursor, y))
                     y += y
 
-    # def _create_cursor(self, size, colour):
-    #     new_cursor = Cursor(size, colour)
-    #     self.buttons.add(new_cursor)
-    #     return new_cursor
-
     def _move_cursor(self):
         n = len(self.options)
-        if self._keys.DOWN:
-            for i in range(n):
-                if self.state == self.actions[i]:
-                    if i == n-1:
-                        self.state = self.actions[0]
-                        self.cursor.set_position(self.cursor_pos[0][0], self.cursor_pos[0][1])
-                    else:
-                        self.state = self.actions[i+1]
-                        self.cursor.set_position(self.cursor_pos[i+1][0], self.cursor_pos[i+1][1])
-                    break
-        if self._keys.UP:
-            for i in range(n):
-                if self.state == self.actions[i]:
-                    if i == 0:
-                        self.state = self.actions[-1]
-                        self.cursor.set_position(self.cursor_pos[-1][0], self.cursor_pos[-1][1])
-                    else:
-                        self.state = self.actions[i-1]
-                        self.cursor.set_position(self.cursor_pos[i-1][0], self.cursor_pos[i-1][1])
-                    break
+        if n > 1:
+            if self._keys.DOWN:
+                for i in range(n):
+                    if self.state == self.actions[i]:
+                        if i == n-1:
+                            self.state = self.actions[0]
+                            self.cursor.set_position(self.cursor_pos[0][0], self.cursor_pos[0][1])
+                        else:
+                            self.state = self.actions[i+1]
+                            self.cursor.set_position(self.cursor_pos[i+1][0], self.cursor_pos[i+1][1])
+                        break
+            if self._keys.UP:
+                for i in range(n):
+                    if self.state == self.actions[i]:
+                        if i == 0:
+                            self.state = self.actions[-1]
+                            self.cursor.set_position(self.cursor_pos[-1][0], self.cursor_pos[-1][1])
+                        else:
+                            self.state = self.actions[i-1]
+                            self.cursor.set_position(self.cursor_pos[i-1][0], self.cursor_pos[i-1][1])
+                        break
 
     def update(self):
         self._move_cursor()
@@ -93,10 +90,10 @@ class Menu:
         self._renderer.blit(self.base, self.rect)
 
     def _check_input(self):
-        return False
+        return self.name
 
 class BattleMenu(Menu):
-    def __init__(self, name, owners, renderer, keys, options, actions, x, y):
+    def __init__(self, name, owners, parent, renderer, keys, options, actions, x, y):
         w = SCREEN_W // 4
         h = SCREEN_H // 4
         bg_colour = DARK_PURPLE
@@ -105,13 +102,14 @@ class BattleMenu(Menu):
         Menu.__init__(
             self, name, renderer, keys,
             w, h, bg_colour,
-            options, actions,
+            parent, options, actions,
             margin, gutter, x, y
             )
         self.owners = owners
 
     def _check_input(self):
-        # n = len(self.options)
         if self._keys.SELECT:
             return self.state
-        return self.active
+        elif self._keys.LEFT or self._keys.BACK:
+            return self.parent
+        return self.name

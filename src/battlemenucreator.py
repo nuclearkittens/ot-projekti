@@ -25,13 +25,13 @@ class BattleMenuCreator:
     def create_item_menu(self, party):
         x = self._pos[1][0]
         y = self._pos[1][1]
-        party_mbrs = party.current_party
+        party_mbrs = party
         party_itms = party.items
 
         temp_options = []
         temp_actions = []
         temp_frames = []
-        for itm, qty in party_itms:
+        for itm, qty in party_itms.items():
             info = self._item_cntr.fetch_item(itm)
             name = info[0]
             text = f'{name:20}{qty}'
@@ -44,7 +44,7 @@ class BattleMenuCreator:
             temp_frames.append(itm_frames)
 
         new_menu = BattleMenu(
-            'item', party_mbrs,
+            'item', party_mbrs, 'main',
             self._renderer, self._keys,
             temp_options, temp_actions, x, y
             )
@@ -55,7 +55,7 @@ class BattleMenuCreator:
                     frames.pop()
                     for frame in frames:
                         button.add_frame(frame)
-                    frames = None
+                    frames = [None]
         return new_menu
 
     def create_main_menu(self, party):
@@ -64,55 +64,70 @@ class BattleMenuCreator:
         options = ['Attack', 'Skill', 'Magic', 'Item']
         actions = [option.lower() for option in options]
         return BattleMenu(
-            'main', party,
+            'main', party, 'main',
             self._renderer, self._keys,
             options, actions, x, y
             )
 
-    def _create_options(self, char):
+    def _create_skill_options(self, char):
         temp_skills = {}
-        temp_mag = {}
         for skill in char.skills:
             if skill != 'attack':
                 info = self._skill_cntr.fetch_skill(skill)
                 name, cost = info[0], info[5]
                 temp_skills[skill] = (name, cost)
+        return temp_skills
+
+    def _create_mag_options(self, char):
+        temp_mag = {}
         for mag in char.magics:
             info = self._magic_cntr.fetch_skill(mag)
             name, cost = info[0], info[5]
             temp_mag[mag] = (name, cost)
-        return temp_skills, temp_mag
+        return temp_mag
 
-    def create_skill_and_magic_menus(self, char):
+    def create_skill_menu(self, char):
         x = self._pos[1][0]
         y = self._pos[1][1]
 
         temp_options = []
         temp_actions = []
-        temp_skills, temp_mag = self._create_options(char)
-        menu_list = []
+        temp_skills = self._create_skill_options(char)
+
+        if not temp_skills:
+            temp_skills['no action'] = ('no skills', ')--:')
 
         for skill, val in temp_skills.items():
             text = f'{val[0]:20}{val[1]}'
             temp_actions.append(skill)
             temp_options.append(text)
         new_menu = BattleMenu(
-            'skill', [char], self._renderer, self._keys,
+            'skill', [char], 'main',
+            self._renderer, self._keys,
             temp_options, temp_actions, x, y
             )
-        menu_list.append(new_menu)
+
+        return new_menu
+
+    def create_magic_menu(self, char):
+        x = self._pos[1][0]
+        y = self._pos[1][1]
 
         temp_options = []
         temp_actions = []
+        temp_mag = self._create_mag_options(char)
+
+        if not temp_mag:
+            temp_mag['no action'] = ('no magic', ')--:')
+
         for mag, val in temp_mag.items():
             text = f'{val[0]:20}{val[1]}'
             temp_actions.append(mag)
             temp_options.append(text)
         new_menu = BattleMenu(
-            'magic', [char], self._renderer, self._keys,
+            'magic', [char], 'main',
+            self._renderer, self._keys,
             temp_options, temp_actions, x, y
             )
-        menu_list.append(new_menu)
 
-        return menu_list
-        
+        return new_menu

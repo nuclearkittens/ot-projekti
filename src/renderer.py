@@ -34,3 +34,4 @@ class Renderer:
 
     def draw_sprites(self, spritegroup):
         spritegroup.draw(self._display)
+        

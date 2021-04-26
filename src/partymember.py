@@ -33,12 +33,13 @@ class PartyMember(Character):
         self.mp_bar.set_position(x, y)
 
     def new_name_button(self, x, y):
-        self.name_button = Button(self.proper_name.upper(), FONT_SIZE // 2, DARK_PURPLE)
+        self.name_button = Button(self._proper_name.upper(), FONT_SIZE // 2, DARK_PURPLE)
         self.name_button.rect.midleft = (x, y)
 
     def set_tick_speed(self):
         rand = random.randint(-2, 2)
         self._tick_spd = 100 // self._agi + rand
+        return self._tick_spd
 
     def _load_data(self):
         data = load_file(PARTY_DB)

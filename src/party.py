@@ -26,7 +26,7 @@ class Party:
         # add to group when joined
         self.ej = PartyMember(self._clock, self._renderer, 'ej', self.items)
         self.witch = PartyMember(self._clock, self._renderer, 'witch', self.items)
-        # self.items.set_owner(self.ej)
+        
         self.active_party.append(self.ej)
         self.active_party.append(self.witch)
         self.group.add(self.ej, self.witch)

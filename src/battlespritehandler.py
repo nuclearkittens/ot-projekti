@@ -1,12 +1,13 @@
+import pygame as pg
+
 from config import SCREEN_W, SCREEN_H, SCALE, BAR_W, BAR_H
 from monster import Monster
 
 class BattleSpriteHandler:
-    def __init__(self, clock, renderer, party, demo=True):
+    def __init__(self, clock, renderer, party):
         self._clock = clock
         self._renderer = renderer
         self._party = party
-        self._demo = demo
 
         self.party = pg.sprite.Group()
         self.enemies = pg.sprite.Group()
@@ -19,12 +20,11 @@ class BattleSpriteHandler:
         # TODO: random encounter creator;
         # fetch monsters for a certain area, initialise them here;
         # 1-3 monsters per battle
-        if self._demo:
-            monster1 = Monster(self._clock, self._renderer, 'ikorni')
-            monster2 = Monster(self._clock, self._renderer, 'ikorni')
-            self.enemies.add(monster1, monster2)
-            self.all.add(monster1, monster2)
-        for char in self._party.active_party:
+        monster1 = Monster(self._clock, self._renderer, 'ikorni')
+        monster2 = Monster(self._clock, self._renderer, 'ikorni')
+        self.enemies.add(monster1, monster2)
+        self.all.add(monster1, monster2)
+        for char in self._party.group:
             char.add(self.all, self.party)
 
         self._calc_sprite_placement()
@@ -91,57 +91,38 @@ class BattleSpriteHandler:
     def _draw_bar(self, bar):
         self._renderer.draw_bar(bar)
 
-    def get_participants(self):
-        return self.enemies.sprites() + self.party.sprites()
+    # @property
+    # def item_inventory(self, owner):
+    #     try:
+    #         if owner in self.all:
+    #             return self.all.sprites(owner.items)
+    #     except KeyError:
+    #         return 'owner not found'
 
-    def get_inventory(self, sprite, cat):
-        values = ['skill', 'magic', 'item']
-        for sprite in self.party.sprites():
-            if cat == values[0]:
-                return sprite.skills
-            elif cat == values[1]:
-                return sprite.magic
-            elif cat == values[2]:
-                return sprite.items.keys()
+    # @property
+    # def skill_inventory(self, owner):
+    #     try:
+    #         if owner in self.all:
+    #             return self.all.sprites(owner.skills)
+    #     except KeyError:
+    #         return 'owner not found'
 
-    @property
-    def item_inventory(self, owner):
-        try:
-            if owner in self.all:
-                return self.all.sprites(owner.items)
-        except KeyError:
-            return 'owner not found'
+    # @property
+    # def magic_inventory(self, owner):
+    #     try:
+    #         if owner in self.all:
+    #             return self.all.sprites(owner.magic)
+    #     except KeyError:
+    #         return 'owner not found'
 
-    @property
-    def skill_inventory(self, owner):
-        try:
-            if owner in self.all:
-                return self.all.sprites(owner.skills)
-        except KeyError:
-            return 'owner not found'
+    # @property
+    # def enemies(self):
+    #     return self.enemies.sprites()
 
-    @property
-    def magic_inventory(self, owner):
-        try:
-            if owner in self.all:
-                return self.all.sprites(owner.magic)
-        except KeyError:
-            return 'owner not found'
-
-    @property
-    def enemies(self):
-        return self.enemies.sprites()
-
-    @property
-    def partymembers(self):
-        return self.party.sprites()
+    # @property
+    # def partymembers(self):
+    #     return self.party.sprites()
 
     @property
     def participants(self):
-        return self.all.sprites()
-
-    def get_enemies(self):
-        return self.enemies.sprites()
-
-    def get_party(self):
-        return self.party.sprites()
+        return self.enemies.sprites() + self.party.sprites()

@@ -29,7 +29,7 @@ class Character(pg.sprite.Sprite):
         self._res = None
 
         self.hp_bar = None
-        self._hp_bar_center = False
+        self.hp_bar_center = False
 
         self._anim_lst = []
         self._frame_idx = 0
