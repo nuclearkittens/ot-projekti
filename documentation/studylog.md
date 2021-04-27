@@ -15,8 +15,10 @@
 | 22/04/21 | 7 | another try on the battle demo |
 | 23/04/21 | 12 | started building the demo from scratch - twice |
 | 24/04/21 | 11 | refactoring, maths: battle mechanics, json files |
-| 25/04/21 | 6 | battle menus, hp*/mp bars |
+| 25/04/21 | 6 | battle menus, hp/mp bars |
+| 26/04/21 | 4 | rethinking containers for skills/items, trying to figure out nested menus |
+| 27/04/21 | 12 | new approach to handling menus (mouse instead of keyboard) |
 
-total hours (25/04/21): 83
+total hours (25/04/21): 99
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
