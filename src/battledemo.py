@@ -1,29 +1,25 @@
 import pygame as pg
 
 from config import SCREEN_W, SCREEN_H
-from clock import Clock
-from renderer import Renderer
 from battlespritehandler import BattleSpriteHandler
 from party import Party
 from containers import ItemContainer, SkillContainer
-from buttons import BattleMenuButton, ActionButton, ItemButton
-from keys import Keys
-from eventhandler import EventHandler
+from ui.buttons import BattleMenuButton, ActionButton, ItemButton
 from battleactionhandler import BattleActionHandler
 
 class Demo:
-    def __init__(self):
-        pg.init()
+    def __init__(self, clock, renderer, keys, eventhandler):
+        # pg.init()
 
         self.running = True
 
-        self._screen = pg.display.set_mode((SCREEN_W, SCREEN_H))
-        pg.display.set_caption('battle demo v2')
+        # self._screen = pg.display.set_mode((SCREEN_W, SCREEN_H))
+        # pg.display.set_caption('battle demo v2')
 
-        self._clock = Clock()
-        self._renderer = Renderer(self._screen)
-        self._keys = Keys()
-        self._events = EventHandler(self._keys)
+        self._clock = clock
+        self._renderer = renderer
+        self._keys = keys
+        self._events = eventhandler
 
         self._item_cntr = ItemContainer()
         self._skill_cntr = SkillContainer('skill')
@@ -58,7 +54,7 @@ class Demo:
         self.item_buttons = pg.sprite.Group()
         self.all_buttons = pg.sprite.Group()
 
-        self.main_active = False
+        self.main_active = True
         self.sub_active = False
         self.skl_active = False
         self.mag_active = False
@@ -281,8 +277,8 @@ class Demo:
         pg.quit()
 
 
-if __name__ == '__main__':
-    demo = Demo()
-    demo.main_active = True
-    # demo.sub_active = True
-    demo.game_loop()
+# if __name__ == '__main__':
+#     demo = Demo()
+#     demo.main_active = True
+#     # demo.sub_active = True
+#     demo.game_loop()

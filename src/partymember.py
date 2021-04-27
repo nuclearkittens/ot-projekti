@@ -1,8 +1,8 @@
 import random
 
+from ui.buttons import Button
+from ui.bar import MPBar
 from character import Character
-from buttons import Button
-from bar import MPBar
 from util import load_file
 from config import PARTY_DB, FONT_SIZE, DARK_PURPLE
 

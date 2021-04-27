@@ -1,6 +1,6 @@
 import pygame as pg
 
-from bar import HPBar
+from ui.bar import HPBar
 from util import load_img, fetch_blk_spell, fetch_skill
 
 class Character(pg.sprite.Sprite):
