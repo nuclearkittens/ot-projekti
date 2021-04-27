@@ -12,6 +12,9 @@
 | 13/04/21 | 3 | refactoring the spaghetti | 
 | 13/04/21 | 5 | writing tests, updating documentation, initialising invoke etc |
 | 20/04/21 | 8 | trying to write the actual battle demo but failed miserably |
+| 22/04/21 | 7 | another try on the battle demo |
+| 23/04/21 | 12 | started building the demo from scratch - twice |
+| 24/04/21 | 11 | refactoring, maths: battle mechanics, json files |
 
 total hours (20/04/21): 47
 
