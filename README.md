@@ -25,4 +25,5 @@ This game is developed as a part of the University of Helsinki's *Ohjelmistotekn
 + run tests: `poetry run invoke test`
 + generate a test coverage report: `poetry run invoke coverage-report`
   + report can be found in *htmlcov* directory
++ lint: `poetry run invoke lint`
 
