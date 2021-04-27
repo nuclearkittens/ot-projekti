@@ -15,7 +15,8 @@
 | 22/04/21 | 7 | another try on the battle demo |
 | 23/04/21 | 12 | started building the demo from scratch - twice |
 | 24/04/21 | 11 | refactoring, maths: battle mechanics, json files |
+| 25/04/21 | 6 | battle menus, hp*/mp bars |
 
-total hours (20/04/21): 47
+total hours (25/04/21): 83
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
