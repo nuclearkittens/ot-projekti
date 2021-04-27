@@ -13,7 +13,7 @@ an exciting storyline in the future.
 
 ### Title screen
 
-Start/load game, see controls, check the credits.
+Start/load game, see controls, check the credits **(done but accidentally removed from repo, gotta find it)**
 
 ### Exploration
 
@@ -22,17 +22,17 @@ The player can move around the map(s) freely, finding items and encountering ene
 + Tiled maps
 + Random encounters
 + Interacting with surroundings
-+ Keyboard and mouse input
++ Keyboard and mouse input **(working on it)**
 
 ### Battle
 
 Turn-based battle system
 
-+ Battle menu 
-	+ Physical and magical attacks 
++ Battle menu **(not working yet)**
+	+ Physical and magical attacks (started)
 	+ Possibility to flee the battle 
-	+ Use items
-+ Health point system 
+	+ Use items **(done)**
++ Health point system **(done)**
 + Defeating enemies gives experience points
 + Boss fights (only one will be provided in the demo version)
 
@@ -53,7 +53,7 @@ will be created, keeping track of the player's stats and experience.
 After the demo version is finished, more functionalities will be added, for example:
 
 + Nicer graphics
-+ NPCs, party members, monsters
++ NPCs, party members, monsters **(already created some)**
 + Actual storyline
 + World expansion: more explorable maps and dungeons
 + Treasures, equipment, items
