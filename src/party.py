@@ -3,9 +3,8 @@ import pygame as pg
 from partymember import PartyMember
 
 class Party:
-    def __init__(self, clock, renderer):
+    def __init__(self, clock):
         self._clock = clock
-        self._renderer = renderer
 
         # self.items = ItemContainer()
         self.items = {}
@@ -24,8 +23,8 @@ class Party:
     def _create_party(self):
         # TODO: create all party members here even when they haven't joined yet;
         # add to group when joined
-        self.ej = PartyMember(self._clock, self._renderer, 'ej', self.items)
-        self.witch = PartyMember(self._clock, self._renderer, 'witch', self.items)
+        self.ej = PartyMember(self._clock, 'ej', self.items)
+        self.witch = PartyMember(self._clock, 'witch', self.items)
         
         self.active_party.append(self.ej)
         self.active_party.append(self.witch)

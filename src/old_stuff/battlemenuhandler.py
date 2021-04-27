@@ -21,7 +21,7 @@ class BattleMenuHandler:
     def _create_menus(self):
         menucreator = BattleMenuCreator(self._renderer, self._keys)
 
-        self.main_menu = menucreator.create_main_menu(self._party)
+        self.main_menu = menucreator.create_main_menu(self._party.current_party)
         self.all_menus.append(self.main_menu)
 
         self.item_menu = menucreator.create_item_menu(self._party)

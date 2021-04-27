@@ -1,8 +1,11 @@
+import pygame as pg
+
 class BattleActionHandler:
     def __init__(self, participants, items, skills, magics):
         self._participants = participants
-        self._current = None
-        self._target = None
+        self._dummy = pg.sprite.Sprite()
+        self._current = self._dummy
+        self._target = self._dummy
 
         self._turns = {}
         self._generate_turns()
@@ -16,33 +19,22 @@ class BattleActionHandler:
         if action in self._items:
             self._current.remove_item(action)
             self._items[action].use(self._target)
-            return True
         elif action in self._skills:
             self._skills[action].use(self._current, self._target)
-            return True
         elif action in self._magics:
             self._magics[action].use(self._current, self._target)
-            return True
-        return False
-
-    def check_action(self, action):
-        if action in self._menus or action == 'no action':
-            return True
-        return False
 
     def _generate_turns(self):
         for char in self._participants:
             self._turns[char] = char.set_tick_speed()
 
     def tick(self):
-        print(self._turns)
+        # print(self._turns)
         for char in self._turns:
             if self._turns[char] > 0:
                 self._turns[char] -= 1
 
     def check_turn(self):
-        self._reset_current()
-        self._reset_target()
         for char in self._turns:
             if self._turns[char] == 0:
                 self._current = char
@@ -52,13 +44,10 @@ class BattleActionHandler:
         self._turns[self._current] = self._current.set_tick_speed()
 
     def _reset_current(self):
-        self._current = None
-
-    # def set_target(self, target):
-    #     self.target = target
+        self._current = self._dummy
 
     def _reset_target(self):
-        self._target = None
+        self._target = self._dummy
 
     @property
     def target(self):

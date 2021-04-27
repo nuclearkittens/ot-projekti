@@ -10,7 +10,7 @@ class EventHandler:
                 pg.quit()
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_RETURN:
-                    self._keys.SELECT = True
+                    self._keys.START = True
                 if event.key == pg.K_BACKSPACE:
                     self._keys.BACK = True
                 if event.key == pg.K_DOWN:
@@ -21,6 +21,9 @@ class EventHandler:
                     self._keys.LEFT = True
                 if event.key == pg.K_RIGHT:
                     self._keys.RIGHT = True
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                self._keys.SELECT = True
+                self._keys.mouse_position = pg.mouse.get_pos()
                     
     def _event_queue(self):
         return pg.event.get()

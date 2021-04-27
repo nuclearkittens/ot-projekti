@@ -1,12 +1,11 @@
 import pygame as pg
 
 from bar import HPBar
-from util import fetch_blk_spell, fetch_skill
+from util import load_img, fetch_blk_spell, fetch_skill
 
 class Character(pg.sprite.Sprite):
-    def __init__(self, clock, renderer, name):
+    def __init__(self, clock, name):
         self._clock = clock
-        self._renderer = renderer
         self._update_time = self._clock.get_ticks()
 
         pg.sprite.Sprite.__init__(self)
@@ -45,7 +44,7 @@ class Character(pg.sprite.Sprite):
         self._magic = []
 
     def new_hp_bar(self, w, h, x, y):
-        self.hp_bar = HPBar(w, h, self._max_hp, self._curr_hp, self.hp_bar_center)
+        self.hp_bar = HPBar(self, w, h, self._max_hp, self.hp_bar_center)
         self.hp_bar.set_position(x, y)
 
     def set_position(self, x, y):
@@ -57,14 +56,17 @@ class Character(pg.sprite.Sprite):
     def reset_tick_speed(self):
         self._tick_spd = None
 
-    def check_hp(self):
+    def use_skill(self, skill, target):
+        pass
+
+    def _check_hp(self):
         if self._curr_hp > self._max_hp:
             self._curr_hp = self._max_hp
         elif self._curr_hp <= 0:
             self._curr_hp = 0
             self.alive = False
 
-    def check_mp(self):
+    def _check_mp(self):
         if self._curr_mp > self._max_mp:
             self._curr_mp = self._max_mp
 
@@ -95,7 +97,7 @@ class Character(pg.sprite.Sprite):
             temp = []
             for frame in frames:
                 path = f'assets/gfx/sprites/{self.name}/{frame}'
-                temp.append(self._renderer.load_img(path))
+                temp.append(load_img(path))
             self._anim_lst.append(temp)
 
     def _load_data(self):
@@ -129,6 +131,24 @@ class Character(pg.sprite.Sprite):
             self._magic.add(new_skill)
 
     @property
+    def hp(self):
+        return self._curr_hp
+
+    @hp.setter
+    def hp(self, value):
+        self._curr_hp = value
+        self._check_hp()
+
+    @property
+    def mp(self):
+        return self._curr_mp
+
+    @mp.setter
+    def mp(self, value):
+        self._curr_mp = value
+        self._check_mp()
+
+    @property
     def skills(self):
         return self._skills
 
@@ -139,3 +159,24 @@ class Character(pg.sprite.Sprite):
     @property
     def magics(self):
         return self._magic
+
+    @property
+    def resistance(self):
+        return self._res
+
+    @property
+    def strength(self):
+        return self._str
+
+    @property
+    def defense(self):
+        return self._defs
+
+    @property
+    def magic_strength(self):
+        return self._mag
+
+    @property
+    def magic_defense(self):
+        return self._mdef
+        

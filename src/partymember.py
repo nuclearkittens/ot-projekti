@@ -7,8 +7,8 @@ from util import load_file
 from config import PARTY_DB, FONT_SIZE, DARK_PURPLE
 
 class PartyMember(Character):
-    def __init__(self, clock, renderer, name, items):
-        Character.__init__(self, clock, renderer, name)
+    def __init__(self, clock, name, items):
+        Character.__init__(self, clock, name)
 
         self.mp_bar = None
         self.name_button = None
@@ -29,7 +29,7 @@ class PartyMember(Character):
         self.active = False
 
     def new_mp_bar(self, w, h, x, y):
-        self.mp_bar = MPBar(w, h, self._max_mp, self._curr_mp)
+        self.mp_bar = MPBar(self, w, h, self._max_mp)
         self.mp_bar.set_position(x, y)
 
     def new_name_button(self, x, y):
@@ -38,7 +38,7 @@ class PartyMember(Character):
 
     def set_tick_speed(self):
         rand = random.randint(-2, 2)
-        self._tick_spd = 100 // (self._agi + rand)
+        self._tick_spd = 100 // (self._agi + rand) * 3
         return self._tick_spd
 
     def _load_data(self):

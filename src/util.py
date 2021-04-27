@@ -1,14 +1,19 @@
+import os.path
 import json
+import pygame as pg
 
 from techniques import OffensiveSkill
 from magic import BlackMagic
 from item import Item
-from config import ITEMS_DB, ATKS_DB, BLK_MAG_DB
+from config import DIRNAME, ITEMS_DB, ATKS_DB, BLK_MAG_DB
 
 def load_file(filename):
-    with open(filename) as f:
-        data = json.load(f)
+    with open(filename) as json_file:
+        data = json.load(json_file)
     return data
+
+def load_img(relative_path):
+    return pg.image.load(os.path.join(DIRNAME, relative_path)).convert_alpha()
 
 def fetch_item(item):
     data = load_file(ITEMS_DB)

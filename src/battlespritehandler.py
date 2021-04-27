@@ -20,8 +20,8 @@ class BattleSpriteHandler:
         # TODO: random encounter creator;
         # fetch monsters for a certain area, initialise them here;
         # 1-3 monsters per battle
-        monster1 = Monster(self._clock, self._renderer, 'ikorni')
-        monster2 = Monster(self._clock, self._renderer, 'ikorni')
+        monster1 = Monster(self._clock, 'ikorni')
+        monster2 = Monster(self._clock, 'ikorni')
         self.enemies.add(monster1, monster2)
         self.all.add(monster1, monster2)
         for char in self._party.group:
@@ -80,48 +80,18 @@ class BattleSpriteHandler:
             offset += offset
 
     def draw_sprites(self):
-        for sprite in self.all.sprites():
+        for sprite in self.all:
             sprite.update()
-        # self.all.draw(self._renderer._display)
         self._renderer.draw_sprites(self.all)
-        for bar in self.bars.sprites():
-            bar.update()
-            self._draw_bar(bar)
+        self.bars.update()
+        # for bar in self.bars:
+        #     self._draw_bar(bar)
+        for base in self.bars:
+            self._renderer.blit(base.base, base.base_rect)
+        self._renderer.draw_sprites(self.bars)
 
-    def _draw_bar(self, bar):
-        self._renderer.draw_bar(bar)
-
-    # @property
-    # def item_inventory(self, owner):
-    #     try:
-    #         if owner in self.all:
-    #             return self.all.sprites(owner.items)
-    #     except KeyError:
-    #         return 'owner not found'
-
-    # @property
-    # def skill_inventory(self, owner):
-    #     try:
-    #         if owner in self.all:
-    #             return self.all.sprites(owner.skills)
-    #     except KeyError:
-    #         return 'owner not found'
-
-    # @property
-    # def magic_inventory(self, owner):
-    #     try:
-    #         if owner in self.all:
-    #             return self.all.sprites(owner.magic)
-    #     except KeyError:
-    #         return 'owner not found'
-
-    # @property
-    # def enemies(self):
-    #     return self.enemies.sprites()
-
-    # @property
-    # def partymembers(self):
-    #     return self.party.sprites()
+    # def _draw_bar(self, bar):
+    #     self._renderer.draw_bar(bar)
 
     @property
     def participants(self):

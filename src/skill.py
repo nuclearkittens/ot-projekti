@@ -34,32 +34,30 @@ class Skill:
         pass
 
     def _use_offensive(self, user, target):
-        if self._check_mp(user):
-            mult = target.res[self._element] * self._multiplier
-            for i in range(self._hits):
-                if self.magic:
-                    atk, defs = user.mag, target.mdef
-                else:
-                    atk, defs = user.str, target.defs
-                if atk < defs:
-                    dmg = 1
-                else:
-                    dmg = self._calc_damage(atk, defs, mult)
-                target.curr_hp -= dmg
-            return True
-        return False
+        mult = target.resistance[self._element] * self._multiplier
+        for i in range(self._hits):
+            if self.magic:
+                atk, defs = user.magic_strength, target.magic_defense
+            else:
+                atk, defs = user.strength, target.defense
+            if atk < defs:
+                dmg = 1
+            else:
+                dmg = self._calc_damage(atk, defs, mult)
+            user.mp = user.mp - self._mp_cost
+            target.hp = target.hp - dmg
 
     def _use_defensive(self, user, target):
         pass
 
-    def _check_mp(self, user):
-        return self._mp_cost <= user.curr_mp
+    # def _check_mp(self, user):
+    #     return self._mp_cost <= user.curr_mp
 
     def _calc_damage(self, atk, defs, mult):
         rand = random.uniform(0.8, 1.2)
         if self._is_critical():
             mult *= 1.5
-        return int(rand * (mult * (atk-defs)))
+        return int(rand * (mult * (atk-(defs/2))))
 
     def _is_critical(self):
         return random.random() < self._crit_rate

@@ -60,24 +60,28 @@ class BattleDemo:
             self.action_handler.tick()
             self.action_handler.check_turn()
             current = self.action_handler.current
-            print(current)
-            if current in self.party:
-                action, target = self._player_turn(current)
-            elif current in self.enemies:
-                action, target = current.make_decision(self.party)
-            if target:
-                self.action_handler.target = target
-            if self.action_handler.execute_action(action):
-                print('action executed!')
+            if current:
+                print(current)
+                if current in self.party:
+                    action, target = self._player_turn(current)
+                elif current in self.enemies:
+                    action, target = current.make_decision(self.party)
+                print(action, target)
+                if target:
+                    self.action_handler.target = target
+                if self.action_handler.execute_action(action):
+                    print('action executed!')
             self.sprite_handler.draw_sprites()
             self.clock.tick()
             pg.display.update()
 
     def _player_turn(self, current):
+        print('player turn!')
         menu = True
         while True:
             self.event_handler.check_input()
             action = self.menu_handler.get_action(current)
+            print(action)
             menu = self.action_handler.check_action(action)
             if not menu:
                 target = random.choice([enem for enem in self.enemies if enem.alive])
@@ -85,18 +89,16 @@ class BattleDemo:
             self.sprite_handler.draw_sprites()
             self.clock.tick()
 
-class BattleState:
-    def __init__(self):
-        self.attack = False
-        self.skill = False
-        self.magic = False
-        self.items = False
+    def _draw_panel(self, submenu):
+        panel_w = SCREEN_W // 4
+        panel_h = SCREEN_H // 4
+        colour = DARK_PURPLE
+        margin = int(0.1 * panel_w)
+        gutter = int(0.01 * SCREEN_W)
 
-    def reset(self):
-        self.attack = False
-        self.skill = False
-        self.magic = False
-        self.items = False
+        def draw_main_menu():
+            surf = pg.Surface((panel_w, panel_h))
+
 
 if __name__ == '__main__':
     demo = BattleDemo()

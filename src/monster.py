@@ -5,8 +5,8 @@ from util import load_file
 from config import ENEM_DB
 
 class Monster(Character):
-    def __init__(self, clock, renderer, name):
-        Character.__init__(self, clock, renderer, name)
+    def __init__(self, clock, name):
+        Character.__init__(self, clock, name)
         self.hp_bar_center = True
 
         self._category = None
@@ -16,7 +16,7 @@ class Monster(Character):
 
     def set_tick_speed(self):
         rand = random.randint(-3, 3)
-        self._tick_spd = 100 // (self._agi + rand)
+        self._tick_spd = 100 // (self._agi + rand) * 3
         return self._tick_spd
 
     def make_decision(self, target_list):
@@ -27,8 +27,6 @@ class Monster(Character):
             action = random.choice(self._skills) # hox! remember to add magics to random.choices
             target = random.choice(target_list)
         return action, target
-
-    
 
     def _load_data(self):
         data = load_file(ENEM_DB)
