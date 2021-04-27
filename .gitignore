@@ -12,6 +12,7 @@
 /src/.venv/
 .pytest_cache/
 /src/tests/__pycache__/
+/src/ui/__pycache__/
 
 .coverage
 htmlcov/
