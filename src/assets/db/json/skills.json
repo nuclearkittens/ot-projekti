@@ -1,0 +1,80 @@
+{
+    "skills": {
+        "physical": {
+            "attack": {
+                "name": "Attack",
+                "descr": "Deal physical damage to the target",
+                "element": "physical",
+                "effects": [],
+                "hits": 1,
+                "mp_cost": 0,
+                "multiplier": 1.0,
+                "crit_rate": 0.1
+            },
+            "kick": {
+                "name": "Kick",
+                "descr": "Deal physical damage to the target",
+                "element": "physical",
+                "effects": [],
+                "hits": 1,
+                "mp_cost": 0,
+                "multiplier": 1.0,
+                "crit_rate": 0.1
+            },
+            "dbl_claw": {
+                "name": "Double Claw",
+                "descr": "Deals two hits to a single target",
+                "element": "physical",
+                "effects": [],
+                "hits": 2,
+                "mp_cost": 2,
+                "multiplier": 0.7,
+                "crit_rate": 0.05
+            }
+        }
+    },
+    "magic": {
+        "blk": {
+            "fire": {
+                "name": "Fire",
+                "descr": "Weak fire-elemental damage to one enemy",
+                "element": "fire",
+                "effects": [],
+                "hits": 1,
+                "mp_cost": 4,
+                "multiplier": 1.0,
+                "crit_rate": 0.1
+            },
+            "ice": {
+                "name": "Ice",
+                "descr": "Weak ice-elemental damage to one enemy",
+                "element": "ice",
+                "effects": [],
+                "hits": 1,
+                "mp_cost": 4,
+                "multiplier": 1.0,
+                "crit_rate": 0.1
+            },
+            "thunder": {
+                "name": "Thunder",
+                "descr": "Weak lightning-elemental damage to one enemy",
+                "element": "lightning",
+                "effects": [],
+                "hits": 1,
+                "mp_cost": 4,
+                "multiplier": 1.0,
+                "crit_rate": 0.1
+            },
+            "wind": {
+                "name": "Wind",
+                "descr": "Weak wind-elemental damage to one enemy",
+                "element": "wind",
+                "effects": [],
+                "hits": 1,
+                "mp_cost": 4,
+                "multiplier": 1.0,
+                "crit_rate": 0.1
+            }
+        }
+    }
+}

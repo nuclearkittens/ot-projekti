@@ -1,74 +1,89 @@
 import pygame as pg
+
 from config import HP_GREEN, HP_YELLOW, HP_RED, MP_BLUE, DARK_PURPLE
 
-class Bar(pg.sprite.Sprite):
-    def __init__(self, w, h, center):
-        pg.sprite.Sprite.__init__(self)
-        self.w = w
-        self.h = h
-        self.colour = None
-        self.center = center
+class Bar:
+    '''General class for rectangular bars.
 
-        self.base = pg.Surface((self.w, self.h))
-        self.base.fill(DARK_PURPLE)
-        self.base_rect = self.base.get_rect()
-        self.image = pg.Surface((self.w, self.h))
-        self.rect = self.image.get_rect()
+    attr:
+        base: a Pygame surface, works as the base of the bar
+        rect: a Pygame object for storing coordinates
+    '''
+    def __init__(self, w, h):
+        '''Class constructor.
 
-    def set_position(self, x, y):
-        if self.center:
-            self.base_rect.center = (x, y)
-        else:
-            self.base_rect.topleft = (x, y)
-        self.rect.topleft = self.rect.topleft
+        args:
+            w: int; width of the bar
+            h: int; height of the bar
+        '''
+        self._w = w
+        self._h = h
+
+        self._base = pg.Surface((self._w, self._h))
+        self._top = pg.Surface((self._w, self._h))
+        self.rect = self._base.get_rect()
 
     def update(self):
+        '''Hook for subclasses, not functional on itself.'''
         pass
 
-    def draw(self):
-        pass
+    def draw(self, renderer):
+        '''Blits the bar on the display.
+
+        args:
+            renderer: game renderer object
+        '''
+        renderer.blit(self._base, self.rect)
+        renderer.blit(self._top, self.rect)
 
 class HPBar(Bar):
-    def __init__(self, owner, w, h, max_hp, center):
-        Bar.__init__(self, w, h, center)
-        self._owner = owner
-        self.colour = HP_GREEN
-        self._max_hp = max_hp
-        self._curr_hp = max_hp
+    '''Class for drawing health bars in a battle screen.'''
+    def __init__(self, w, h, character):
+        '''Class constructor for HP bars.
+
+        args:
+            character: character object; specifies the character associated with the bar
+            colour: colour tuple; colour of the bar
+        '''
+        Bar.__init__(self, w, h)
+        self.character = character
+        self._colour = HP_GREEN
 
     def update(self):
-        self._curr_hp = self._owner.hp
-        ratio = self._curr_hp / self._max_hp
+        '''Updates the bar based on current HP and draws a new
+        rectangle on the base surface.'''
+        self._base.fill(DARK_PURPLE)
+        ratio = self.character.curr_hp / self.character.max_hp
         if ratio > 0.5:
-            self.colour = HP_GREEN
+            self._colour = HP_GREEN
         elif ratio < 0.2:
-            self.colour = HP_RED
+            self._colour = HP_RED
         else:
-            self.colour = HP_YELLOW
-        new_w = int(ratio*self.w)
-        self.image = pg.Surface((new_w, self.h))
-        self.image.fill(self.colour)
-        # top_rect = top_bar.get_rect()
-        # top_rect.topleft = self.rect.topleft
-        # self.image.blit(top_bar, self.rect)
-        
+            self._colour = HP_YELLOW
+        new_w = int(ratio * self._w)
+        if new_w < 0:
+            new_w = 0
+        self._top = pg.Surface((new_w, self._h))
+        self._top.fill(self._colour)
 
 class MPBar(Bar):
-    def __init__(self, owner, w, h, max_mp, center=False):
-        Bar.__init__(self, w, h, center)
-        self._owner = owner
-        self.colour = MP_BLUE
-        self._max_mp = max_mp
-        self._curr_mp = max_mp
+    '''Class for drawing party members' MP bars in battle.'''
+    def __init__(self, w, h, character):
+        '''Class constructor for MP bars.
+
+        args:
+            character: character object; specifies the character associated with the bar
+            colour: colour tuple; colour of the bar
+        '''
+        Bar.__init__(self, w, h)
+        self.character = character
+        self._colour = MP_BLUE
 
     def update(self):
-        # self.image.fill(DARK_PURPLE)
-        self._curr_mp = self._owner.mp
-        ratio = self._curr_mp / self._max_mp
-        new_w = int(ratio*self.w)
-        # pg.transform.scale(self.top_bar, (new_w, self.h))
-        self.image = pg.Surface((new_w, self.h))
-        self.image.fill(MP_BLUE)
-        # top_rect = top_bar.get_rect()
-        # top_rect.topleft = self.rect.topleft
-        # self.image.blit(top_bar, self.rect)
+        '''Updates the bar based on current MP and draws a new
+        rectangle on the base surface.'''
+        self._base.fill(DARK_PURPLE)
+        ratio = self.character.curr_mp / self.character.max_mp
+        new_w = int(ratio * self._w)
+        self._top = pg.Surface((new_w, self._h))
+        self._top.fill(self._colour)

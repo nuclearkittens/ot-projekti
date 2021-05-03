@@ -13,6 +13,8 @@
 .pytest_cache/
 /src/tests/__pycache__/
 /src/ui/__pycache__/
+/src/entities/__pycache__/
+/src/database/__pycache__/
 
 .coverage
 htmlcov/

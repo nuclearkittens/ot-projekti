@@ -21,10 +21,12 @@
                 "dark": 0.5
             }
         },
-        "tech": {
-            "skills": ["kick", "dbl_claw"],
-            "blk_mag": [],
-            "wht_mag": []
+        "skills": {
+            "physical": ["kick", "dbl_claw"],
+            "magic": {
+                "blk": [],
+                "wht": []
+            }
         },
         "items": {
             "potion": 1

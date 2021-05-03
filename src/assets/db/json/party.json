@@ -5,8 +5,8 @@
         "stats": {
             "hp": 60,
             "mp": 10,
-            "str": 14,
-            "def": 10,
+            "atk": 14,
+            "defs": 10,
             "mag": 5,
             "mdef": 5,
             "agi": 7,
@@ -20,10 +20,12 @@
                 "dark": 1.0
             }
         },
-        "tech": {
-            "skills": ["attack"],
-            "blk_mag": [],
-            "wht_mag": []
+        "skills": {
+            "physical": ["attack"],
+            "magic": {
+                "blk": [],
+                "wht": []
+            }
         }
     },
     "witch": {
@@ -32,8 +34,8 @@
         "stats": {
             "hp": 36,
             "mp": 20,
-            "str": 7,
-            "def": 8,
+            "atk": 7,
+            "defs": 8,
             "mag": 15,
             "mdef": 8,
             "agi": 10,
@@ -47,10 +49,12 @@
                 "dark": 1.0
             }
         },
-        "tech": {
-            "skills": ["attack"],
-            "blk_mag": ["fire", "ice", "thunder", "wind"],
-            "wht_mag": []
+        "skills": {
+            "physical": ["attack"],
+            "magic": {
+                "blk": ["fire", "ice", "thunder", "wind"],
+                "wht": []
+            }
         }
     }
 }

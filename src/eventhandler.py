@@ -5,12 +5,12 @@ class EventHandler:
         self._keys = keys
 
     def check_input(self):
-        for event in self._event_queue():
+        for event in pg.event.get():
             if event.type == pg.QUIT:
-                pg.quit()
+                self._keys.QUIT = True
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_RETURN:
-                    self._keys.START = True
+                    self._keys.SELECT = True
                 if event.key == pg.K_BACKSPACE:
                     self._keys.BACK = True
                 if event.key == pg.K_DOWN:
@@ -21,15 +21,7 @@ class EventHandler:
                     self._keys.LEFT = True
                 if event.key == pg.K_RIGHT:
                     self._keys.RIGHT = True
-            elif event.type == pg.MOUSEBUTTONDOWN:
-                self._keys.SELECT = True
-                self._keys.mouse_position = pg.mouse.get_pos()
-                    
-    def _event_queue(self):
-        return pg.event.get()
 
-    def quit(self):
-        for event in self._event_queue():
-            if event.type == pg.QUIT:
-                return True
-        return False
+    @property
+    def keys(self):
+        return self._keys
