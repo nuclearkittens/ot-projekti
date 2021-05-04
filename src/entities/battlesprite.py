@@ -1,7 +1,7 @@
 import pygame as pg
 
 from util import load_img
-from ui.bar import HPBar, MPBar
+from entities.bar import HPBar, MPBar
 
 class BattleSprite(pg.sprite.Sprite):
     '''Class for handling the character sprite in battle.
