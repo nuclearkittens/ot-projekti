@@ -67,10 +67,12 @@ class TestSkill(unittest.TestCase):
     def test_is_critical(self):
         test_skill = Skill('test_skill', self.conn)
         self.assertTrue(test_skill._is_critical())
+        self.conn.close()
 
     def test_is_not_critical(self):
         test_skill = Skill('test_other', self.conn)
         self.assertFalse(test_skill._is_critical())
+        self.conn.close()
 
     def test_damage_calculation_normal(self):
         test_skill = Skill('test_other', self.conn)
@@ -80,6 +82,7 @@ class TestSkill(unittest.TestCase):
         expected_upper = int(1.2 * mult * (atk - (defs / 2)))
         actual = test_skill._calc_dmg(atk, defs, mult)
         self.assertTrue(expected_lower <= actual <= expected_upper)
+        self.conn.close()
 
     def test_damage_calculation_critical(self):
         test_skill = Skill('test_skill', self.conn)
@@ -89,6 +92,7 @@ class TestSkill(unittest.TestCase):
         expected_upper = int(1.2 * ((1.5 * mult) * (atk - (defs / 2))))
         actual = test_skill._calc_dmg(atk, defs, mult)
         self.assertTrue(expected_lower <= actual <= expected_upper)
+        self.conn.close()
 
     def test_use_skill_physical(self):
         test_skill = Skill('test_skill', self.conn)
@@ -97,3 +101,47 @@ class TestSkill(unittest.TestCase):
         max_hp = target.curr_hp
         test_skill.use(user, target)
         self.assertLess(target.curr_hp, max_hp)
+        self.conn.close()
+
+    def test_use_skill_magical(self):
+        test_skill = Skill('test_magic', self.conn)
+        user = StubCharacter()
+        target = StubCharacter()
+        max_hp = target.curr_hp
+        test_skill.use(user, target)
+        self.assertLess(target.curr_hp, max_hp)
+        self.conn.close()
+
+    def test_use_skill_other(self):
+        test_skill = Skill('test_other', self.conn)
+        user = StubCharacter()
+        target = StubCharacter()
+        max_hp = target.curr_hp
+        test_skill.use(user, target)
+        self.assertEqual(target.curr_hp, max_hp)
+        self.conn.close()
+
+    def test_use_skill_atk_lesser_than_defs(self):
+        test_skill = Skill('test_magic', self.conn)
+        user = StubCharacter()
+        target = StubCharacter()
+        user.mag = 4
+        expected = target.curr_hp - 1
+        test_skill.use(user, target)
+        self.assertEqual(target.curr_hp, expected)
+        self.conn.close()
+
+    def test_property_mp_cost(self):
+        test_skill = Skill('test_other', self.conn)
+        self.assertEqual(test_skill.mp_cost, 0)
+        self.conn.close()
+
+    def test_property_name(self):
+        test_skill = Skill('test_other', self.conn)
+        self.assertEqual(test_skill.name, 'Unspecified Skill')
+        self.conn.close()
+
+    def test_property_category(self):
+        test_skill = Skill('test_other', self.conn)
+        self.assertEqual(test_skill.category, 'other')
+        self.conn.close()
