@@ -1,0 +1,12 @@
+CREATE TABLE Items (id TEXT PRIMARY KEY, name TEXT, descr TEXT);
+CREATE TABLE Skills (id TEXT PRIMARY KEY, category TEXT, subcategory TEXT, name TEXT, descr TEXT, element TEXT, hits INTEGER, mp_cost INTEGER, multiplier REAL, crit_rate REAL);
+CREATE TABLE Effects (id TEXT PRIMARY KEY, target_attr TEXT, effect TEXT, amount NUMERIC);
+CREATE TABLE ItemEffects (item_id TEXT, effect_id TEXT);
+CREATE TABLE SkillEffects (skill_id TEXT, effect_id TEXT);
+CREATE TABLE Monsters (id TEXT PRIMARY KEY, name TEXT, category TEXT, lvl INTEGER, descr TEXT);
+CREATE TABLE Party (id TEXT PRIMARY KEY, name TEXT, lvl INTEGER);
+CREATE TABLE Stats (char_id TEXT PRIMARY KEY, hp INTEGER, mp INTEGER, atk INTEGER, defs INTEGER, mag INTEGER, mdef INTEGER, agi INTEGER);
+CREATE TABLE Resistance (char_id TEXT PRIMARY KEY, physical REAL, fire REAL, ice REAL, lightning REAL, wind REAL, light REAL, dark REAL);
+CREATE TABLE CharSkills (char_id TEXT, skill_id TEXT);
+CREATE TABLE Loot (monster_id TEXT PRIMARY KEY, money INTEGER, item_id TEXT, qty INTEGER);
+CREATE TABLE Inventory (char_id TEXT, item_id TEXT, qty INTEGER);

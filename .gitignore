@@ -10,11 +10,13 @@
 /src/__pycache__/
 /src/.vscode/
 /src/.venv/
-.pytest_cache/
-/src/tests/__pycache__/
-/src/ui/__pycache__/
-/src/entities/__pycache__/
 /src/database/__pycache__/
+/src/entities/__pycache__/
+/src/tests/__pycache__/
+/src/tests/database/__pycache__/
+/src/tests/entities/__pycache__/
+/src/ui/__pycache__/
 
+.pytest_cache/
 .coverage
 htmlcov/
