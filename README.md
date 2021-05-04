@@ -2,7 +2,9 @@
 
 In this game, you will share an adventure with the main hero in a contemporary environment. The world resembles our own, but in this reality magic and weird monsters exist (I mean, squirrels with human feet? Wouldn't want to encounter them in the city streets).
 
-The game is programmed using Python (v.3.8) and its Pygame library. As the game develops, it will have explorable maps and a turn-based battle system. Currently, the only functionality is a mock-up of the title screen. If you want to check out the art style, take a look at the first character sprites in the [assets](https://github.com/nuclearkittens/ot-projekti/tree/master/src/assets) folder!
+The game is programmed using Python (v.3.8) and its Pygame library. As the game develops, it will have explorable maps and a turn-based battle system. Currently, the only functionality is a never-ending demo battle. The first map is in production, and I have managed to find someone to write an actual storyline script for the game!
+
+In development for probably at least for the next yer or so.
 
 This game is developed as a part of the University of Helsinki's *Ohjelmistotekniikka* course.
 
@@ -11,7 +13,7 @@ This game is developed as a part of the University of Helsinki's *Ohjelmistotekn
 + [requirement specification](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/requirementspecification.md)
 + [architecture](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/architecture.md)
 + [study log](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/studylog.md)
-+ [newest coverage report](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/coverage-report-210413.png)
++ [newest coverage report](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/coverage_report_210504.png)
 + [credits](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/temp-credits.md)
 
 ### installation
