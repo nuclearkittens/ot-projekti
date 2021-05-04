@@ -19,20 +19,20 @@ Start/load game, see controls, check the credits **(done but accidentally remove
 
 The player can move around the map(s) freely, finding items and encountering enemies.
 
-+ Tiled maps
-+ Random encounters
-+ Interacting with surroundings
-+ Keyboard and mouse input **(working on it)**
++ Tiled maps **(map planning: wk 6)**
++ Random encounters **(started working on the functionality, not implemented as of wk 6)**
++ Interacting with surroundings **(battle done: wk 6)**
++ Keyboard (and mouse) input **(done: wk 6)**
 
 ### Battle
 
 Turn-based battle system
 
-+ Battle menu **(not working yet)**
-	+ Physical and magical attacks (started)
++ Battle menu **(mostly done: wk 6)**
+	+ Physical and magical attacks **(done: wk 6)**
 	+ Possibility to flee the battle 
-	+ Use items **(done)**
-+ Health point system **(done)**
+	+ Use items **(done: wk 5)**
++ Health point system **(done: wk 5 / fixed: wk 6)**
 + Defeating enemies gives experience points
 + Boss fights (only one will be provided in the demo version)
 
@@ -48,11 +48,18 @@ See your party's stats and view inventory
 For the time being, saving the game in demo mode is not possible. However, a save file 
 will be created, keeping track of the player's stats and experience.
 
+### Database
+
+Load info from a SQLite database
+
++ Item/skill info **(done: wk 6)**
++ Enemy party member stats **(done: wk 6)**
+
 ## Planned additions
 
 After the demo version is finished, more functionalities will be added, for example:
 
-+ Nicer graphics
++ Nicer graphics **(wk 6: placeholder hurt/attack/dead animation implemented)**
 + NPCs, party members, monsters **(already created some)**
 + Actual storyline
 + World expansion: more explorable maps and dungeons
