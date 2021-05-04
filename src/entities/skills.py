@@ -16,6 +16,8 @@ class Skill:
             atk, defs = user.atk, target.defs
         elif self._info.category == 'magic':
             atk, defs = user.mag, target.mdef
+        else:
+            atk, defs = 0, 0
         # print(atk, defs)
         for i in range(self._attr.hits):
             if atk < defs // 2:
@@ -42,7 +44,6 @@ class Skill:
         )
 
         return Info._make(tuple(cur.fetchone()))
-
 
     def _load_attr(self):
         Attributes = namedtuple('Attributes', [
