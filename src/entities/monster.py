@@ -45,7 +45,7 @@ class Monster(Character):
         rows = cur.fetchall()
         for row in rows:
             item_id, qty = row[0], row[1]
-            new_item = Item(item_id)
+            new_item = Item(item_id, self._conn)
             self._inventory[item_id] = [new_item, qty]
 
     def _set_default_action(self):

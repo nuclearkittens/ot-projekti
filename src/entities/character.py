@@ -93,7 +93,7 @@ class Character:
         rows = cur.fetchall()
         for row in rows:
             skill_id = row[0]
-            new_skill = Skill(skill_id)
+            new_skill = Skill(skill_id, self._conn)
             self._skills[skill_id] = new_skill
 
     def check_hp(self):

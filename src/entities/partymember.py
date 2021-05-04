@@ -44,6 +44,6 @@ class PartyMember(Character):
             qty: int (default=1); quantity of items to add
         '''
         if item_id not in self._inventory:
-            self._inventory[item_id] = [Item(item_id), qty]
+            self._inventory[item_id] = [Item(item_id, self._conn), qty]
         else:
             self._inventory[item_id][1] += qty

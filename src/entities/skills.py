@@ -1,11 +1,10 @@
 from collections import namedtuple
 from random import random, uniform
 
-from database.db_connection import get_db_connection
-
 class Skill:
-    def __init__(self, skill_id):
+    def __init__(self, skill_id, conn):
         self._id = skill_id
+        self._conn = conn
 
         self._info = self._load_info()
         self._attr = self._load_attr()
@@ -36,8 +35,7 @@ class Skill:
 
     def _load_info(self):
         Info = namedtuple('Info', ['name', 'category', 'subcategory', 'description'])
-        conn = get_db_connection()
-        cur = conn.cursor()
+        cur = self._conn.cursor()
         cur.execute(
             '''SELECT name, category, subcategory, descr
             FROM Skills WHERE Skills.id=?''', (self._id,)
@@ -49,8 +47,7 @@ class Skill:
     def _load_attr(self):
         Attributes = namedtuple('Attributes', [
             'element', 'hits', 'mp_cost', 'multiplier', 'crit_rate'])
-        conn = get_db_connection()
-        cur = conn.cursor()
+        cur = self._conn.cursor()
         cur.execute(
             '''SELECT element, hits, mp_cost, multiplier, crit_rate
             FROM Skills WHERE Skills.id=?''', (self._id,)

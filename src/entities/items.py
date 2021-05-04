@@ -1,5 +1,3 @@
-from database.db_connection import get_db_connection
-
 class Item:
     '''Class for item objects.
 
@@ -10,13 +8,14 @@ class Item:
                 includes the type of effect, target attribute and the value
                 the target attribute is changed
     '''
-    def __init__(self, item_id):
+    def __init__(self, item_id, conn):
         '''Constructor for the item class.
 
         args:
             item_id: str; unique identifier for an item
         '''
         self._id = item_id
+        self._conn = conn
 
         data = self._load_info()
 
@@ -39,24 +38,22 @@ class Item:
             if isinstance(amount, int):
                 target.curr_hp += amount
             else:
-                target.curr_hp = amount * target.max_hp
+                target.curr_hp += int(amount * target.max_hp)
         if target_attr == 'mp':
             if isinstance(amount, int):
                 target.curr_mp += amount
             else:
-                target.curr_mp = amount * target.max_mp
+                target.curr_mp += int(amount * target.max_mp)
 
     def _load_info(self):
-        '''Connects to the game database and fetches the item information.'''
-        conn = get_db_connection()
-        cur = conn.cursor()
+        '''Fetches the item information from the game database.'''
+        cur = self._conn.cursor()
         cur.execute('SELECT name, descr FROM Items WHERE id=?', (self._id,))
         return cur.fetchone()
 
     def _load_effects(self):
-        '''Connects to the game database and fetches the item's effects.'''
-        conn = get_db_connection()
-        cur = conn.cursor()
+        '''Fetches the item's effects from the game database.'''
+        cur = self._conn.cursor()
         cur.execute(
             '''SELECT E.effect, E.target_attr, E.amount
             FROM Effects E, ItemEffects I

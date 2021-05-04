@@ -21,7 +21,7 @@ def create_demo_party(conn):
         rows = cur.fetchall()
         for row in rows:
             item_id, qty = row[0], row[1]
-            new_item = Item(item_id)
+            new_item = Item(item_id, conn)
             inv[item_id] = [new_item, qty]
         return inv
 
