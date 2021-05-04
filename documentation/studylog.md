@@ -18,7 +18,11 @@
 | 25/04/21 | 6 | battle menus, hp/mp bars |
 | 26/04/21 | 4 | rethinking containers for skills/items, trying to figure out nested menus |
 | 27/04/21 | 12 | new approach to handling menus (mouse instead of keyboard) |
+| 01/05/21 | 11 | moved from json to sqlite, docstringing, database functionality |
+| 02/05/21 | 10 | more docstringing, rewriting battle & demo classes, changed back to keyboard only input |
+| 03/05/21 | 8 | building the menus, buttons class, player action & battle loop |
+| 04/05/21 | 6 | docstring, unittests, updated documentation |
 
-total hours (25/04/21): 99
+total hours (04/05/21): 147
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
