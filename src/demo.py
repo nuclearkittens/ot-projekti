@@ -3,10 +3,10 @@ import pygame as pg
 # from config import FPS
 from prepare import initialise_demo_display, create_demo_party
 from keys import Keys
-from eventhandler import EventHandler
 from battle import Battle
 from database.initialise_db import initialise_db, drop_tables
 from database.db_connection import get_db_connection
+from ui.eventhandler import EventHandler
 from ui.renderer import Renderer
 
 class Demo:
