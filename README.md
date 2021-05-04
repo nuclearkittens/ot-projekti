@@ -4,7 +4,7 @@ In this game, you will share an adventure with the main hero in a contemporary e
 
 The game is programmed using Python (v.3.8) and its Pygame library. As the game develops, it will have explorable maps and a turn-based battle system. Currently, the only functionality is a never-ending demo battle. The first map is in production, and I have managed to find someone to write an actual storyline script for the game!
 
-In development for probably at least for the next yer or so.
+In development for probably at least for the next year or so.
 
 This game is developed as a part of the University of Helsinki's *Ohjelmistotekniikka* course.
 
