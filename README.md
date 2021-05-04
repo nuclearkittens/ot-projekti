@@ -10,10 +10,10 @@ This game is developed as a part of the University of Helsinki's *Ohjelmistotekn
 
 ### documentation
 
-+ [requirement specification](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/requirementspecification.md)
-+ [architecture](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/architecture.md)
++ [requirement specification](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/requirementspecification.md) **updated: wk6**
++ [architecture](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/architecture.md) **updated: wk6**
 + [user manual](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/user_manual.md) **new! wk6**
-+ [study log](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/studylog.md)
++ [study log](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/studylog.md) **updated: wk6**
 + [newest coverage report](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/coverage_report_210504.png) **updated: wk6**
 + [credits](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/temp-credits.md)
 
