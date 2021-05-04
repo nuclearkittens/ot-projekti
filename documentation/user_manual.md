@@ -16,3 +16,8 @@ An action can be chosen by pressing **enter (also known as return)**. The chosen
 If the character does not have any magic or skills, the submenu will be empty (pictured below). Returning to the parent menu can be done by pressing **backspace**.
 
 ![empty submenu](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/manual03.png)
+
+When a menu action is chosen, the target selector cursor appears. Move the cursor by pressing **left or right arrow key**, and select the target by pressing **enter**. Once an action has been chosen, it cannot be cancelled and you have to select a target.
+![target selection screen](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/manual04.png)
+
+Currently, the game does not check for a game over, so it will be running forever unless the user closes the Pygame window. Working on it, though.
