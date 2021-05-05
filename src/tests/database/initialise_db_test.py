@@ -1,14 +1,12 @@
 import unittest
 import sqlite3
-import os
 
+from config import DB_TEST_SCRIPT
 from database.initialise_db import (
     execute_script_from_file,
     drop_tables
 )
 
-dirname = os.path.dirname(__file__)
-test_script = filename = os.path.join(dirname, 'test_query_script.sql')
 tables = [
     'Items', 'Skills', 'Effects', 'ItemEffects',
     'SkillEffects', 'Monsters', 'Party',
@@ -28,7 +26,7 @@ class TestInitialiseDb(unittest.TestCase):
 
     def test_execute_script_from_file(self):
         cursor = self.conn.cursor()
-        execute_script_from_file(cursor, test_script)
+        execute_script_from_file(cursor, DB_TEST_SCRIPT)
         cursor.execute(get_tables)
         itms = [row[0] for row in cursor.fetchall()]
         self.assertEqual(list(itms), sorted(tables))
@@ -44,7 +42,7 @@ class TestInitialiseDb(unittest.TestCase):
 
     def test_drop_tables_db_not_empty(self):
         cursor = self.conn.cursor()
-        execute_script_from_file(cursor, test_script)
+        execute_script_from_file(cursor, DB_TEST_SCRIPT)
         drop_tables(self.conn)
         cursor.execute(get_tables)
         itms = cursor.fetchall()

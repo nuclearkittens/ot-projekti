@@ -104,6 +104,7 @@ class Character:
             self.curr_hp = self._stats.hp
         elif self.curr_hp < 0:
             self.curr_hp = 0
+        if self.curr_hp == 0:
             self.alive = False
             self.battlesprite.dead()
 
@@ -141,14 +142,13 @@ class Character:
         '''
         if self._skills[skill_id].mp_cost > self.curr_mp:
             raise ValueError('not enough mp!')
-        else:
-            self.curr_mp -= self._skills[skill_id].mp_cost
-            self._skills[skill_id].use(self, target)
-            self.battlesprite.attack()
-            target.battlesprite.hurt()
+        self.curr_mp -= self._skills[skill_id].mp_cost
+        self._skills[skill_id].use(self, target)
+        self.battlesprite.attack()
+        target.battlesprite.hurt()
 
     def get_item_qty(self, item_id):
-        '''Returns how many of specified items the character has left.'''
+        '''Returns how many of the specified item the character has left.'''
         return self._inventory[item_id][1]
 
     # gotta do sth abt all these properties, fix this later!

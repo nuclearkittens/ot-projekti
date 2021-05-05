@@ -6,6 +6,7 @@ DIRNAME = os.path.dirname(__file__)
 
 DB_PATH = os.path.join(DIRNAME, 'assets/db/gamedata.db')
 DB_INIT_CMDS = os.path.join(DIRNAME, 'assets/db/init_commands.sql')
+DB_TEST_SCRIPT = os.path.join(DIRNAME, 'assets/db/test_query_script.sql')
 
 DARK_PURPLE = (66, 30, 66)
 POWDER_ROSE = (201, 143, 143)
