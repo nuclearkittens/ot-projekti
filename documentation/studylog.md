@@ -21,8 +21,8 @@
 | 01/05/21 | 11 | moved from json to sqlite, docstringing, database functionality |
 | 02/05/21 | 10 | more docstringing, rewriting battle & demo classes, changed back to keyboard only input |
 | 03/05/21 | 8 | building the menus, buttons class, player action & battle loop |
-| 04/05/21 | 6 | docstring, unittests, updated documentation |
-
-total hours (04/05/21): 147
+| 04/05/21 | 6 | docstring, unit tests, updated documentation |
+| 05/05/21 | 3 | unit testing, mock database, fixed error creating characters w/o image directories 
+total hours (05/05/21): 150
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
