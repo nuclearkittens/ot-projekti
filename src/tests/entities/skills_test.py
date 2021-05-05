@@ -1,7 +1,7 @@
 import unittest
 import sqlite3
 from collections import namedtuple
-from random import seed, random, uniform
+# from random import seed
 
 from entities.skills import Skill
 
