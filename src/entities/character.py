@@ -1,5 +1,4 @@
-from collections import namedtuple
-
+from database.db_util import load_stats, load_res, load_skills
 from entities.skills import Skill
 from entities.battlesprite import BattleSprite
 
@@ -37,12 +36,12 @@ class Character:
         self._id = char_id
         self._conn = conn
 
-        self._stats = self._load_stats()
-        self._res = self._load_res()
-        self._skills = {}
+        self._stats = load_stats(self._id)
+        self._res = load_res(self._id)
+        self._skills = load_skills(self._id)
         self._inventory = {}
 
-        self._load_skills()
+        # self._load_skills()
 
         self.battlesprite = BattleSprite(self)
 
@@ -50,51 +49,52 @@ class Character:
         self.curr_hp = self._stats.hp
         self.curr_mp = self._stats.mp
 
-    def _load_stats(self):
-        '''Connects to the game database and fetches the characters stats.
+    # def _load_stats(self):
+    #     '''Connects to the game database and fetches the characters stats.
 
-        return: Stats(namedtuple)
-        '''
-        Stats = namedtuple('Stats', ['hp', 'mp', 'atk', 'defs', 'mag', 'mdef', 'agi'])
-        cur = self._conn.cursor()
-        cur.execute(
-            '''SELECT hp, mp, atk, defs,
-            mag, mdef, agi FROM Stats
-            WHERE char_id=?''', (self._id,)
-        )
-        return Stats._make(tuple(cur.fetchone()))
+    #     return: Stats(namedtuple)
+    #     '''
+    #     # Stats = namedtuple('Stats', ['hp', 'mp', 'atk', 'defs', 'mag', 'mdef', 'agi'])
+    #     # cur = self._conn.cursor()
+    #     # cur.execute(
+    #     #     '''SELECT hp, mp, atk, defs,
+    #     #     mag, mdef, agi FROM Stats
+    #     #     WHERE char_id=?''', (self._id,)
+    #     # )
+    #     # return Stats._make(tuple(cur.fetchone()))
+    #     return load_character_stats(self._id)
 
-    def _load_res(self):
-        '''Connects to the game database and fetches the character's resistance
-        to different elements.
+    # def _load_res(self):
+    #     '''Connects to the game database and fetches the character's resistance
+    #     to different elements.
 
-        return: Res(namedtuple)
-        '''
-        Res = namedtuple('Res', ['physical', 'fire', 'ice', 'lightning', 'wind', 'light', 'dark'])
-        cur = self._conn.cursor()
-        cur.execute(
-            '''SELECT physical, fire, ice, lightning,
-            wind, light, dark FROM Resistance
-            WHERE char_id=?''', (self._id,)
-        )
-        return Res._make(tuple(cur.fetchone()))
+    #     return: Res(namedtuple)
+    #     '''
+    #     # Res = namedtuple('Res', ['physical', 'fire', 'ice', 'lightning', 'wind', 'light', 'dark'])
+    #     # cur = self._conn.cursor()
+    #     # cur.execute(
+    #     #     '''SELECT physical, fire, ice, lightning,
+    #     #     wind, light, dark FROM Resistance
+    #     #     WHERE char_id=?''', (self._id,)
+    #     # )
+    #     return load_character_resistance(self._id)
 
     def _load_info(self):
         '''Hook for loading other character data; overwritten in subclasses.'''
         pass
 
-    def _load_skills(self):
-        '''Connects to the game database and adds skills associated with character.'''
-        cur = self._conn.cursor()
-        cur.execute(
-            '''SELECT skill_id FROM CharSkills
-            WHERE char_id=?''', (self._id,)
-        )
-        rows = cur.fetchall()
-        for row in rows:
-            skill_id = row[0]
-            new_skill = Skill(skill_id, self._conn)
-            self._skills[skill_id] = new_skill
+    # def _load_skills(self):
+    #     '''Connects to the game database and adds skills associated with character.'''
+    #     cur = self._conn.cursor()
+    #     cur.execute(
+    #         '''SELECT skill_id FROM CharSkills
+    #         WHERE char_id=?''', (self._id,)
+    #     )
+    #     rows = cur.fetchall()
+    #     for row in rows:
+    #         skill_id = row[0]
+    #         new_skill = Skill(skill_id, self._conn)
+    #         self._skills[skill_id] = new_skill
 
     def check_hp(self):
         '''Checks that the current HP value is between 0 and maximum HP.
