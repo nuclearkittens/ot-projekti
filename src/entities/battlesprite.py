@@ -131,10 +131,7 @@ class BattleSprite(pg.sprite.Sprite):
             temp = []
             for frame in frames:
                 filename = f'assets/gfx/sprites/{self._character.id}/{frame}'
-                if os.path.exists(filename):
-                    img = load_img(filename)
-                else:
-                    img = pg.Surface((64, 64))
+                img = load_img(filename)
                 temp.append(img)
             self._anim_list.append(temp)
 

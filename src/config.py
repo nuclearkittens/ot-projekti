@@ -22,6 +22,8 @@ NATIVE_RESOLUTION = (512, 448)
 SCREEN_W = 512 * SCALE
 SCREEN_H = 448 * SCALE
 
+TILE_SIZE = (32, 32)
+
 FPS = 60
 
 FONT = os.path.join(DIRNAME, 'assets/fonts/m5x7.ttf')
