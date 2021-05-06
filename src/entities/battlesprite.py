@@ -1,5 +1,5 @@
 import pygame as pg
-import os.path
+import os
 
 from util import load_img
 from entities.bar import HPBar, MPBar
@@ -130,9 +130,9 @@ class BattleSprite(pg.sprite.Sprite):
         for frames in frames_lst:
             temp = []
             for frame in frames:
-                path = f'assets/gfx/sprites/{self._character.id}/{frame}'
-                if os.path.exists(path):
-                    img = load_img(path)
+                filename = f'assets/gfx/sprites/{self._character.id}/{frame}'
+                if os.path.exists(filename):
+                    img = load_img(filename)
                 else:
                     img = pg.Surface((64, 64))
                 temp.append(img)
