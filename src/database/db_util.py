@@ -21,7 +21,11 @@ def get_db_connection(db=DB_PATH):
 def load_stats(char_id):
     '''Connects to the game database and fetches the characters stats.
 
-    return: Stats(namedtuple)
+    args:
+        char_id: str
+
+    return:
+        stats: Stats object (namedtuple)
     '''
     conn = get_db_connection()
     cur = conn.cursor()
@@ -40,7 +44,11 @@ def load_res(char_id):
     '''Connects to the game database and fetches the character's resistance
     to different elements.
 
-    return: Res(namedtuple)
+    args:
+        char_id: str
+
+    return:
+        res: Res object (namedtuple)
     '''
     conn = get_db_connection()
     cur = conn.cursor()
@@ -56,7 +64,13 @@ def load_res(char_id):
     return res
 
 def load_skills(char_id):
-    '''Connects to the game database and adds skills associated with character.'''
+    '''Connects to the game database and adds skills associated with character.
+
+    args:
+        char_id: str; a unique id for a character
+
+    return:
+        skills: dict; key: skill_id (str), val: skill (Skill object)'''
     conn = get_db_connection()
     cur = conn.cursor()
     skills = {}
@@ -66,17 +80,23 @@ def load_skills(char_id):
     )
     rows = cur.fetchall()
     conn.close()
+
     for row in rows:
         skill_id = row[0]
         new_skill = Skill(skill_id)
         skills[skill_id] = new_skill
 
-    # conn.close()
-
     return skills
 
 def load_party_info(char_id):
-    '''Loads character info from the game database.'''
+    '''Loads character info from the game database.
+
+    args:
+        char_id: str
+
+    return:
+        info: SQLite Row object
+    '''
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('SELECT name, lvl FROM Party WHERE id=?', (char_id,))
@@ -85,7 +105,14 @@ def load_party_info(char_id):
     return info
 
 def load_monster_info(char_id):
-    '''Loads monster info from the game database.'''
+    '''Loads monster info from the game database.
+
+    args:
+        char_id: str
+
+    return:
+        info: MonsterInfo object (namedtuple)
+    '''
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute(
@@ -97,6 +124,14 @@ def load_monster_info(char_id):
     return info
 
 def load_inventory(char_id):
+    '''Loads character's default inventory from the game database.
+
+    args:
+        char_id: str
+
+    return:
+        inv: dict; key: item_id (str), val: item (Item object)
+    '''
     conn = get_db_connection()
     cur = conn.cursor()
     inv = {}
@@ -114,6 +149,14 @@ def load_inventory(char_id):
     return inv
 
 def load_item_info(item_id):
+    '''Loads item info from the game database.
+
+    args:
+        item_id: str
+
+    return:
+        info: SQLite Row object
+    '''
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('SELECT name, descr FROM Items WHERE id=?', (item_id,))
@@ -122,6 +165,14 @@ def load_item_info(item_id):
     return info
 
 def load_item_effects(item_id):
+    '''Loads item effects from the game database.
+
+    args:
+        item_id: str
+
+    return:
+        effects: lst (of tuples)
+    '''
     conn = get_db_connection()
     cur = conn.cursor()
     effects = []
@@ -138,6 +189,14 @@ def load_item_effects(item_id):
     return effects
 
 def load_skill_info(skill_id):
+    '''Loads skill info from the game database.
+
+    args:
+        skill_id: str
+
+    return:
+        info: SkillInfo object (namedtuple)
+    '''
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute(
@@ -149,6 +208,14 @@ def load_skill_info(skill_id):
     return info
 
 def load_skill_attr(skill_id):
+    '''Loads skill attributes from the game database.
+
+    args:
+        skill_id: str
+
+    return:
+        attr: SkillAttributes object (namedtuple)
+    '''
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute(
