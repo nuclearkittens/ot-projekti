@@ -16,7 +16,6 @@ class PartyMember(Character):
 
         args:
             char_id: str; a unique id for the character
-            conn: game database connection
         '''
         Character.__init__(self, char_id)
 
@@ -24,15 +23,12 @@ class PartyMember(Character):
         self._name = info[0]
         self._lvl = info[1]
 
-    # def _load_info(self):
-    #     '''Loads character info from the game database.'''
-    #     cur = self._conn.cursor()
-    #     cur.execute('SELECT name, lvl FROM Party WHERE id=?', (self._id,))
-    #     return cur.fetchone()
-
     def set_tick_speed(self):
         '''Sets the character's tick speed in battle.
         Dependable on the character's agility stat.
+
+        return:
+            tick speed: int
         '''
         rand = randint(-2, 2)
         return 100 // (self._stats.agi + rand) * 3

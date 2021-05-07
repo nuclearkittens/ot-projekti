@@ -23,14 +23,13 @@ class Character:
         skills: dict; character's skills
         inventory: dict; character's items
         alive: bool; tells whether the character is alive or knocked out
-        curr_hp: character's current health points
-        curr_mp: character's current magic points
+        curr_hp: int; character's current health points
+        curr_mp: int; character's current magic points
     '''
     def __init__(self, char_id):
         '''Character class constructor.
         args:
             char_id: str; a unique character id
-            conn: connection to the game database
         '''
         self._id = char_id
 
@@ -144,7 +143,8 @@ class Character:
     def res(self):
         '''property: character's resistance to different attack types
 
-            return: dict: key: element (str), value: resistance (float)
+        return:
+            dict: key: element (str), value: resistance (float)
         '''
         return self._res._asdict()
 
