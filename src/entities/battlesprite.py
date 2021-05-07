@@ -1,5 +1,4 @@
 import pygame as pg
-import os
 
 from util import load_img
 from entities.bar import HPBar, MPBar
@@ -26,7 +25,7 @@ class BattleSprite(pg.sprite.Sprite):
 
         self._anim_list = []
         self._frame_idx = 0
-        self._action = 0 # 0: idle, 1: attack, 2: hurt, 3: dead
+        self._action = 0
 
         self._load_frames()
 
@@ -114,7 +113,7 @@ class BattleSprite(pg.sprite.Sprite):
         '''Blits the bars on the display.
 
         args:
-            renderer: game renderer object
+            renderer: Renderer object
         '''
         for bar in self._bars.values():
             bar.draw(renderer)
@@ -137,5 +136,5 @@ class BattleSprite(pg.sprite.Sprite):
 
     @property
     def character(self):
-        '''property: character object'''
+        '''property: Character object'''
         return self._character

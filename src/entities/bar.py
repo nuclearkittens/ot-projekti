@@ -7,6 +7,7 @@ class Bar:
 
     attr:
         base: a Pygame surface, works as the base of the bar
+        top: a Pygame surface, the moving part of the bar
         rect: a Pygame object for storing coordinates
     '''
     def __init__(self, w, h):

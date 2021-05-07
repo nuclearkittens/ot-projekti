@@ -7,8 +7,8 @@ def execute_script_from_file(cursor, filename):
     '''Fetches an sql file and executes the queries specified in it.
 
     args:
-    cursor: SQLite cursor
-    filename: path to the executable file
+        cursor: SQLite cursor
+        filename: path to the executable file
     '''
 
     sql_file = open(filename, 'r')

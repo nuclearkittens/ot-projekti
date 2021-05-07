@@ -1,7 +1,6 @@
-import sqlite3
 from collections import namedtuple
 
-from config import DB_PATH
+from database.db_connection import get_db_connection
 from entities.skills import Skill
 from entities.items import Item
 
@@ -11,12 +10,6 @@ MonsterInfo = namedtuple('MonsterInfo', ['name', 'category', 'descr'])
 SkillInfo = namedtuple('SkillInfo', ['name', 'category', 'subcategory', 'description'])
 SkillAttributes = namedtuple('SkillAttributes', [
         'element', 'hits', 'mp_cost', 'multiplier', 'crit_rate'])
-
-def get_db_connection(db=DB_PATH):
-    '''Returns connection to the game database.'''
-    conn = sqlite3.connect(db)
-    conn.row_factory = sqlite3.Row
-    return conn
 
 def load_stats(char_id):
     '''Connects to the game database and fetches the characters stats.

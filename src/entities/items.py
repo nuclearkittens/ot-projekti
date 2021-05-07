@@ -1,5 +1,3 @@
-# from database.db_util import load_item_info, load_item_effects
-
 class Item:
     '''Class for item objects.
 
@@ -29,41 +27,23 @@ class Item:
 
     def use(self, target):
         '''Use an item. Takes a character object (target) as the argument.'''
+        def heal(target, target_attr, amount):
+            '''Use a healing item.'''
+            if target_attr == 'hp':
+                if isinstance(amount, int):
+                    target.curr_hp += amount
+                else:
+                    target.curr_hp += int(amount * target.max_hp)
+            if target_attr == 'mp':
+                if isinstance(amount, int):
+                    target.curr_mp += amount
+                else:
+                    target.curr_mp += int(amount * target.max_mp)
+
         for effect in self._effects:
             if effect[0] == 'heal':
                 target_attr, amount = effect[1], effect[2]
-                self._heal(target, target_attr, amount)
-
-    def _heal(self, target, target_attr, amount):
-        '''Use a healing item.'''
-        if target_attr == 'hp':
-            if isinstance(amount, int):
-                target.curr_hp += amount
-            else:
-                target.curr_hp += int(amount * target.max_hp)
-        if target_attr == 'mp':
-            if isinstance(amount, int):
-                target.curr_mp += amount
-            else:
-                target.curr_mp += int(amount * target.max_mp)
-
-    # def _load_info(self):
-    #     '''Fetches the item information from the game database.'''
-    #     cur = self._conn.cursor()
-    #     cur.execute('SELECT name, descr FROM Items WHERE id=?', (self._id,))
-    #     return cur.fetchone()
-
-    # def _load_effects(self):
-    #     '''Fetches the item's effects from the game database.'''
-    #     cur = self._conn.cursor()
-    #     cur.execute(
-    #         '''SELECT E.effect, E.target_attr, E.amount
-    #         FROM Effects E, ItemEffects I
-    #         WHERE E.id=I.effect_id AND I.item_id=?''', (self._id,)
-    #         )
-    #     rows = cur.fetchall()
-    #     for row in rows:
-    #         self._effects.append(tuple(row))
+                heal(target, target_attr, amount)
 
     @property
     def name(self):
