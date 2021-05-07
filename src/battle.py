@@ -4,13 +4,13 @@ import pygame as pg
 from ui.battlegraphics import BattleGFX
 
 class Battle:
-    def __init__(self, renderer, eventhandler, party, conn):
+    def __init__(self, renderer, eventhandler, party):
         # self._clock = clock
         self._renderer = renderer
         self._eventhandler = eventhandler
         self._keys = self._eventhandler.keys
 
-        self._gfx = BattleGFX(party, conn)
+        self._gfx = BattleGFX(party)
         self._turns = self._generate_turns()
 
     def loop(self):

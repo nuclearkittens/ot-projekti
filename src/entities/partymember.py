@@ -1,5 +1,6 @@
 from random import randint
 
+from database.db_util import load_party_info
 from entities.character import Character
 from entities.items import Item
 
@@ -10,24 +11,24 @@ class PartyMember(Character):
         name: str; party member's name
         lvl: int; party member's current level
     '''
-    def __init__(self, char_id, conn):
+    def __init__(self, char_id):
         '''Constructor for the PartyMember class. Initialises a Character object.
 
         args:
             char_id: str; a unique id for the character
             conn: game database connection
         '''
-        Character.__init__(self, char_id, conn)
+        Character.__init__(self, char_id)
 
-        info = self._load_info()
+        info = load_party_info(self._id)
         self._name = info[0]
         self._lvl = info[1]
 
-    def _load_info(self):
-        '''Loads character info from the game database.'''
-        cur = self._conn.cursor()
-        cur.execute('SELECT name, lvl FROM Party WHERE id=?', (self._id,))
-        return cur.fetchone()
+    # def _load_info(self):
+    #     '''Loads character info from the game database.'''
+    #     cur = self._conn.cursor()
+    #     cur.execute('SELECT name, lvl FROM Party WHERE id=?', (self._id,))
+    #     return cur.fetchone()
 
     def set_tick_speed(self):
         '''Sets the character's tick speed in battle.
@@ -44,6 +45,6 @@ class PartyMember(Character):
             qty: int (default=1); quantity of items to add
         '''
         if item_id not in self._inventory:
-            self._inventory[item_id] = [Item(item_id, self._conn), qty]
+            self._inventory[item_id] = [Item(item_id), qty]
         else:
             self._inventory[item_id][1] += qty

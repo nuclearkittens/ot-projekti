@@ -12,7 +12,7 @@ from ui.renderer import Renderer
 class Demo:
     def __init__(self):
         initialise_db()
-        self._conn = get_db_connection()
+        # self._conn = get_db_connection()
 
         self._clock = pg.time.Clock()
         self._keys = Keys()
@@ -21,7 +21,7 @@ class Demo:
         self._screen = initialise_demo_display()
         self._renderer = Renderer(self._screen)
 
-        self._party = create_demo_party(self._conn)
+        self._party = create_demo_party()
 
         self.battle = False
 
@@ -32,14 +32,14 @@ class Demo:
                 running = False
             if self.battle:
                 battle = Battle(
-                    self._renderer, self._eventhandler,
-                    self._party, self._conn
+                    self._renderer, self._eventhandler, self._party
                     )
                 battle.loop()
             self._render()
             # self._clock.tick(FPS)
-        drop_tables(self._conn)
-        self._conn.close()
+        conn = get_db_connection()
+        drop_tables(conn)
+        conn.close()
 
     def _render(self):
         self._renderer.update_display()

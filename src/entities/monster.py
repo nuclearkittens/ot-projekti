@@ -1,6 +1,6 @@
 from random import randint, choice
-from collections import namedtuple
 
+from database.db_util import load_monster_info, load_inventory
 from entities.character import Character
 from entities.items import Item
 
@@ -11,42 +11,42 @@ class Monster(Character):
         info: namedtuple containing the monster's name, category and description
         default_action: skill object; monster's default attack
     '''
-    def __init__(self, char_id, conn):
+    def __init__(self, char_id):
         '''Constructor for the monster class. Initialises a Character object.
 
         args:
             char_id: str; a unique id for the monster
             conn: game database connection
         '''
-        Character.__init__(self, char_id, conn)
+        Character.__init__(self, char_id)
 
-        self._info = self._load_info()
-        self._load_inv()
+        self._info = load_monster_info(self._id)
+        self._inventory = load_inventory(self._id)
 
         self._default_action = self._set_default_action()
 
-    def _load_info(self):
-        '''Loads monster info from the game database.'''
-        Info = namedtuple('Info', ['name', 'category', 'descr'])
-        cur = self._conn.cursor()
-        cur.execute(
-            '''SELECT name, category, descr FROM Monsters
-            WHERE id=?''', (self._id,)
-        )
-        return Info._make(tuple(cur.fetchone()))
+    # def _load_info(self):
+    #     '''Loads monster info from the game database.'''
+    #     Info = namedtuple('Info', ['name', 'category', 'descr'])
+    #     cur = self._conn.cursor()
+    #     cur.execute(
+    #         '''SELECT name, category, descr FROM Monsters
+    #         WHERE id=?''', (self._id,)
+    #     )
+    #     return Info._make(tuple(cur.fetchone()))
 
-    def _load_inv(self):
-        '''Loads monster's inventory from the game database.'''
-        cur = self._conn.cursor()
-        cur.execute(
-            '''SELECT item_id, qty FROM Inventory
-            WHERE char_id=?''', (self._id,)
-        )
-        rows = cur.fetchall()
-        for row in rows:
-            item_id, qty = row[0], row[1]
-            new_item = Item(item_id, self._conn)
-            self._inventory[item_id] = [new_item, qty]
+    # def _load_inv(self):
+    #     '''Loads monster's inventory from the game database.'''
+    #     cur = self._conn.cursor()
+    #     cur.execute(
+    #         '''SELECT item_id, qty FROM Inventory
+    #         WHERE char_id=?''', (self._id,)
+    #     )
+    #     rows = cur.fetchall()
+    #     for row in rows:
+    #         item_id, qty = row[0], row[1]
+    #         new_item = Item(item_id, self._conn)
+    #         self._inventory[item_id] = [new_item, qty]
 
     def _set_default_action(self):
         '''Sets the default action in battle.'''

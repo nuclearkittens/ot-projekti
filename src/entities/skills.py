@@ -1,13 +1,14 @@
-from collections import namedtuple
 from random import random, uniform
 
-class Skill:
-    def __init__(self, skill_id, conn):
-        self._id = skill_id
-        self._conn = conn
+# from database.db_util import load_skill_info, load_skill_attr
 
-        self._info = self._load_info()
-        self._attr = self._load_attr()
+class Skill:
+    def __init__(self, skill_id):
+        from database.db_util import load_skill_info, load_skill_attr
+        self._id = skill_id
+
+        self._info = load_skill_info(self._id)
+        self._attr = load_skill_attr(self._id)
 
     def use(self, user, target):
         mult = target.res[self._attr.element] * self._attr.multiplier
@@ -35,25 +36,25 @@ class Skill:
     def _is_critical(self):
         return random() < self._attr.crit_rate
 
-    def _load_info(self):
-        Info = namedtuple('Info', ['name', 'category', 'subcategory', 'description'])
-        cur = self._conn.cursor()
-        cur.execute(
-            '''SELECT name, category, subcategory, descr
-            FROM Skills WHERE Skills.id=?''', (self._id,)
-        )
+    # def _load_info(self):
+    #     Info = namedtuple('Info', ['name', 'category', 'subcategory', 'description'])
+    #     cur = self._conn.cursor()
+    #     cur.execute(
+    #         '''SELECT name, category, subcategory, descr
+    #         FROM Skills WHERE Skills.id=?''', (self._id,)
+    #     )
 
-        return Info._make(tuple(cur.fetchone()))
+    #     return Info._make(tuple(cur.fetchone()))
 
-    def _load_attr(self):
-        Attributes = namedtuple('Attributes', [
-            'element', 'hits', 'mp_cost', 'multiplier', 'crit_rate'])
-        cur = self._conn.cursor()
-        cur.execute(
-            '''SELECT element, hits, mp_cost, multiplier, crit_rate
-            FROM Skills WHERE Skills.id=?''', (self._id,)
-        )
-        return Attributes._make(tuple(cur.fetchone()))
+    # def _load_attr(self):
+    #     Attributes = namedtuple('Attributes', [
+    #         'element', 'hits', 'mp_cost', 'multiplier', 'crit_rate'])
+    #     cur = self._conn.cursor()
+    #     cur.execute(
+    #         '''SELECT element, hits, mp_cost, multiplier, crit_rate
+    #         FROM Skills WHERE Skills.id=?''', (self._id,)
+    #     )
+    #     return Attributes._make(tuple(cur.fetchone()))
 
     @property
     def mp_cost(self):

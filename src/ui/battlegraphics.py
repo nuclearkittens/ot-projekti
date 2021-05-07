@@ -7,9 +7,9 @@ from ui.menu import BattleMenu
 from ui.buttons import TargetCursor
 
 class BattleGFX:
-    def __init__(self, party, conn):
+    def __init__(self, party):
         # change into random battle for the actual game
-        self.enemies = [enem.battlesprite for enem in create_demo_enemies(conn)]
+        self.enemies = [enem.battlesprite for enem in create_demo_enemies()]
         self.party = [member.battlesprite for member in party]
         self.all = pg.sprite.Group(self.enemies, self.party)
         self.target_cursor = TargetCursor()
