@@ -1,14 +1,32 @@
 import pygame as pg
 
-from util import load_img
 from config import SCREEN_W, SCREEN_H, BAR_W, BAR_H
 from prepare import create_demo_enemies
+from util import load_img
 from ui.menu import BattleMenu
 from ui.buttons import TargetCursor
 
 class BattleGFX:
+    '''A class for updating and handling the graphics elements in battle.
+
+    attr:
+        enemies: lst; enemies to defeat in battle; currently creates a demo battle,
+            to be updated when random battles become a reality
+        party: lst; list of available party members
+        all: sprite Group; contains both enemies' and party's battle sprites
+        target_cursor: Target Cursor object; used for choosing target for
+            an action
+        bg_img: Surface; background image for the battle
+        menus: dict; menus used in battle
+        default_menu: BattleMenu object; default menu that remains drawn on the
+            screen for the duration of the battle
+    '''
     def __init__(self, party):
-        # change into random battle for the actual game
+        '''Constructor for the BattleGFX class.
+
+        args:
+            party: lst; list of current party members
+        '''
         self.enemies = [enem.battlesprite for enem in create_demo_enemies()]
         self.party = [member.battlesprite for member in party]
         self.all = pg.sprite.Group(self.enemies, self.party)
@@ -20,20 +38,27 @@ class BattleGFX:
 
         self._create_menus()
         self._calc_sprite_placement()
+        self._calc_target_cursor_pos()
 
     def update_sprites(self):
+        '''Updates all sprites as per their own update methods.'''
         self.all.update()
 
     def update_target_list(self):
+        '''Checks if the length of the target list remains the same,
+        i.e. has any of the participants died, and updates the
+        target cursor position list accordingly.
+        '''
         if len(self.all) < len(self.target_cursor.pos):
-            print('updating target list:')
-            print(f'old: {self.target_cursor.pos}')
-            self.target_cursor.pos = sorted(
-                [sprite.rect.midright for sprite in self.all])
-            self.target_cursor.current_pos = self.target_cursor.pos[0]
-            print(f'new: {self.target_cursor.pos}')
+            self._calc_target_cursor_pos()
 
     def render(self, renderer, current):
+        '''Draws the graphic elements on screen.
+
+        args:
+            renderer: Renderer object
+            current: Character object; character whose turn it is
+        '''
         renderer.blit(self.bg_img, (0, 0))
         renderer.draw_sprites(self.all)
         for sprite in self.all:
@@ -43,56 +68,92 @@ class BattleGFX:
             self.default_menu.draw(renderer)
 
     def draw_cursor(self, renderer):
+        '''Draws the target selection cursor if target selection is in an active state.
+
+        args:
+            renderer: Renderer object
+        '''
         if self.target_cursor.active:
             renderer.blit(self.target_cursor.image, self.target_cursor.rect)
 
     def _calc_sprite_placement(self):
+        '''Function to calculate the sprite placement on screen. Is called when
+        class is initialised.'''
+        def enemy_placement(x, y, offset, max_w):
+            '''Calculates the on-screen placement for enemy sprites and their HP bars.
+
+            args:
+                x: int; x-coordinate for the leftmost sprite to place
+                y: int; y-coordinate for the leftmost sprite to place
+                offset: int; sprite offset
+                max_w: int; maximum possible width of an enemy sprite
+            '''
+            for sprite in self.enemies:
+                hp_offset = sprite.rect.height + offset
+                sprite.set_position(x, y)
+                sprite.create_hp_bar(BAR_W, BAR_H)
+                sprite.set_bar_position(x, y - hp_offset, True)
+                x += max_w
+                y -= offset
+
+        def party_placement(x, y, bar_x, bar_y, max_w, offset, margin):
+            '''Calculates the on-screen placement for party and their HP/MP bars.
+
+            args:
+                x: int; x-coordinate for the leftmost sprite to place
+                y: int; y-coordinate for the leftmost sprite to place
+                bar_x: int; x-coordinate for the topmost HP bar
+                bar_y: int; y-coordinate for the topmost HP bar
+                offset: int; sprite offset
+                margin: int; margin for bar placement
+            '''
+            for sprite in self.party:
+                sprite.set_position(x, y)
+                sprite.create_hp_bar((2 * BAR_W), (2 * BAR_H))
+                sprite.create_mp_bar((2 * BAR_W), BAR_H)
+                sprite.set_bar_position(bar_x, bar_y + margin, False)
+                x += max_w
+                y += offset
+                margin += margin
+
         margin = SCREEN_W // 16
         gutter = margin // 8
 
         max_w_enem = ((SCREEN_W // 2) - margin) // len(self.enemies)
         max_w_party = ((SCREEN_W // 2) - margin) // len(self.party)
 
-        offset_y = margin
+        offset = margin
         enem_x = max_w_enem // 2
-        enem_y = 3 * SCREEN_H // 4 - (offset_y + (gutter * (len(self.enemies)-1)))
+        enem_y = 3 * SCREEN_H // 4 - (offset + (gutter * (len(self.enemies)-1)))
         party_x = (max_w_party // 2) + (SCREEN_W // 2) + margin
-        party_y = 3 * SCREEN_H // 4 - offset_y
+        party_y = 3 * SCREEN_H // 4 - offset
 
-        temp_cursor_pos = []
-
-        offset_y = gutter
-        for sprite in self.enemies:
-            hp_offset_y = sprite.rect.height + offset_y
-            sprite.set_position(enem_x, enem_y)
-            temp_cursor_pos.append(sprite.rect.midright)
-            sprite.create_hp_bar(BAR_W, BAR_H)
-            sprite.set_bar_position(enem_x, enem_y - hp_offset_y, True)
-            enem_x += max_w_enem
-            enem_y -= offset_y
+        offset = gutter
+        enemy_placement(enem_x, enem_y, offset, max_w_enem)
 
         bar_x = SCREEN_W - ((2 * BAR_W) + margin // 2)
         bar_y = (3 * SCREEN_H // 4) - margin
-        for sprite in self.party:
-            sprite.set_position(party_x, party_y)
-            temp_cursor_pos.append(sprite.rect.midright)
-            sprite.create_hp_bar((2 * BAR_W), (2 * BAR_H))
-            sprite.create_mp_bar((2 * BAR_W), BAR_H)
-            sprite.set_bar_position(bar_x, bar_y + margin, False)
-            # button_y = mp_y - margin
-            # sprite.new_name_button(bar_x, button_y)
-            party_x += max_w_party
-            party_y += offset_y
-            margin += margin
+        party_placement(
+            party_x, party_y, bar_x, bar_y, max_w_party,
+            offset, margin)
 
-        self.target_cursor.pos = sorted(temp_cursor_pos)
-        # print(self.target_cursor.pos)
+    def _calc_target_cursor_pos(self):
+        '''Calculates the possible positions for a target cursor.'''
+        self.target_cursor.pos = sorted(
+            [sprite.rect.midright for sprite in self.all])
         self.target_cursor.current_pos = self.target_cursor.pos[0]
 
     def _create_menus(self):
+        '''Creates menus for each party member in battle.'''
         main_options = ['attack', 'skill', 'magic', 'item']
 
         def skill_options(char):
+            '''Creates menu button options for a character's skill
+            and magic menus.
+
+            args:
+                char: Character object
+            '''
             temp_skl = []
             temp_mag = []
             for skill in char.skills.values():
@@ -104,6 +165,11 @@ class BattleGFX:
             return temp_skl, temp_mag
 
         def item_options(char):
+            '''Creates menu button options for a character's item menu.
+
+            args:
+                char: Character object
+            '''
             temp = []
             for lst in char.inventory.values():
                 temp.append((lst[0].name, lst[1]))
