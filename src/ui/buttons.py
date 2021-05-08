@@ -133,3 +133,23 @@ class ItemButton(Button):
         else:
             self.image = self._passive_img
 
+class DamageText(Button):
+    '''A button subclass for displaying damage taken in battle.'''
+    def __init__(self, amount, colour, pos):
+        '''Class constructor for damage text.
+
+        args:
+            amount: str; damage taken/amount healed as string
+            colour: tuple; text colour (green for hp heal, red
+                for damage, blue for mp heal)
+            pos: tuple; character sprite position
+        '''
+        Button.__init__(self, amount, FONT_SIZE, colour)
+        self.rect.center = pos
+
+    def update(self):
+        '''Moves the button up and makes it disappear when
+        it hits the top of the screen.'''
+        self.rect.y -= 0.01
+        if self.rect.y == 0:
+            self.kill()

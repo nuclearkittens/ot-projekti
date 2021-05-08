@@ -1,19 +1,22 @@
 import pygame as pg
 
+from config import HP_GREEN, HP_RED, MP_BLUE
 from util import load_img
 from entities.bar import HPBar, MPBar
+from ui.buttons import DamageText
 
 class BattleSprite(pg.sprite.Sprite):
     '''Class for handling the character sprite in battle.
 
     attr:
-        update_time: keeps track of animation update time
-        anim_list: nested list for animation frames, grouped by action
-        action: current animation state; possible values:
+        update_time: int; keeps track of animation update time
+        anim_list: lst; nested list for animation frames, grouped by action
+        action: int; current animation state; possible values:
             0: idle, 1: attack, 2: hurt, 3: dead
-        image: current image
-        rect: rectangular area containing the sprite
-        bars: hp (and mp) bar(s) associated with the character
+        image: Surface; current image
+        rect: Rect; rectangular area containing the sprite
+        bars: dict; hp (and mp) bar(s) associated with the character
+        damage: sprite Group; group containing damage text buttons
     '''
     def __init__(self, character):
         '''Constructor for BattleSprite class.
@@ -33,11 +36,12 @@ class BattleSprite(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self._bars = {}
+        self._damage = pg.sprite.Group()
 
     def update(self):
         '''Checks the time passed since the last frame update,
         and updates the frame accordingly. Also checks hp and mp
-        of the associated character.
+        of the associated character, and updates damage text buttons.
         '''
         self._character.check_hp()
         self._character.check_mp()
@@ -55,6 +59,9 @@ class BattleSprite(pg.sprite.Sprite):
 
         for bar in self._bars.values():
             bar.update()
+
+        self._update_dmg_buttons()
+        self._damage.update()
 
     def _idle(self):
         '''Resets the sprite animation to idle.'''
@@ -117,6 +124,40 @@ class BattleSprite(pg.sprite.Sprite):
         '''
         for bar in self._bars.values():
             bar.draw(renderer)
+
+    def draw_dmg_txt(self, renderer):
+        '''Blits the damage text buttons on screen.
+
+        args:
+            renderer: Renderer object
+        '''
+        renderer.draw_sprites(self._damage)
+
+    def create_dmg_txt_button(self, stat, amount):
+        '''Creates a button displaying damage taken/amount healed.
+
+        args:
+            stat: str; HP or MP
+            amount: int; amount healed or damage taken
+        '''
+        if stat == 'hp':
+            if amount < 0:
+                colour = HP_RED
+            else:
+                colour = HP_GREEN
+        elif stat == 'mp':
+            colour = MP_BLUE
+        self._damage.add(DamageText(str(abs(amount)), colour, self.rect.midtop))
+
+    def _update_dmg_buttons(self):
+        '''Checks that the damage buttons don't overlap.'''
+        sprites = sorted(
+            self._damage.sprites(), key=lambda sprite: sprite.rect.y,
+            reverse=True)
+        for idx, sprite in enumerate(sprites, start=1):
+            if idx < len(sprites)-1:
+                if sprite.rect.y - sprites[idx].rect.y < sprite.rect.h:
+                    sprite.rect.y = sprites[idx].rect.y - sprite.rect.h
 
     def _load_frames(self):
         '''Loads the frames for sprite animation.'''

@@ -16,6 +16,7 @@ class BattleGFX:
         all: sprite Group; contains both enemies' and party's battle sprites
         target_cursor: Target Cursor object; used for choosing target for
             an action
+        dmg_text: sprite Group; group for handling damage text buttons
         bg_img: Surface; background image for the battle
         menus: dict; menus used in battle
         default_menu: BattleMenu object; default menu that remains drawn on the
@@ -31,6 +32,7 @@ class BattleGFX:
         self.party = [member.battlesprite for member in party]
         self.all = pg.sprite.Group(self.enemies, self.party)
         self.target_cursor = TargetCursor()
+        self.dmg_text = pg.sprite.Group()
 
         self.bg_img = load_img('assets/gfx/backgrounds/battlebg1.png')
         self.menus = {}
@@ -63,6 +65,7 @@ class BattleGFX:
         renderer.draw_sprites(self.all)
         for sprite in self.all:
             sprite.draw_bars(renderer)
+            sprite.draw_dmg_txt(renderer)
         if current not in self.party:
             self.default_menu.reset_cursor()
             self.default_menu.draw(renderer)

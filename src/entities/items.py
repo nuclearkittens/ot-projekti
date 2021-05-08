@@ -30,15 +30,15 @@ class Item:
         def heal(target, target_attr, amount):
             '''Use a healing item.'''
             if target_attr == 'hp':
-                if isinstance(amount, int):
-                    target.curr_hp += amount
-                else:
-                    target.curr_hp += int(amount * target.max_hp)
+                if isinstance(amount, float):
+                    amount *= target.max_hp
+                target.curr_hp += int(amount)
+                target.battlesprite.create_dmg_txt_button('hp', int(amount))
             if target_attr == 'mp':
-                if isinstance(amount, int):
-                    target.curr_mp += amount
-                else:
-                    target.curr_mp += int(amount * target.max_mp)
+                if isinstance(amount, float):
+                    amount *= target.max_mp
+                target.curr_mp += int(amount)
+                target.battlesprite.create_dmg_txt_button('mp', int(amount))
 
         for effect in self._effects:
             if effect[0] == 'heal':

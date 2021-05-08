@@ -44,6 +44,7 @@ class Skill:
             else:
                 dmg = self._calc_dmg(atk, defs, mult)
             target.curr_hp -= dmg
+            target.battlesprite.create_dmg_txt_button('hp', -dmg)
 
     def _calc_dmg(self, atk, defs, mult):
         '''Calculates the damage taken by the target.

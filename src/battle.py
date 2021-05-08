@@ -1,11 +1,11 @@
-# from config import FPS
+from config import FPS
 import pygame as pg
 
 from ui.battlegraphics import BattleGFX
 
 class Battle:
-    def __init__(self, renderer, eventhandler, party):
-        # self._clock = clock
+    def __init__(self, clock, renderer, eventhandler, party):
+        self._clock = clock
         self._renderer = renderer
         self._eventhandler = eventhandler
         self._keys = self._eventhandler.keys
@@ -19,7 +19,7 @@ class Battle:
         action = None
         target = None
 
-        cooldown = 50
+        cooldown = 100
         update_time = pg.time.get_ticks()
 
         while running:
@@ -38,13 +38,15 @@ class Battle:
                     current.character.use_item(action, target.character)
                 elif action in current.character.skills:
                     current.character.use_skill(action, target.character)
-            while pg.time.get_ticks() - update_time < cooldown:
-                self._gfx.update_sprites()
-                self._gfx.update_target_list()
-                self._render(current)
-            update_time = pg.time.get_ticks()
+                while pg.time.get_ticks() - update_time < cooldown:
+                    self._gfx.update_sprites()
+                    self._gfx.update_target_list()
+                    self._render(current)
+                update_time = pg.time.get_ticks()
+
             self._reset_menus()
             self._tick()
+            self._clock.tick(FPS)
 
     def _render(self, current, menu_stack=None):
         # draw everything here
@@ -70,7 +72,6 @@ class Battle:
                 self._turns[char] = -1
             if self._turns[char] > 0:
                 self._turns[char] -= 1
-        # self._clock.tick(FPS)
 
     def _check_turn(self):
         for char in self._turns:
@@ -147,7 +148,7 @@ class Battle:
             self._render(current, menu_stack)
             # self._gfx.draw_cursor(self._renderer)
             self._keys.reset_keys()
-            # self._clock.tick(FPS)
+            self._clock.tick(FPS)
         for menu in menu_stack:
             menu.reset_cursor()
         return action_stack.pop(), target

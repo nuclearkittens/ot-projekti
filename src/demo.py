@@ -44,7 +44,8 @@ class Demo:
                 running = False
             if self.battle:
                 battle = Battle(
-                    self._renderer, self._eventhandler, self._party
+                    self._clock, self._renderer,
+                    self._eventhandler, self._party
                     )
                 battle.loop()
             self._render()
