@@ -10,7 +10,18 @@ from ui.eventhandler import EventHandler
 from ui.renderer import Renderer
 
 class Demo:
+    '''A class that functions as the demo itself.
+
+    attr:
+        keys: Keys object
+        eventhandler: EventHandler object
+        screen: Pygame display
+        renderer: Renderer object
+        party: lst; party formation used in the demo
+        battle: bool; tells whether the demo is on battle state
+    '''
     def __init__(self):
+        '''Constructor for the Demo class.'''
         initialise_db()
         # self._conn = get_db_connection()
 
@@ -26,6 +37,7 @@ class Demo:
         self.battle = False
 
     def loop(self):
+        '''The main game loop.'''
         running = True
         while running:
             if self._keys.QUIT:
@@ -42,4 +54,5 @@ class Demo:
         conn.close()
 
     def _render(self):
+        '''Updates the game display. Called once per loop.'''
         self._renderer.update_display()

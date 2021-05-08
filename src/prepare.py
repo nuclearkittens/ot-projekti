@@ -1,31 +1,29 @@
+'''A module containing functions and methods for
+preparing the demo.'''
+
 import pygame as pg
 
 from config import SCREEN_W, SCREEN_H
 from database.db_util import load_inventory
-# from entities.items import Item
 from entities.monster import Monster
 from entities.partymember import PartyMember
 
 def initialise_demo_display():
+    '''Initialises the Pygame display used in the demo.
+
+    return:
+        screen: Pygame display
+    '''
     screen = pg.display.set_mode((SCREEN_W, SCREEN_H))
     pg.display.set_caption('battle demo v666')
     return screen
 
 def create_demo_party():
-    # def create_party_inventory(conn):
-    #     inv = {}
-    #     cur = conn.cursor()
-    #     cur.execute(
-    #         '''SELECT item_id, qty FROM Inventory
-    #         WHERE char_id=?''', ('party',)
-    #     )
-    #     rows = cur.fetchall()
-    #     for row in rows:
-    #         item_id, qty = row[0], row[1]
-    #         new_item = Item(item_id, conn)
-    #         inv[item_id] = [new_item, qty]
-    #     return inv
+    '''Creates the party used in the demo.
 
+    return:
+        party: lst; list of party members available
+    '''
     party = []
     party.append(PartyMember('ej'))
     party.append(PartyMember('witch'))
@@ -36,6 +34,11 @@ def create_demo_party():
     return party
 
 def create_demo_enemies():
+    '''Creates enemies for the default demo battle.
+
+    return:
+        enemies: lst; list of Monster objects
+    '''
     mons1 = Monster('ikorni')
     mons2 = Monster('ikorni')
     enemies = [mons1, mons2]
