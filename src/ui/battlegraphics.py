@@ -45,30 +45,6 @@ class BattleGFX:
         self._calc_sprite_placement()
         self._calc_target_cursor_pos()
 
-    def update_sprites(self):
-        '''Updates all sprites as per their own update methods.'''
-        self.all.update()
-        self._update_dmg_buttons()
-        self.dmg_text.update()
-
-    def update_target_list(self):
-        '''Checks if the length of the target list remains the same,
-        i.e. has any of the participants died, and updates the
-        target cursor position list accordingly.
-        '''
-        if len(self.all) < len(self.target_cursor.pos):
-            self._calc_target_cursor_pos()
-
-    def _update_dmg_buttons(self):
-        '''Checks that the damage buttons don't overlap.'''
-        sprites = sorted(
-            self.dmg_text.sprites(), key=lambda sprite: sprite.rect.y,
-            reverse=True)
-        for idx, sprite in enumerate(sprites, start=1):
-            if idx < len(sprites)-1:
-                if sprite.rect.y - sprites[idx].rect.y < sprite.rect.h:
-                    sprite.rect.y = sprites[idx].rect.y - sprite.rect.h
-
     def create_dmg_txt_button(self, stat, amount, target):
         '''Creates a button displaying damage taken/amount healed.
 
@@ -76,7 +52,6 @@ class BattleGFX:
             stat: str; HP or MP
             amount: int; amount healed or damage taken
             target: BattleSprite object
-
         '''
         if stat == 'hp':
             if amount < 0:
@@ -101,7 +76,6 @@ class BattleGFX:
         renderer.draw_sprites(self.dmg_text)
         for sprite in self.all:
             sprite.draw_bars(renderer)
-            # sprite.draw_dmg_txt(renderer)
         if current not in self.party:
             self.default_menu.reset_cursor()
             self.default_menu.draw(renderer)
@@ -114,6 +88,30 @@ class BattleGFX:
         '''
         if self.target_cursor.active:
             renderer.blit(self.target_cursor.image, self.target_cursor.rect)
+
+    def update_sprites(self):
+        '''Updates all sprites as per their own update methods.'''
+        def update_dmg_buttons():
+            '''Checks that the damage buttons don't overlap.'''
+            sprites = sorted(
+                self.dmg_text.sprites(), key=lambda sprite: sprite.rect.y,
+                reverse=True)
+            for idx, sprite in enumerate(sprites, start=1):
+                if idx < len(sprites)-1:
+                    if sprite.rect.y - sprites[idx].rect.y < sprite.rect.h:
+                        sprite.rect.y = sprites[idx].rect.y - sprite.rect.h
+
+        self.all.update()
+        update_dmg_buttons()
+        self.dmg_text.update()
+
+    def update_target_list(self):
+        '''Checks if the length of the target list remains the same,
+        i.e. has any of the participants died, and updates the
+        target cursor position list accordingly.
+        '''
+        if len(self.all) < len(self.target_cursor.pos):
+            self._calc_target_cursor_pos()
 
     def _calc_sprite_placement(self):
         '''Function to calculate the sprite placement on screen. Is called when

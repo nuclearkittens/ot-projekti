@@ -44,10 +44,6 @@ class Character:
         self.curr_hp = self._stats.hp
         self.curr_mp = self._stats.mp
 
-    def _load_info(self):
-        '''Hook for loading other character data; overwritten in subclasses.'''
-        pass
-
     def check_hp(self):
         '''Checks that the current HP value is between 0 and maximum HP.
         Sets alive status to false and kills battlesprite if HP < 0.

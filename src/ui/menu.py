@@ -49,18 +49,6 @@ class BattleMenu:
             self._cursor = False
             self._cursor_current = None
 
-    def _calc_position(self):
-        '''Calculates the position of the menu panel depending on
-        the menu type.
-        '''
-        if self.menu_type == 'main':
-            n = 1
-        else:
-            n = 2
-        x = (n-1) * self._panel_w + n * self._gutter
-        y = SCREEN_H - self._panel_h - self._gutter
-        self.rect.topleft = (x, y)
-
     def draw(self, renderer):
         '''Draws the menu on screen.
 
@@ -72,6 +60,82 @@ class BattleMenu:
         renderer.draw_sprites(self._buttons)
         if self._cursor:
             renderer.blit(self._cursor.image, self._cursor.rect)
+
+    def update(self, keys):
+        '''Updates the state of the menu. If menu is active, checks if
+        a menu button has been pressed using sprite collision.
+
+        args:
+            keys: Keys object
+
+        return:
+            action: str or None; returns an action if one is chosen,
+                otherwise returns None
+        '''
+        def move_cursor(keys):
+            '''Moves the menu cursor according to player input, and updates its
+            position.
+
+            args:
+                keys: Keys object
+            '''
+            if self._cursor:
+                if keys.DOWN:
+                    for idx, pos in enumerate(self._cursor_pos):
+                        # print(idx, pos)
+                        if self._cursor_current == pos:
+                            if idx == len(self._cursor_pos)-1:
+                                self._cursor_current = self._cursor_pos[0]
+                            else:
+                                self._cursor_current = self._cursor_pos[idx+1]
+                            break
+                elif keys.UP:
+                    for idx, pos in enumerate(self._cursor_pos):
+                        if self._cursor_current == pos:
+                            if idx == 0:
+                                self._cursor_current = self._cursor_pos[-1]
+                            else:
+                                self._cursor_current = self._cursor_pos[idx-1]
+                            break
+                self._cursor.rect.bottomleft = self._cursor_current
+
+        action = None
+        if self.active:
+            move_cursor(keys)
+            if keys.SELECT:
+                button = pg.sprite.spritecollide(self._cursor, self._buttons, False)[0]
+                button.pressed = True
+                self.active = False
+                print(button.action)
+                action = button.action
+            elif keys.BACK:
+                self.active = False
+                self.reset_buttons()
+                action = 'main'
+        self._buttons.update()
+        return action
+
+    def reset_cursor(self):
+        '''Resets cursor to its default position (i.e. topmost menu button).'''
+        self._cursor.rect.bottomleft = self._cursor_pos[0]
+        self._cursor_current = self._cursor_pos[0]
+
+    def reset_buttons(self):
+        '''Resets buttons to unpressed status.'''
+        for button in self._buttons:
+            button.pressed = False
+
+    def _calc_position(self):
+        '''Calculates the position of the menu panel depending on
+        the menu type.
+        '''
+        if self.menu_type == 'main':
+            n = 1
+        else:
+            n = 2
+        x = (n-1) * self._panel_w + n * self._gutter
+        y = SCREEN_H - self._panel_h - self._gutter
+        self.rect.topleft = (x, y)
 
     def _create_buttons(self, options):
         '''Creates buttons for the menu.
@@ -98,67 +162,3 @@ class BattleMenu:
             self._cursor_pos.append((x, y + (self._panel_h // 4)))
             self._buttons.add(new_button)
             y += self._panel_h // 4
-
-    def _move_cursor(self, keys):
-        '''Moves the menu cursor according to player input, and updates its
-        position.
-
-        args:
-            keys: Keys object
-        '''
-        if self._cursor:
-            if keys.DOWN:
-                for idx, pos in enumerate(self._cursor_pos):
-                    # print(idx, pos)
-                    if self._cursor_current == pos:
-                        if idx == len(self._cursor_pos)-1:
-                            self._cursor_current = self._cursor_pos[0]
-                        else:
-                            self._cursor_current = self._cursor_pos[idx+1]
-                        break
-            elif keys.UP:
-                for idx, pos in enumerate(self._cursor_pos):
-                    if self._cursor_current == pos:
-                        if idx == 0:
-                            self._cursor_current = self._cursor_pos[-1]
-                        else:
-                            self._cursor_current = self._cursor_pos[idx-1]
-                        break
-            self._cursor.rect.bottomleft = self._cursor_current
-
-    def update(self, keys):
-        '''Updates the state of the menu. If menu is active, checks if
-        a menu button has been pressed using sprite collision.
-
-        args:
-            keys: Keys object
-
-        return:
-            action: str or None; returns an action if one is chosen,
-                otherwise returns None
-        '''
-        action = None
-        if self.active:
-            self._move_cursor(keys)
-            if keys.SELECT:
-                button = pg.sprite.spritecollide(self._cursor, self._buttons, False)[0]
-                button.pressed = True
-                self.active = False
-                print(button.action)
-                action = button.action
-            elif keys.BACK:
-                self.active = False
-                self.reset_buttons()
-                action = 'main'
-        self._buttons.update()
-        return action
-
-    def reset_cursor(self):
-        '''Resets cursor to its default position (i.e. topmost menu button).'''
-        self._cursor.rect.bottomleft = self._cursor_pos[0]
-        self._cursor_current = self._cursor_pos[0]
-
-    def reset_buttons(self):
-        '''Resets buttons to unpressed status.'''
-        for button in self._buttons:
-            button.pressed = False

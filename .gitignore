@@ -7,6 +7,8 @@
 /laskarit/viikko2/unicafe/.coverage
 /laskarit/viikko2/unicafe/htmlcov
 
+/backups/
+
 /src/__pycache__/
 /src/.vscode/
 /src/.venv/

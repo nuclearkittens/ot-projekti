@@ -27,7 +27,7 @@ class Item:
 
     def use(self, target):
         '''Use an item. Takes a character object (target) as the argument.
-        
+
         return:
             info: lst; info for creating a DamageText object
         '''
@@ -39,13 +39,11 @@ class Item:
                     amount *= target.max_hp
                 target.curr_hp += int(amount)
                 info.append(('hp', int(amount)))
-                # button = target.battlesprite.create_dmg_txt_button('hp', int(amount))
             if target_attr == 'mp':
                 if isinstance(amount, float):
                     amount *= target.max_mp
                 target.curr_mp += int(amount)
                 info.append(('mp', int(amount)))
-                # button = target.battlesprite.create_dmg_txt_button('mp', int(amount))
             return info
 
         info = []

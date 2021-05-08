@@ -26,29 +26,9 @@ class TargetCursor(Button):
         self.current_pos = None
         self.active = False
 
-    def _move_cursor(self, keys):
-        '''Moves the target cursor according to player input by updating
-        the current position.
-
-        args:
-            keys: Keys object'''
-        if keys.RIGHT:
-            for idx, pos in enumerate(self.pos):
-                if self.current_pos == pos:
-                    if idx == len(self.pos)-1:
-                        self.current_pos = self.pos[0]
-                    else:
-                        self.current_pos = self.pos[idx+1]
-                    break
-        elif keys.LEFT:
-            for idx, pos in enumerate(self.pos):
-                if self.current_pos == pos:
-                    if idx == 0:
-                        self.current_pos = self.pos[-1]
-                    else:
-                        self.current_pos = self.pos[idx-1]
-                    break
-        self.rect.midtop = self.current_pos
+    def reset(self):
+        '''Resets the cursor position.'''
+        self.current_pos = self.pos[0]
 
     def choose_target(self, keys, spritegroup):
         '''Chooses target by checking collisions if the cursor is active.
@@ -60,9 +40,33 @@ class TargetCursor(Button):
         return:
             target: sprite object
         '''
+        def move_cursor(keys):
+            '''Moves the target cursor according to player input by updating
+            the current position.
+
+            args:
+                keys: Keys object'''
+            if keys.RIGHT:
+                for idx, pos in enumerate(self.pos):
+                    if self.current_pos == pos:
+                        if idx == len(self.pos)-1:
+                            self.current_pos = self.pos[0]
+                        else:
+                            self.current_pos = self.pos[idx+1]
+                        break
+            elif keys.LEFT:
+                for idx, pos in enumerate(self.pos):
+                    if self.current_pos == pos:
+                        if idx == 0:
+                            self.current_pos = self.pos[-1]
+                        else:
+                            self.current_pos = self.pos[idx-1]
+                        break
+            self.rect.midtop = self.current_pos
+
         target = None
         if self.active:
-            self._move_cursor(keys)
+            move_cursor(keys)
             if keys.SELECT:
                 target = pg.sprite.spritecollide(self, spritegroup, False)[0]
                 print(target)

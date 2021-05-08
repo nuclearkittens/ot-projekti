@@ -1,6 +1,6 @@
 import pygame as pg
 
-# from config import FPS
+from config import FPS
 from prepare import initialise_demo_display, create_demo_party
 from keys import Keys
 from battle import Battle
@@ -23,7 +23,6 @@ class Demo:
     def __init__(self):
         '''Constructor for the Demo class.'''
         initialise_db()
-        # self._conn = get_db_connection()
 
         self._clock = pg.time.Clock()
         self._keys = Keys()
@@ -40,6 +39,7 @@ class Demo:
         '''The main game loop.'''
         running = True
         while running:
+            self._clock.tick(FPS)
             if self._keys.QUIT:
                 running = False
             if self.battle:
@@ -49,7 +49,6 @@ class Demo:
                     )
                 battle.loop()
             self._render()
-            # self._clock.tick(FPS)
         conn = get_db_connection()
         drop_tables(conn)
         conn.close()
