@@ -1,9 +1,9 @@
 import pygame as pg
 
-from config import HP_GREEN, HP_RED, MP_BLUE
+# from config import HP_GREEN, HP_RED, MP_BLUE
 from util import load_img
 from entities.bar import HPBar, MPBar
-from ui.buttons import DamageText
+# from ui.buttons import DamageText
 
 class BattleSprite(pg.sprite.Sprite):
     '''Class for handling the character sprite in battle.
@@ -16,7 +16,7 @@ class BattleSprite(pg.sprite.Sprite):
         image: Surface; current image
         rect: Rect; rectangular area containing the sprite
         bars: dict; hp (and mp) bar(s) associated with the character
-        damage: sprite Group; group containing damage text buttons
+        # damage: sprite Group; group containing damage text buttons
     '''
     def __init__(self, character):
         '''Constructor for BattleSprite class.
@@ -36,7 +36,7 @@ class BattleSprite(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self._bars = {}
-        self._damage = pg.sprite.Group()
+        # self._damage = pg.sprite.Group()
 
     def update(self):
         '''Checks the time passed since the last frame update,
@@ -46,22 +46,21 @@ class BattleSprite(pg.sprite.Sprite):
         self._character.check_hp()
         self._character.check_mp()
 
-        anim_cooldown = 250
+        anim_cooldown = 200
         self.image = self._anim_list[self._action][self._frame_idx]
         if pg.time.get_ticks() - self._update_time > anim_cooldown:
             self._update_time = pg.time.get_ticks()
             self._frame_idx += 1
         if self._frame_idx >= len(self._anim_list[self._action]):
-            if self._action == 3:
-                self.kill()
-            else:
-                self._idle()
+            # if self._action == 3:
+            #     self.kill()
+            self._idle()
 
         for bar in self._bars.values():
             bar.update()
 
-        self._update_dmg_buttons()
-        self._damage.update()
+        # self._update_dmg_buttons()
+        # self._damage.update()
 
     def _idle(self):
         '''Resets the sprite animation to idle.'''
@@ -83,9 +82,11 @@ class BattleSprite(pg.sprite.Sprite):
 
     def dead(self):
         '''Changes the sprite animation to dead.'''
-        self._action = 3
-        self._frame_idx = 0
-        self._update_time = pg.time.get_ticks()
+        # self._damage.empty()
+        # self._action = 3
+        # self._frame_idx = 0
+        # self._update_time = pg.time.get_ticks()
+        self.kill()
 
     def set_position(self, x, y):
         '''Places the midbottom of the image at the given coordinates.'''
@@ -125,39 +126,42 @@ class BattleSprite(pg.sprite.Sprite):
         for bar in self._bars.values():
             bar.draw(renderer)
 
-    def draw_dmg_txt(self, renderer):
-        '''Blits the damage text buttons on screen.
+    # def draw_dmg_txt(self, renderer):
+    #     '''Blits the damage text buttons on screen.
 
-        args:
-            renderer: Renderer object
-        '''
-        renderer.draw_sprites(self._damage)
+    #     args:
+    #         renderer: Renderer object
+    #     '''
+    #     renderer.draw_sprites(self._damage)
 
-    def create_dmg_txt_button(self, stat, amount):
-        '''Creates a button displaying damage taken/amount healed.
+    # def create_dmg_txt_button(self, stat, amount):
+    #     '''Creates a button displaying damage taken/amount healed.
 
-        args:
-            stat: str; HP or MP
-            amount: int; amount healed or damage taken
-        '''
-        if stat == 'hp':
-            if amount < 0:
-                colour = HP_RED
-            else:
-                colour = HP_GREEN
-        elif stat == 'mp':
-            colour = MP_BLUE
-        self._damage.add(DamageText(str(abs(amount)), colour, self.rect.midtop))
+    #     args:
+    #         stat: str; HP or MP
+    #         amount: int; amount healed or damage taken
 
-    def _update_dmg_buttons(self):
-        '''Checks that the damage buttons don't overlap.'''
-        sprites = sorted(
-            self._damage.sprites(), key=lambda sprite: sprite.rect.y,
-            reverse=True)
-        for idx, sprite in enumerate(sprites, start=1):
-            if idx < len(sprites)-1:
-                if sprite.rect.y - sprites[idx].rect.y < sprite.rect.h:
-                    sprite.rect.y = sprites[idx].rect.y - sprite.rect.h
+    #     return:
+    #         DamageText object
+    #     '''
+    #     if stat == 'hp':
+    #         if amount < 0:
+    #             colour = HP_RED
+    #         else:
+    #             colour = HP_GREEN
+    #     elif stat == 'mp':
+    #         colour = MP_BLUE
+    #     return DamageText(str(abs(amount)), colour, self.rect.midtop)
+
+    # def _update_dmg_buttons(self):
+    #     '''Checks that the damage buttons don't overlap.'''
+    #     sprites = sorted(
+    #         self._damage.sprites(), key=lambda sprite: sprite.rect.y,
+    #         reverse=True)
+    #     for idx, sprite in enumerate(sprites, start=1):
+    #         if idx < len(sprites)-1:
+    #             if sprite.rect.y - sprites[idx].rect.y < sprite.rect.h:
+    #                 sprite.rect.y = sprites[idx].rect.y - sprite.rect.h
 
     def _load_frames(self):
         '''Loads the frames for sprite animation.'''

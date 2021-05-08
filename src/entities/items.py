@@ -26,24 +26,36 @@ class Item:
         self._effects = load_item_effects(self._id)
 
     def use(self, target):
-        '''Use an item. Takes a character object (target) as the argument.'''
+        '''Use an item. Takes a character object (target) as the argument.
+        
+        return:
+            info: lst; info for creating a DamageText object
+        '''
         def heal(target, target_attr, amount):
             '''Use a healing item.'''
+            info = []
             if target_attr == 'hp':
                 if isinstance(amount, float):
                     amount *= target.max_hp
                 target.curr_hp += int(amount)
-                target.battlesprite.create_dmg_txt_button('hp', int(amount))
+                info.append(('hp', int(amount)))
+                # button = target.battlesprite.create_dmg_txt_button('hp', int(amount))
             if target_attr == 'mp':
                 if isinstance(amount, float):
                     amount *= target.max_mp
                 target.curr_mp += int(amount)
-                target.battlesprite.create_dmg_txt_button('mp', int(amount))
+                info.append(('mp', int(amount)))
+                # button = target.battlesprite.create_dmg_txt_button('mp', int(amount))
+            return info
 
+        info = []
         for effect in self._effects:
             if effect[0] == 'heal':
                 target_attr, amount = effect[1], effect[2]
-                heal(target, target_attr, amount)
+                heal_info = heal(target, target_attr, amount)
+                for elem in heal_info:
+                    info.append(elem)
+            return info
 
     @property
     def name(self):

@@ -72,16 +72,18 @@ class Character:
         args:
             item_id: str; id for the item to be used
             target: character object; the character the item is used on.
+
+        return:
+            info: lst; list for creating a DamageText object
         '''
         if item_id in self._inventory:
             if self._inventory[item_id][1] > 0:
                 self._inventory[item_id][1] -= 1
-                self._inventory[item_id][0].use(target)
+                info = self._inventory[item_id][0].use(target)
                 target.check_hp()
-            else:
-                raise ValueError(f'not enough {item_id}s in inventory!')
-        else:
-            raise ValueError(f'no item "{item_id}" in inventory!')
+                return info
+            raise ValueError(f'not enough {item_id}s in inventory!')
+        raise ValueError(f'no item "{item_id}" in inventory!')
 
     def use_skill(self, skill_id, target):
         '''Uses skill if character has enough MP to execute it,
@@ -91,13 +93,17 @@ class Character:
         args:
             skill_id: str; id for the skill to be used
             target: character object; the character the skill is used on.
+
+        return:
+            info: lst; info for creating a DamageText object
         '''
         if self._skills[skill_id].mp_cost > self.curr_mp:
             raise ValueError('not enough mp!')
         self.curr_mp -= self._skills[skill_id].mp_cost
-        self._skills[skill_id].use(self, target)
+        info = self._skills[skill_id].use(self, target)
         self.battlesprite.attack()
         target.battlesprite.hurt()
+        return info
 
     def get_item_qty(self, item_id):
         '''Returns how many of the specified item the character has left.'''

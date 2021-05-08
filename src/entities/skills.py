@@ -29,6 +29,9 @@ class Skill:
         args:
             user: Character object
             target: Character object
+
+        return:
+            info: lst; info for creating a DamageText object
         '''
         mult = target.res[self._attr.element] * self._attr.multiplier
         if self._info.category == 'skills':
@@ -38,13 +41,16 @@ class Skill:
         else:
             atk, defs = 0, 0
 
+        info = []
         for i in range(self._attr.hits):
             if atk < defs // 2:
                 dmg = 1
             else:
                 dmg = self._calc_dmg(atk, defs, mult)
             target.curr_hp -= dmg
-            target.battlesprite.create_dmg_txt_button('hp', -dmg)
+            # target.battlesprite.create_dmg_txt_button('hp', -dmg)
+            info.append(('hp', -dmg))
+        return info
 
     def _calc_dmg(self, atk, defs, mult):
         '''Calculates the damage taken by the target.

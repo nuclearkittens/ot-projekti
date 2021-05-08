@@ -1,9 +1,12 @@
 import pygame as pg
 
-from config import SCREEN_W, SCREEN_H, BAR_W, BAR_H
+from config import (
+    SCREEN_W, SCREEN_H, BAR_W, BAR_H,
+    HP_GREEN, HP_RED, MP_BLUE)
 from prepare import create_demo_enemies
 from util import load_img
 from ui.menu import BattleMenu
+from ui.buttons import DamageText
 from ui.cursors import TargetCursor
 
 class BattleGFX:
@@ -45,6 +48,8 @@ class BattleGFX:
     def update_sprites(self):
         '''Updates all sprites as per their own update methods.'''
         self.all.update()
+        self._update_dmg_buttons()
+        self.dmg_text.update()
 
     def update_target_list(self):
         '''Checks if the length of the target list remains the same,
@@ -53,6 +58,36 @@ class BattleGFX:
         '''
         if len(self.all) < len(self.target_cursor.pos):
             self._calc_target_cursor_pos()
+
+    def _update_dmg_buttons(self):
+        '''Checks that the damage buttons don't overlap.'''
+        sprites = sorted(
+            self.dmg_text.sprites(), key=lambda sprite: sprite.rect.y,
+            reverse=True)
+        for idx, sprite in enumerate(sprites, start=1):
+            if idx < len(sprites)-1:
+                if sprite.rect.y - sprites[idx].rect.y < sprite.rect.h:
+                    sprite.rect.y = sprites[idx].rect.y - sprite.rect.h
+
+    def create_dmg_txt_button(self, stat, amount, target):
+        '''Creates a button displaying damage taken/amount healed.
+
+        args:
+            stat: str; HP or MP
+            amount: int; amount healed or damage taken
+            target: BattleSprite object
+
+        '''
+        if stat == 'hp':
+            if amount < 0:
+                colour = HP_RED
+            else:
+                colour = HP_GREEN
+        elif stat == 'mp':
+            colour = MP_BLUE
+
+        button = DamageText(str(abs(amount)), colour, target.rect.midtop)
+        button.add(self.dmg_text)
 
     def render(self, renderer, current):
         '''Draws the graphic elements on screen.
@@ -63,9 +98,10 @@ class BattleGFX:
         '''
         renderer.blit(self.bg_img, (0, 0))
         renderer.draw_sprites(self.all)
+        renderer.draw_sprites(self.dmg_text)
         for sprite in self.all:
             sprite.draw_bars(renderer)
-            sprite.draw_dmg_txt(renderer)
+            # sprite.draw_dmg_txt(renderer)
         if current not in self.party:
             self.default_menu.reset_cursor()
             self.default_menu.draw(renderer)
@@ -178,6 +214,7 @@ class BattleGFX:
                 temp.append((item_id, lst[0].name, lst[1]))
             return temp
 
+        item_menu = None
         for sprite in self.party:
             char_menus = {}
             skl_options, mag_options = skill_options(sprite.character)
@@ -187,5 +224,7 @@ class BattleGFX:
                 self.default_menu = char_menus['main']
             char_menus['skill'] = BattleMenu('skill', skl_options)
             char_menus['magic'] = BattleMenu('magic', mag_options)
-            char_menus['item'] = BattleMenu('item', itm_options)
+            if item_menu is None:
+                item_menu = BattleMenu('item', itm_options)
+            char_menus['item'] = item_menu
             self.menus[sprite] = char_menus
