@@ -4,7 +4,7 @@ from config import SCREEN_W, SCREEN_H, BAR_W, BAR_H
 from prepare import create_demo_enemies
 from util import load_img
 from ui.menu import BattleMenu
-from ui.buttons import TargetCursor
+from ui.cursors import TargetCursor
 
 class BattleGFX:
     '''A class for updating and handling the graphics elements in battle.
@@ -156,12 +156,12 @@ class BattleGFX:
             '''
             temp_skl = []
             temp_mag = []
-            for skill in char.skills.values():
-                if skill.name != 'Attack':
+            for skill_id, skill in char.skills.items():
+                if skill_id != 'attack':
                     if skill.category == 'skills':
-                        temp_skl.append((skill.name.lower(), skill.mp_cost))
+                        temp_skl.append((skill_id, skill.name.lower(), skill.mp_cost))
                     elif skill.category == 'magic':
-                        temp_mag.append((skill.name.lower(), skill.mp_cost))
+                        temp_mag.append((skill_id, skill.name.lower(), skill.mp_cost))
             return temp_skl, temp_mag
 
         def item_options(char):
@@ -171,8 +171,8 @@ class BattleGFX:
                 char: Character object
             '''
             temp = []
-            for lst in char.inventory.values():
-                temp.append((lst[0].name, lst[1]))
+            for item_id, lst in char.inventory.items():
+                temp.append((item_id, lst[0].name, lst[1]))
             return temp
 
         for sprite in self.party:

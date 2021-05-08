@@ -1,10 +1,23 @@
 import pygame as pg
 
 class EventHandler:
+    '''A class for handling Pygame events.
+
+    attr:
+        keys: Keys object, tracks the player input
+    '''
     def __init__(self, keys):
+        '''EventHandler class constructor.
+
+        args:
+            keys: Keys object
+        '''
         self._keys = keys
 
     def check_input(self):
+        '''Checks the player input, and changes the state of
+        pressed keys accordingly.
+        '''
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self._keys.QUIT = True
@@ -24,4 +37,5 @@ class EventHandler:
 
     @property
     def keys(self):
+        '''Returns a Keys object.'''
         return self._keys

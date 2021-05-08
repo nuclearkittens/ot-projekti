@@ -1,67 +1,58 @@
 import pygame as pg
 
-from config import (
-    FONT, FONT_SIZE, MENU_CURSOR, TARGET_CURSOR,
-    CURSOR_SIZE, DARK_ROSE, POWDER_ROSE
-)
-
-# TO DO: move cursors to their own class
+from config import FONT, FONT_SIZE, DARK_ROSE, POWDER_ROSE
 
 class Button(pg.sprite.Sprite):
+    '''A general class for buttons. Inherits Pygame's sprite class.
+
+    attr:
+        image: a rendered text box
+        rect: bounding rectangle for the image
+    '''
     def __init__(self, text, size, colour):
+        '''Button class constructor.
+
+        args:
+            text: str; text to be drawn as the button image
+            size: int; font size
+            colour: tuple; colour of the text
+        '''
         pg.sprite.Sprite.__init__(self)
         self.image = self._create_button(text, size, colour)
         self.rect = self.image.get_rect()
 
     def _create_button(self, text, size, colour):
+        '''Creates a new button.
+
+        args:
+            text: str; text to be written
+            size: int; font size
+            colour: tuple; font colour
+        '''
         font = pg.font.Font(FONT, size)
         return font.render(text, False, colour)
 
-class MenuCursor(Button):
-    def __init__(self):
-        Button.__init__(self, MENU_CURSOR, CURSOR_SIZE, POWDER_ROSE)
-
-class TargetCursor(Button):
-    def __init__(self):
-        Button.__init__(self, TARGET_CURSOR, CURSOR_SIZE, POWDER_ROSE)
-
-        self.pos = []
-        self.current_pos = None
-        self.active = False
-
-    def _move_cursor(self, keys):
-        if keys.RIGHT:
-            for idx, pos in enumerate(self.pos):
-                if self.current_pos == pos:
-                    if idx == len(self.pos)-1:
-                        self.current_pos = self.pos[0]
-                    else:
-                        self.current_pos = self.pos[idx+1]
-                    break
-        elif keys.LEFT:
-            for idx, pos in enumerate(self.pos):
-                if self.current_pos == pos:
-                    if idx == 0:
-                        self.current_pos = self.pos[-1]
-                    else:
-                        self.current_pos = self.pos[idx-1]
-                    break
-        self.rect.midtop = self.current_pos
-
-    def choose_target(self, keys, spritegroup):
-        target = None
-        if self.active:
-            self._move_cursor(keys)
-            if keys.SELECT:
-                target = pg.sprite.spritecollide(self, spritegroup, False)[0]
-                print(target)
-                self.active = False
-            elif keys.BACK:
-                self.active = False
-        return target
-
 class BattleMenuButton(Button):
-    def __init__(self, name, text):
+    '''Button subclass for action buttons in a battle menu.
+
+    attr:
+        size: int; font size
+        name: str; name of the button action
+        text: str; text to be drawn on the button image
+        pressed: bool; tells whether the button has been pressed
+        passive_img: Surface; button shown when it has not been pressed
+        active_img: Surface; button shown when it has been pressed
+    '''
+    def __init__(self, action, name, text):
+        '''BattleMenuButton class constructor.
+
+        args:
+            action: str; action associated with the button; can be
+                a menu action or skill identifier
+            name: str: name of the button action
+            text: str: text to be shown on the button
+        '''
+        self.action = action
         self._size = FONT_SIZE
         self._name = name
         self._text = f'  {text}'
@@ -75,20 +66,39 @@ class BattleMenuButton(Button):
             self._text, self._size, DARK_ROSE
         )
 
-    @property
-    def action(self):
-        return self._name
-
     def update(self):
+        '''Updates the sprite image according to whether the
+        button has been pressed.
+        '''
         if self.pressed:
             self.image = self._active_img
         else:
             self.image = self._passive_img
 
 class ItemButton(Button):
-    def __init__(self, name, qty):
+    '''Button subclass for the item menu buttons on the battle menu.
+
+    attr:
+        action: str; item identifier
+        size: int; font size
+        name: str; item name
+        qty: int; item quantity in character's inventory
+        text: str; text to be drawn on the button
+        pressed: bool; indicator of whether the button has been pressed
+        passive_img: Surface: button to be drawn on screen when it is not pressed
+        active_img: Surface: button to be drawn on screen when it has been pressed
+    '''
+    def __init__(self, action, name, qty):
+        '''ItemButton class constructor.
+
+        args:
+            action: str; item identifier
+            name: str; item name
+            qty: int; item quantity
+        '''
+        self.action = action
         self._size = FONT_SIZE
-        self._name = name.lower()
+        self._name = name
         self._qty = qty
         self._text = self._update_text()
         Button.__init__(self, self._text, self._size, POWDER_ROSE)
@@ -102,9 +112,13 @@ class ItemButton(Button):
         )
 
     def _update_text(self):
-        return f'  {self._name}{self._qty:2}'
+        '''Returns an updated button text.'''
+        return f'  {self._name.lower()}{self._qty:2}'
 
     def update(self):
+        '''Updates the sprite image, as well as item quantity if
+        an item has been used.
+        '''
         if self.pressed:
             if self._qty > 0:
                 self._qty -= 1
@@ -119,6 +133,3 @@ class ItemButton(Button):
         else:
             self.image = self._passive_img
 
-    @property
-    def action(self):
-        return self._name
