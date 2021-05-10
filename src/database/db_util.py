@@ -123,7 +123,8 @@ def load_inventory(char_id):
         char_id: str
 
     return:
-        inv: dict; key: item_id (str), val: item (Item object)
+        inv: dict;
+            key: item_id (str), val: item (Item object), qty: int; quantity
     '''
     conn = get_db_connection()
     cur = conn.cursor()

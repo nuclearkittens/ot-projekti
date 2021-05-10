@@ -69,6 +69,7 @@ class BattleMenu:
             keys: Keys object
 
         return:
+            info: str; current position of cursor to tell what to update on info panel
             action: str or None; returns an action if one is chosen,
                 otherwise returns None
         '''
@@ -99,21 +100,26 @@ class BattleMenu:
                             break
                 self._cursor.rect.bottomleft = self._cursor_current
 
+        info = None
         action = None
         if self.active:
             move_cursor(keys)
+            try:
+                pos = pg.sprite.spritecollide(self._cursor, self._buttons, False)[0]
+                info = pos.action
+            except AttributeError:
+                info = None
             if keys.SELECT:
                 button = pg.sprite.spritecollide(self._cursor, self._buttons, False)[0]
                 button.pressed = True
                 self.active = False
-                print(button.action)
                 action = button.action
             elif keys.BACK:
                 self.active = False
                 self.reset_buttons()
                 action = 'main'
         self._buttons.update()
-        return action
+        return info, action
 
     def reset_cursor(self):
         '''Resets cursor to its default position (i.e. topmost menu button).'''

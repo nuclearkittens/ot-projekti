@@ -1,13 +1,15 @@
 import pygame as pg
 
-from config import HP_GREEN, HP_YELLOW, HP_RED, MP_BLUE, DARK_PURPLE
+from config import (
+    HP_GREEN, HP_YELLOW, HP_RED, MP_BLUE, DARK_PURPLE,
+    POWDER_ROSE, FONT, FONT_SIZE, SCREEN_W, SCREEN_H)
 
 class Bar:
     '''General class for rectangular bars.
 
     attr:
         base: a Pygame surface, works as the base of the bar
-        top: a Pygame surface, the moving part of the bar
+        top: a Pygame surface
         rect: a Pygame object for storing coordinates
     '''
     def __init__(self, w, h):
@@ -24,9 +26,9 @@ class Bar:
         self._top = pg.Surface((self._w, self._h))
         self.rect = self._base.get_rect()
 
-    def update(self):
-        '''Hook for subclasses, not functional on itself.'''
-        pass
+    # def update(self):
+    #     '''Hook for subclasses, not functional on itself.'''
+    #     pass
 
     def draw(self, renderer):
         '''Blits the bar on the display.
@@ -88,3 +90,22 @@ class MPBar(Bar):
         new_w = int(ratio * self._w)
         self._top = pg.Surface((new_w, self._h))
         self._top.fill(self._colour)
+
+class InfoBar(Bar):
+    '''Class for displaying an info bar in battle.'''
+    def __init__(self):
+        margin = SCREEN_W // 64
+        w = SCREEN_W - (2 * margin)
+        h = SCREEN_H // 16
+        Bar.__init__(self, w, h)
+
+        self.rect.topleft = (margin, margin)
+        self.update(' ')
+
+    def update(self, text):
+        self._base.fill(POWDER_ROSE)
+        font = pg.font.Font(FONT, FONT_SIZE)
+        self._top = font.render(text, False, DARK_PURPLE)
+        if self._top.get_width() > self._w:
+            self._top = pg.transform.scale(self._top, (self._w, self._h))
+        # self._top = pg.transform.scale(surf, (self._w, self._h))

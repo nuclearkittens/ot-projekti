@@ -40,6 +40,9 @@ def create_demo_enemies():
         enemies: lst; list of Monster objects
     '''
     mons1 = Monster('ikorni')
+    old = mons1.name
+    mons1.name = f'{old} A'
     mons2 = Monster('ikorni')
+    mons2.name = f'{old} B'
     enemies = [mons1, mons2]
     return enemies

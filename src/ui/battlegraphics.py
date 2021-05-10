@@ -5,6 +5,7 @@ from config import (
     HP_GREEN, HP_RED, MP_BLUE)
 from prepare import create_demo_enemies
 from util import load_img
+from entities.bar import InfoBar
 from ui.menu import BattleMenu
 from ui.buttons import DamageText
 from ui.cursors import TargetCursor
@@ -34,8 +35,10 @@ class BattleGFX:
         self.enemies = [enem.battlesprite for enem in create_demo_enemies()]
         self.party = [member.battlesprite for member in party]
         self.all = pg.sprite.Group(self.enemies, self.party)
+
         self.target_cursor = TargetCursor()
         self.dmg_text = pg.sprite.Group()
+        self.info_panel = InfoBar()
 
         self.bg_img = load_img('assets/gfx/backgrounds/battlebg1.png')
         self.menus = {}
@@ -79,6 +82,7 @@ class BattleGFX:
         if current not in self.party:
             self.default_menu.reset_cursor()
             self.default_menu.draw(renderer)
+        self.info_panel.draw(renderer)
 
     def draw_cursor(self, renderer):
         '''Draws the target selection cursor if target selection is in an active state.
@@ -88,6 +92,14 @@ class BattleGFX:
         '''
         if self.target_cursor.active:
             renderer.blit(self.target_cursor.image, self.target_cursor.rect)
+
+    def update_info(self, text):
+        '''Updates the text displayed on the info panel.
+
+        args:
+            text: str; text to be shown
+        '''
+        self.info_panel.update(text)
 
     def update_sprites(self):
         '''Updates all sprites as per their own update methods.'''

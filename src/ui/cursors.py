@@ -39,6 +39,7 @@ class TargetCursor(Button):
 
         return:
             target: sprite object
+            name: str; name of the target the cursor is pointing to
         '''
         def move_cursor(keys):
             '''Moves the target cursor according to player input by updating
@@ -65,12 +66,15 @@ class TargetCursor(Button):
             self.rect.midtop = self.current_pos
 
         target = None
+        name = None
+
         if self.active:
             move_cursor(keys)
+            sprite = pg.sprite.spritecollide(self, spritegroup, False)[0]
+            name = sprite.character.name
             if keys.SELECT:
-                target = pg.sprite.spritecollide(self, spritegroup, False)[0]
-                print(target)
+                target = sprite
                 self.active = False
             elif keys.BACK:
                 self.active = False
-        return target
+        return target, name

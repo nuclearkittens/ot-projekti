@@ -70,3 +70,13 @@ class Monster(Character):
                 action = self._default_action
             target = choice(target_list)
         return action, target
+
+    @property
+    def name(self):
+        '''Returns the name of the monster.'''
+        return self._info.name
+
+    @name.setter
+    def name(self, new_name):
+        '''Sets a new name for the monster.'''
+        self._info._replace(name=new_name)

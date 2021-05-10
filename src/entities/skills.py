@@ -83,3 +83,8 @@ class Skill:
     def category(self):
         '''Returns the category of the skill.'''
         return self._info.category
+
+    @property
+    def description(self):
+        '''Returns the skill description.'''
+        return self._info.description

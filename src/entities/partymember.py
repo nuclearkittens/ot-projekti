@@ -44,3 +44,8 @@ class PartyMember(Character):
             self._inventory[item_id] = [Item(item_id), qty]
         else:
             self._inventory[item_id][1] += qty
+
+    @property
+    def name(self):
+        '''Returns the name of the party member.'''
+        return self._name

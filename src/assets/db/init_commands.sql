@@ -12,13 +12,13 @@ CREATE TABLE Loot (monster_id TEXT PRIMARY KEY, money INTEGER, item_id TEXT, qty
 CREATE TABLE Inventory (char_id TEXT, item_id TEXT, qty INTEGER);
 INSERT INTO Items (id, name, descr) VALUES ('potion', 'Potion', 'Restores 20 HP to one character');
 INSERT INTO Items (id, name, descr) VALUES ('coffee', 'Coffee', 'Restores 5 MP to one character');
-INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('attack', 'skills', 'physical', 'Attack', 'Deals physical damage to a single target', 'physical', 1, 0, 1.0, 0.1);
+INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('attack', 'skills', 'physical', 'Attack', 'Physical damage to a single target', 'physical', 1, 0, 1.0, 0.1);
 INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('kick', 'skills', 'physical', 'Kick', 'Kick a single target', 'physical', 1, 0, 1.0, 0.1);
 INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('dbl_claw', 'skills', 'physical', 'Double Claw', 'Deals two hits to a single target', 'physical', 2, 2, 0.7, 0.05);
-INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('fire', 'magic', 'blk', 'Fire', 'Deal weak fire-elemental damage to a single target', 'fire', 1, 4, 1.0, 0.1);
-INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('ice', 'magic', 'blk', 'Ice', 'Deal weak ice-elemental damage to a single target', 'ice', 1, 4, 1.0, 0.1);
-INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('thunder', 'magic', 'blk', 'Thunder', 'Deal weak lightning-elemental damage to a single target', 'lightning', 1, 4, 1.0, 0.1);
-INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('wind', 'magic', 'blk', 'Wind', 'Deal weak wind-elemental damage to a single target', 'wind', 1, 4, 1.0, 0.1);
+INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('fire', 'magic', 'blk', 'Fire', 'Weak fire damage to a single target', 'fire', 1, 4, 1.0, 0.1);
+INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('ice', 'magic', 'blk', 'Ice', 'Weak ice damage to a single target', 'ice', 1, 4, 1.0, 0.1);
+INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('thunder', 'magic', 'blk', 'Thunder', 'Weak lightning damage to a single target', 'lightning', 1, 4, 1.0, 0.1);
+INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ('wind', 'magic', 'blk', 'Wind', 'Weak wind damage to a single target', 'wind', 1, 4, 1.0, 0.1);
 INSERT INTO Effects (id, target_attr, effect, amount) VALUES ('hp20', 'hp', 'heal', 20);
 INSERT INTO Effects (id, target_attr, effect, amount) VALUES ('mp5', 'mp', 'heal', 5);
 INSERT INTO ItemEffects (item_id, effect_id) VALUES ('potion', 'hp20');

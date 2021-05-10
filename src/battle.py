@@ -25,6 +25,19 @@ class Battle:
                 for elem in info:
                     self._gfx.create_dmg_txt_button(elem[0], elem[1], target)
 
+        def update_info(action, current, target):
+            name_curr = current.character.name.upper()
+            name_target = target.character.name.upper()
+            if name_curr == name_target:
+                name_target = 'THEMSELF'
+            if action in current.character.inventory:
+                action = current.character.inventory[action][0].name.upper()
+            elif action in current.character.skills:
+                action = current.character.skills[action].name.upper()
+
+            text = f' {name_curr} used {action} on {name_target}!'
+            self._gfx.update_info(text)
+
         def tick():
             for char in self._turns:
                 if not char.alive():
@@ -78,6 +91,7 @@ class Battle:
                 elif current in self._gfx.enemies:
                     action, target = current.character.make_decision(self._gfx.party)
                 execute_action(action, current, target)
+                update_info(action, current, target)
                 self._reset_menus()
             cooldown += 1
             update()
@@ -114,7 +128,7 @@ class Battle:
             return menu
 
         def check_action(menu, menu_stack, current):
-            action = menu.update(self._keys)
+            info, action = menu.update(self._keys)
             if action is not None:
                 if action == 'main' and len(menu_stack) > 1:
                     menu_stack.pop()
@@ -128,7 +142,7 @@ class Battle:
                     ):
                     self._gfx.target_cursor.active = True
 
-            return action
+            return info, action
 
         def check_target():
             return self._gfx.target_cursor.choose_target(self._keys, self._gfx.all)
@@ -138,6 +152,23 @@ class Battle:
             self._render(current, menu_stack)
             self._keys.reset_keys()
             self._clock.tick(FPS)
+
+        def update_info(current, info):
+            if (
+                    info in self._gfx.menus[current] and
+                    info != 'attack'
+                ):
+                text = f' Choose {info}'
+            elif info in current.character.skills:
+                text = f' {current.character.skills[info].description}'
+            elif info in current.character.inventory:
+                text = f' {current.character.inventory[info][0].description}'
+            elif info is not None:
+                text = f' {info}'
+            try:
+                self._gfx.update_info(text)
+            except UnboundLocalError:
+                pass
 
         player = True
         menu_stack = set_menu_stack(current)
@@ -149,8 +180,11 @@ class Battle:
                 return None, None
             menu = check_menu(menu_stack)
             if menu is not None:
-                action = check_action(menu, menu_stack, current)
-            target = check_target()
+                info, action = check_action(menu, menu_stack, current)
+                update_info(current, info)
+            target, name = check_target()
+            if name is not None:
+                update_info(current, name)
             if target is not None:
                 player = False
                 self._reset_menus()
