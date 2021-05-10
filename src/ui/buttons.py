@@ -1,6 +1,6 @@
 import pygame as pg
 
-from config import FONT, FONT_SIZE, DARK_ROSE, POWDER_ROSE
+from config import SCREEN_H, FONT, FONT_SIZE, DARK_ROSE, POWDER_ROSE
 
 class Button(pg.sprite.Sprite):
     '''A general class for buttons. Inherits Pygame's sprite class.
@@ -150,6 +150,6 @@ class DamageText(Button):
     def update(self):
         '''Moves the button up and makes it disappear when
         it hits the top of the screen.'''
-        self.rect.y -= 0.01
-        if self.rect.y == 0:
+        self.rect.y -= 1
+        if self.rect.y == SCREEN_H // 4:
             self.kill()

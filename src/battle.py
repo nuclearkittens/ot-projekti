@@ -1,4 +1,5 @@
-import pygame as pg
+from collections import deque
+# import pygame as pg
 
 from config import FPS
 from ui.battlegraphics import BattleGFX
@@ -38,36 +39,48 @@ class Battle:
                     return char
             return None
 
-        def update(current):
-            self._reset_menus()
+        def get_current(queue):
+            while True:
+                current = queue.popleft()
+                if current.character.alive:
+                    return current
+
+        def update():
+            # self._reset_menus()
             self._gfx.update_sprites()
             self._gfx.update_target_list()
             tick()
+            # self._clock.tick(FPS)
+            self._render()
             self._clock.tick(FPS)
-            self._render(current)
 
         running = True
         current = None
         action = None
         target = None
+        queue = deque()
 
-        cooldown = 100
-        update_time = pg.time.get_ticks()
+        cooldown = 0
+        wait = 50
 
         while running:
             self._check_events()
             if self._keys.QUIT:
                 running = False
             current = check_turn()
-            if current in self._gfx.party:
-                action, target = self._player_action(current)
-            elif current in self._gfx.enemies:
-                action, target = current.character.make_decision(self._gfx.party)
             if current is not None:
+                queue.append(current)
+            if cooldown > wait:
+                cooldown = 0
+                current = get_current(queue)
+                if current in self._gfx.party:
+                    action, target = self._player_action(current)
+                elif current in self._gfx.enemies:
+                    action, target = current.character.make_decision(self._gfx.party)
                 execute_action(action, current, target)
-            while pg.time.get_ticks() - update_time < cooldown:
-                update(current)
-            update_time = pg.time.get_ticks()
+                self._reset_menus()
+            cooldown += 1
+            update()
 
     def _player_action(self, current):
         def set_menu_stack(current):
@@ -122,9 +135,9 @@ class Battle:
 
         def update(current, menu_stack):
             self._gfx.update_sprites()
-            self._clock.tick(FPS)
             self._render(current, menu_stack)
             self._keys.reset_keys()
+            self._clock.tick(FPS)
 
         player = True
         menu_stack = set_menu_stack(current)
@@ -150,7 +163,7 @@ class Battle:
 
         return action, target
 
-    def _render(self, current, menu_stack=None):
+    def _render(self, current=None, menu_stack=None):
         self._gfx.render(self._renderer, current)
         if menu_stack is not None:
             for menu in menu_stack:

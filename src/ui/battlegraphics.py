@@ -64,7 +64,7 @@ class BattleGFX:
         button = DamageText(str(abs(amount)), colour, target.rect.midtop)
         button.add(self.dmg_text)
 
-    def render(self, renderer, current):
+    def render(self, renderer, current=None):
         '''Draws the graphic elements on screen.
 
         args:
