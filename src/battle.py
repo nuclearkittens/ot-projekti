@@ -21,7 +21,9 @@ class Battle:
                 info = current.character.use_item(action, target.character)
             elif action in current.character.skills:
                 info = current.character.use_skill(action, target.character)
-            if info is not None:
+            if isinstance(info, str):
+                self._gfx.update_info(info)
+            elif isinstance(info, list):
                 for elem in info:
                     self._gfx.create_dmg_txt_button(elem[0], elem[1], target)
 
@@ -140,7 +142,19 @@ class Battle:
                         action in current.character.skills or
                         action in current.character.inventory
                     ):
-                    self._gfx.target_cursor.active = True
+                    if (
+                            action in current.character.skills and
+                            current.character.get_skill_cost(action) > current.character.curr_mp
+                        ):
+                        info = 'Not enough MP!'
+                    elif (
+                            action in current.character.inventory and
+                            current.character.get_item_qty(action) == 0
+                        ):
+                        item = current.character.inventory[action][0].name.upper()
+                        info = f'Not enough {item}s in inventory!'
+                    else:
+                        self._gfx.target_cursor.active = True
 
             return info, action
 
@@ -153,10 +167,9 @@ class Battle:
                 else:
                     set_active_menu(current, 'main')
                     menu = get_active_menu()
+                menu.update_buttons()
                 menu.reset_buttons()
             return target, name
-                
-
 
         def update(current, menu_stack):
             self._gfx.update_sprites()
@@ -195,7 +208,7 @@ class Battle:
                 update_info(current, info)
             target, name = check_target(current, menu_stack)
             if name is not None:
-                update_info(current, name)
+                update_info(current, name.upper())
             if target is not None:
                 player = False
                 self._reset_menus()

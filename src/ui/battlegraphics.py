@@ -235,6 +235,7 @@ class BattleGFX:
             char_menus['skill'] = BattleMenu('skill', skl_options)
             char_menus['magic'] = BattleMenu('magic', mag_options)
             if item_menu is None:
-                item_menu = BattleMenu('item', itm_options)
+                char = sprite.character
+                item_menu = BattleMenu('item', itm_options, char)
             char_menus['item'] = item_menu
             self.menus[sprite] = char_menus

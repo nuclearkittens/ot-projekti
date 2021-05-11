@@ -78,7 +78,7 @@ class Character:
                 info = self._inventory[item_id][0].use(target)
                 target.check_hp()
                 return info
-            raise ValueError(f'not enough {item_id}s in inventory!')
+            return f'Not enough {self._inventory[item_id][0].name.upper()}s in inventory!'
         raise ValueError(f'no item "{item_id}" in inventory!')
 
     def use_skill(self, skill_id, target):
@@ -94,7 +94,7 @@ class Character:
             info: lst; info for creating a DamageText object
         '''
         if self._skills[skill_id].mp_cost > self.curr_mp:
-            raise ValueError('not enough mp!')
+            return 'Not enough MP!'
         self.curr_mp -= self._skills[skill_id].mp_cost
         info = self._skills[skill_id].use(self, target)
         self.battlesprite.attack()
@@ -104,6 +104,10 @@ class Character:
     def get_item_qty(self, item_id):
         '''Returns how many of the specified item the character has left.'''
         return self._inventory[item_id][1]
+
+    def get_skill_cost(self, skill_id):
+        '''Returns the MP cost of the specified skill.'''
+        return self._skills[skill_id].mp_cost
 
     # gotta do sth abt all these properties, fix this later!
     @property

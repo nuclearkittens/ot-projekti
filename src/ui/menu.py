@@ -20,12 +20,13 @@ class BattleMenu:
             None if the menu has no buttons
         cursor_current: tuple; current position of the cursor
     '''
-    def __init__(self, menu_type, options):
+    def __init__(self, menu_type, options, character=None):
         '''BattleMenu class constructor.
 
         args:
             menu_type: str; type of the menu (main, skill, magic or item)
             options: lst; options to choose from; used to create the menu buttons
+            character: Character object; needed for creating item buttons
         '''
         self._gutter = SCREEN_W // 64
         self._panel_w = SCREEN_W // 3 - self._gutter
@@ -41,7 +42,7 @@ class BattleMenu:
 
         self._buttons = pg.sprite.Group()
         self._cursor_pos = []
-        self._create_buttons(options)
+        self._create_buttons(options, character)
         if self._cursor_pos:
             self._cursor = MenuCursor()
             self._cursor_current = self._cursor_pos[0]
@@ -118,8 +119,12 @@ class BattleMenu:
                 self.active = False
                 self.reset_buttons()
                 action = 'main'
-        self._buttons.update()
+            self.update_buttons()
         return info, action
+
+    def update_buttons(self):
+        '''Updates the menu's buttons.'''
+        self._buttons.update()
 
     def reset_cursor(self):
         '''Resets cursor to its default position (i.e. topmost menu button).'''
@@ -143,7 +148,7 @@ class BattleMenu:
         y = SCREEN_H - self._panel_h - self._gutter
         self.rect.topleft = (x, y)
 
-    def _create_buttons(self, options):
+    def _create_buttons(self, options, character):
         '''Creates buttons for the menu.
 
         args:
@@ -161,7 +166,7 @@ class BattleMenu:
                 text = f'{option[1]} {option[2]:2}'
                 if self.menu_type == 'item':
                     qty = option[2]
-                    new_button = ItemButton(action, name, qty)
+                    new_button = ItemButton(action, name, qty, character)
                 else:
                     new_button = BattleMenuButton(action, name, text)
             new_button.rect.topleft = (x, y)

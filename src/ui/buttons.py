@@ -88,7 +88,7 @@ class ItemButton(Button):
         passive_img: Surface: button to be drawn on screen when it is not pressed
         active_img: Surface: button to be drawn on screen when it has been pressed
     '''
-    def __init__(self, action, name, qty):
+    def __init__(self, action, name, qty, character):
         '''ItemButton class constructor.
 
         args:
@@ -100,6 +100,7 @@ class ItemButton(Button):
         self._size = FONT_SIZE
         self._name = name
         self._qty = qty
+        self._character = character
         self._text = self._update_text()
         Button.__init__(self, self._text, self._size, POWDER_ROSE)
 
@@ -119,17 +120,19 @@ class ItemButton(Button):
         '''Updates the sprite image, as well as item quantity if
         an item has been used.
         '''
+        prev_qty = self._qty
+        self._qty = self._character.get_item_qty(self.action)
+        if prev_qty > self._qty:
+            self._text = self._update_text()
+            self._passive_img = self._create_button(
+                self._text, self._size, POWDER_ROSE
+            )
+            self._active_img = self._create_button(
+                self._text, self._size, DARK_ROSE
+            )
         if self.pressed:
-            if self._qty > 0:
-                self._qty -= 1
-                self._text = self._update_text()
-                self._passive_img = self._create_button(
-                    self._text, self._size, POWDER_ROSE
-                )
-                self._active_img = self._create_button(
-                    self._text, self._size, DARK_ROSE
-                )
-            self.image = self._active_img
+            if self._qty >= 0:
+                self.image = self._active_img
         else:
             self.image = self._passive_img
 
