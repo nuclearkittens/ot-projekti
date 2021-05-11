@@ -39,7 +39,6 @@ class Demo:
         '''The main game loop.'''
         running = True
         while running:
-            self._clock.tick(FPS)
             if self._keys.QUIT:
                 running = False
             if self.battle:
@@ -49,6 +48,7 @@ class Demo:
                     )
                 battle.loop()
             self._render()
+            self._clock.tick(FPS)
         conn = get_db_connection()
         drop_tables(conn)
         conn.close()

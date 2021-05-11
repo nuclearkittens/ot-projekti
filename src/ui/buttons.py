@@ -32,7 +32,7 @@ class Button(pg.sprite.Sprite):
         font = pg.font.Font(FONT, size)
         return font.render(text, False, colour)
 
-class BattleMenuButton(Button):
+class MenuButton(Button):
     '''Button subclass for action buttons in a battle menu.
 
     attr:
@@ -44,7 +44,7 @@ class BattleMenuButton(Button):
         active_img: Surface; button shown when it has been pressed
     '''
     def __init__(self, action, name, text):
-        '''BattleMenuButton class constructor.
+        '''MenuButton class constructor.
 
         args:
             action: str; action associated with the button; can be
