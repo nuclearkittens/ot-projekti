@@ -75,8 +75,3 @@ class Monster(Character):
     def name(self):
         '''Returns the name of the monster.'''
         return self._info.name
-
-    @name.setter
-    def name(self, new_name):
-        '''Sets a new name for the monster.'''
-        self._info._replace(name=new_name)

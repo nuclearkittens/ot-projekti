@@ -144,8 +144,19 @@ class Battle:
 
             return info, action
 
-        def check_target():
-            return self._gfx.target_cursor.choose_target(self._keys, self._gfx.all)
+        def check_target(current, menu_stack):
+            target, name = self._gfx.target_cursor.choose_target(self._keys, self._gfx.all)
+            if self._keys.BACK:
+                if len(menu_stack) > 1:
+                    menu = menu_stack.pop()
+                    menu.active = True
+                else:
+                    set_active_menu(current, 'main')
+                    menu = get_active_menu()
+                menu.reset_buttons()
+            return target, name
+                
+
 
         def update(current, menu_stack):
             self._gfx.update_sprites()
@@ -182,7 +193,7 @@ class Battle:
             if menu is not None:
                 info, action = check_action(menu, menu_stack, current)
                 update_info(current, info)
-            target, name = check_target()
+            target, name = check_target(current, menu_stack)
             if name is not None:
                 update_info(current, name)
             if target is not None:
