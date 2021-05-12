@@ -41,7 +41,7 @@ class Menu:
 
         self._buttons = pg.sprite.Group()
         self._cursor_pos = []
-        self._create_buttons(options, x, y)
+        self._create_buttons(options, (x, y))
         if self._cursor_pos:
             self._cursor = MenuCursor()
             self._cursor_current = self._cursor_pos[0]
@@ -101,21 +101,21 @@ class Menu:
         '''Calculates the position of the menu panel.'''
         self.rect.topleft = (self._gutter, self._gutter)
 
-    def _create_buttons(self, options, *args):
+    def _create_buttons(self, options, coord):
         '''Creates buttons for the menu.
 
         args:
             options: lst; list of tuples specifying the buttons'
                 attributes
-            *args: tuple; tuple of a coordinate pair.
+            coord: tuple; tuple of a coordinate pair.
         '''
         n = len(options)
-        x = self.rect.x if args[0] == 0 else args[0]
-        y = self.rect.y if args[1] == 0 else args[1]
+        x = self.rect.x if coord[0] == 0 else coord[0]
+        y = self.rect.y if coord[1] == 0 else coord[1]
         for option in options:
-            new_button = MenuButton(option, option, option)
-            new_button.rect.topleft = (x, y)
-            self._cursor_pos.append((x, y + (self._panel_h // n)))
+            new_button = MenuButton(option[0], option[1], option[2])
+            new_button.rect.center = (x, y)
+            self._cursor_pos.append((x, y))
             self._buttons.add(new_button)
             y += self._panel_h // n
 

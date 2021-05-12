@@ -55,6 +55,8 @@ class Monster(Character):
             action: str; action to execute
             target: sprite; target for the action
         '''
+        if len(target_list) == 0:
+            return None, None
         if self.curr_hp < self._stats.hp // 4:
             choices = [key for key, val in self._inventory.items() if val[1] > 0]
             try:

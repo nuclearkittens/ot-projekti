@@ -2,13 +2,14 @@ import pygame as pg
 
 from config import (
     SCREEN_W, SCREEN_H, BAR_W, BAR_H,
-    HP_GREEN, HP_RED, MP_BLUE)
+    HP_GREEN, HP_RED, MP_BLUE, FONT_SIZE)
 from prepare import create_demo_enemies
 from util import load_img
 from entities.bar import InfoBar
 from ui.battlemenu import BattleMenu
 from ui.buttons import DamageText
 from ui.cursors import TargetCursor
+from ui.menu import Menu
 
 class BattleGFX:
     '''A class for updating and handling the graphics elements in battle.
@@ -32,8 +33,10 @@ class BattleGFX:
         args:
             party: lst; list of current party members
         '''
-        self.enemies = [enem.battlesprite for enem in create_demo_enemies()]
-        self.party = [member.battlesprite for member in party]
+        self.enemies = pg.sprite.Group(
+            [enem.battlesprite for enem in create_demo_enemies()]
+            )
+        self.party = pg.sprite.Group([member.battlesprite for member in party])
         self.all = pg.sprite.Group(self.enemies, self.party)
 
         self.target_cursor = TargetCursor()
@@ -84,6 +87,11 @@ class BattleGFX:
             self.default_menu.draw(renderer)
         self.info_panel.draw(renderer)
 
+    def render_game_over(self, renderer, base, status, text):
+        renderer.blit(base)
+        renderer.blit(status[0], status[1])
+        renderer.blit(text[0], text[1])
+
     def draw_cursor(self, renderer):
         '''Draws the target selection cursor if target selection is in an active state.
 
@@ -124,6 +132,28 @@ class BattleGFX:
         '''
         if len(self.all) < len(self.target_cursor.pos):
             self._calc_target_cursor_pos()
+
+    def create_game_over_screen(self, renderer, victory):
+        x = SCREEN_W // 2
+        y = SCREEN_H // 3
+        if victory:
+            status = 'VICTORY!'
+        else:
+            status = 'GAME OVER )--:'
+
+        base = pg.Surface((SCREEN_W, SCREEN_H))
+        renderer.fill(base)
+
+        status_surf = renderer.create_text(status, FONT_SIZE, MP_BLUE)
+        status_rect = status_surf.get_rect()
+        status_rect.center = (x, y)
+
+        text = 'press SELECT to return to title'
+        text_surf = renderer.create_text(text, FONT_SIZE)
+        text_rect = text_surf.get_rect()
+        text_rect.center = (x, 2 * y)
+
+        return base, (status_surf, status_rect), (text_surf, text_rect)
 
     def _calc_sprite_placement(self):
         '''Function to calculate the sprite placement on screen. Is called when
@@ -235,7 +265,6 @@ class BattleGFX:
             char_menus['skill'] = BattleMenu('skill', skl_options)
             char_menus['magic'] = BattleMenu('magic', mag_options)
             if item_menu is None:
-                char = sprite.character
-                item_menu = BattleMenu('item', itm_options, char)
+                item_menu = BattleMenu('item', itm_options, sprite.character)
             char_menus['item'] = item_menu
             self.menus[sprite] = char_menus

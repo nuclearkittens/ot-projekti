@@ -1,7 +1,7 @@
 import os.path
 import pygame as pg
 
-from config import DIRNAME, FONT, DARK_PURPLE
+from config import DIRNAME, FONT, DARK_PURPLE, POWDER_ROSE
 
 class Renderer:
     '''A class for handling all rendering on screen.
@@ -17,7 +17,7 @@ class Renderer:
         '''
         self._display = display
 
-    def blit(self, surf, pos):
+    def blit(self, surf, pos=(0, 0)):
         '''Blits an image (or surface) on screen.
 
         args:
@@ -37,7 +37,7 @@ class Renderer:
         '''
         surf.fill(colour)
 
-    def create_text(self, text, size, colour):
+    def create_text(self, text, size, colour=POWDER_ROSE):
         '''Creates a surface with rendered text.
 
         args:

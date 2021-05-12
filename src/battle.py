@@ -14,6 +14,9 @@ class Battle:
         self._gfx = BattleGFX(party)
         self._turns = self._generate_turns()
 
+        self._gameover = False
+        self._victory = False
+
     def loop(self):
         def execute_action(action, current, target):
             info = None
@@ -28,8 +31,11 @@ class Battle:
                     self._gfx.create_dmg_txt_button(elem[0], elem[1], target)
 
         def update_info(action, current, target):
-            name_curr = current.character.name.upper()
-            name_target = target.character.name.upper()
+            try:
+                name_curr = current.character.name.upper()
+                name_target = target.character.name.upper()
+            except AttributeError:
+                return
             if name_curr == name_target:
                 name_target = 'THEMSELF'
             if action in current.character.inventory:
@@ -53,6 +59,14 @@ class Battle:
                     self._turns[char] = char.character.set_tick_speed()
                     return char
             return None
+
+        def check_game_over():
+            if not bool(self._gfx.enemies):
+                self._gameover = True
+                self._victory = True
+
+            if not bool(self._gfx.party):
+                self._gameover = True
 
         def get_current(queue):
             while True:
@@ -91,12 +105,17 @@ class Battle:
                 if current in self._gfx.party:
                     action, target = self._player_action(current)
                 elif current in self._gfx.enemies:
-                    action, target = current.character.make_decision(self._gfx.party)
+                    action, target = current.character.make_decision(self._gfx.party.sprites())
                 execute_action(action, current, target)
                 update_info(action, current, target)
                 self._reset_menus()
+                check_game_over()
+                if self._gameover:
+                    running = False
             cooldown += 1
             update()
+
+        self._game_over()
 
     def _player_action(self, current):
         def set_menu_stack(current):
@@ -244,3 +263,16 @@ class Battle:
                 menu.active = False
                 menu.reset_buttons()
         self._keys.reset_keys()
+
+    def _game_over(self):
+        base, status, text = self._gfx.create_game_over_screen(
+            self._renderer, self._victory
+            )
+        while self._gameover:
+            self._check_events()
+            if self._keys.QUIT or self._keys.SELECT:
+                self._gameover = False
+            self._gfx.render_game_over(
+                self._renderer, base, status, text
+            )
+            self._renderer.update_display()

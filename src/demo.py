@@ -39,6 +39,7 @@ class Demo:
         '''The main game loop.'''
         running = True
         while running:
+            self._eventhandler.check_input()
             if self._keys.QUIT:
                 running = False
             if self.battle:
@@ -47,6 +48,7 @@ class Demo:
                     self._eventhandler, self._party
                     )
                 battle.loop()
+                self.battle = False
             self._render()
             self._clock.tick(FPS)
         conn = get_db_connection()
