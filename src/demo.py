@@ -48,15 +48,9 @@ class Demo:
             if self.title:
                 self._title_loop()
             if self.battle:
-                battle = Battle(
-                    self._clock, self._renderer,
-                    self._eventhandler, self._party
-                    )
-                battle.loop()
-                self.battle = False
-                self.title = True
-                self._party = create_demo_party()
+                self._new_battle()
             self._render()
+            self._keys.reset_keys()
             self._clock.tick(FPS)
         conn = get_db_connection()
         drop_tables(conn)
@@ -65,6 +59,17 @@ class Demo:
     def _render(self):
         '''Updates the game display. Called once per loop.'''
         self._renderer.update_display()
+
+    def _new_battle(self):
+        battle = Battle(
+            self._clock, self._renderer,
+            self._eventhandler, self._party
+            )
+        battle.loop()
+        self.battle = False
+        if not self._keys.QUIT:
+            self.title = True
+            self._party = create_demo_party()
 
     def _title_loop(self):
         self._titlescreen.menu.active = True
@@ -82,7 +87,8 @@ class Demo:
                 self.title = False
             elif action == 'help':
                 self._titlescreen.menu.reset_buttons()
-                self._keys.reset_keys()
+                self._titlescreen.menu.active = True
+                # self._keys.reset_keys()
             elif action == 'quit':
                 self._keys.QUIT = True
             self._titlescreen.render()

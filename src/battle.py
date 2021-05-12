@@ -1,5 +1,5 @@
 from collections import deque
-# import pygame as pg
+import pygame as pg
 
 from config import FPS
 from ui.battlegraphics import BattleGFX
@@ -78,6 +78,7 @@ class Battle:
                     return current
 
         def update():
+            self._keys.reset_keys()
             self._gfx.update_sprites()
             self._gfx.update_target_list()
             tick()
@@ -277,3 +278,14 @@ class Battle:
                 self._renderer, base, status, text
             )
             self._renderer.update_display()
+
+    def _pause(self):
+        paused = True
+
+        while paused:
+            self._check_events()
+            if self._keys.QUIT or self._keys.PAUSE:
+                paused = False
+                if self._keys.PAUSE:
+                    self._keys.reset_keys()
+

@@ -34,6 +34,8 @@ class EventHandler:
                     self._keys.LEFT = True
                 if event.key == pg.K_RIGHT:
                     self._keys.RIGHT = True
+                if event.key == pg.K_p:
+                    self._keys.PAUSE = True
 
     @property
     def keys(self):

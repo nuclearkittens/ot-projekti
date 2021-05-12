@@ -109,7 +109,6 @@ class Menu:
                 attributes
             coord: tuple; tuple of a coordinate pair.
         '''
-        # n = len(options)
         x = self.rect.x if coord[0] == 0 else coord[0]
         y = self.rect.y if coord[1] == 0 else coord[1]
         for option in options:
