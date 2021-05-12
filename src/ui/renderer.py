@@ -51,19 +51,19 @@ class Renderer:
         font = pg.font.Font(os.path.join(DIRNAME, FONT), size)
         return font.render(text, False, colour)
 
-    def draw_text(self, text, size, pos, colour):
-        '''Blits a text surface on screen.
+    # def draw_text(self, text, size, pos, colour):
+    #     '''Blits a text surface on screen.
 
-        args:
-            text: str; text to be rendered
-            size: int; font size;
-            pos: tuple; coordinates for the center of the text
-            colour: font colour
-        '''
-        text_surf = self.create_text(text, size, colour)
-        text_rect = text_surf.get_rect()
-        text_rect.center = pos
-        self.blit(text_surf, text_rect)
+    #     args:
+    #         text: str; text to be rendered
+    #         size: int; font size;
+    #         pos: tuple; coordinates for the center of the text
+    #         colour: font colour
+    #     '''
+    #     text_surf = self.create_text(text, size, colour)
+    #     text_rect = text_surf.get_rect()
+    #     text_rect.center = pos
+    #     self.blit(text_surf, text_rect)
 
     def draw_cursor(self, cursor, dest):
         '''Draws cursor on the surface specified.

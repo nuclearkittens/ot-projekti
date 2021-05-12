@@ -109,15 +109,15 @@ class Menu:
                 attributes
             coord: tuple; tuple of a coordinate pair.
         '''
-        n = len(options)
+        # n = len(options)
         x = self.rect.x if coord[0] == 0 else coord[0]
         y = self.rect.y if coord[1] == 0 else coord[1]
         for option in options:
             new_button = MenuButton(option[0], option[1], option[2])
             new_button.rect.center = (x, y)
-            self._cursor_pos.append((x, y))
+            self._cursor_pos.append(new_button.rect.bottomleft)
             self._buttons.add(new_button)
-            y += self._panel_h // n
+            y += 2 * new_button.rect.height
 
     def _move_cursor(self, keys):
         '''Moves the menu cursor according to player input, and updates its

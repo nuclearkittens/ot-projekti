@@ -9,7 +9,6 @@ from entities.bar import InfoBar
 from ui.battlemenu import BattleMenu
 from ui.buttons import DamageText
 from ui.cursors import TargetCursor
-from ui.menu import Menu
 
 class BattleGFX:
     '''A class for updating and handling the graphics elements in battle.
@@ -151,7 +150,7 @@ class BattleGFX:
         text = 'press SELECT to return to title'
         text_surf = renderer.create_text(text, FONT_SIZE)
         text_rect = text_surf.get_rect()
-        text_rect.center = (x, 2 * y)
+        text_rect.center = (x, 1.5 * y)
 
         return base, (status_surf, status_rect), (text_surf, text_rect)
 

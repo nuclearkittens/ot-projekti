@@ -6,7 +6,7 @@ def main():
     '''Initialises and runs the demo.'''
     pg.init()
     demo = Demo()
-    demo.battle = True
+    # demo.battle = True
     demo.loop()
     pg.quit()
 

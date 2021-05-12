@@ -8,6 +8,7 @@ from database.initialise_db import initialise_db, drop_tables
 from database.db_util import get_db_connection
 from ui.eventhandler import EventHandler
 from ui.renderer import Renderer
+from ui.title import TitleScreen
 
 class Demo:
     '''A class that functions as the demo itself.
@@ -30,10 +31,12 @@ class Demo:
 
         self._screen = initialise_demo_display()
         self._renderer = Renderer(self._screen)
+        self._titlescreen = TitleScreen(self._renderer)
 
         self._party = create_demo_party()
 
         self.battle = False
+        self.title = True
 
     def loop(self):
         '''The main game loop.'''
@@ -42,6 +45,8 @@ class Demo:
             self._eventhandler.check_input()
             if self._keys.QUIT:
                 running = False
+            if self.title:
+                self._title_loop()
             if self.battle:
                 battle = Battle(
                     self._clock, self._renderer,
@@ -49,6 +54,8 @@ class Demo:
                     )
                 battle.loop()
                 self.battle = False
+                self.title = True
+                self._party = create_demo_party()
             self._render()
             self._clock.tick(FPS)
         conn = get_db_connection()
@@ -58,3 +65,29 @@ class Demo:
     def _render(self):
         '''Updates the game display. Called once per loop.'''
         self._renderer.update_display()
+
+    def _title_loop(self):
+        self._titlescreen.menu.active = True
+        self._titlescreen.menu.reset_cursor()
+        self._keys.reset_keys()
+
+        while self.title:
+            self._eventhandler.check_input()
+            if self._keys.QUIT:
+                self.title = False
+            action = self._titlescreen.update(self._keys)
+            self._keys.reset_keys()
+            if action == 'battle':
+                self.battle = True
+                self.title = False
+            elif action == 'help':
+                self._titlescreen.menu.reset_buttons()
+                self._keys.reset_keys()
+            elif action == 'quit':
+                self._keys.QUIT = True
+            self._titlescreen.render()
+            self._render()
+            self._clock.tick(FPS)
+
+        self._titlescreen.menu.reset_buttons()
+

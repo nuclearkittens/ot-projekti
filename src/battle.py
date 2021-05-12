@@ -11,11 +11,14 @@ class Battle:
         self._eventhandler = eventhandler
         self._keys = self._eventhandler.keys
 
+        self._party = party
         self._gfx = BattleGFX(party)
         self._turns = self._generate_turns()
 
         self._gameover = False
         self._victory = False
+
+        self.demo = False
 
     def loop(self):
         def execute_action(action, current, target):
@@ -75,11 +78,9 @@ class Battle:
                     return current
 
         def update():
-            # self._reset_menus()
             self._gfx.update_sprites()
             self._gfx.update_target_list()
             tick()
-            # self._clock.tick(FPS)
             self._render()
             self._clock.tick(FPS)
 
@@ -109,11 +110,11 @@ class Battle:
                 execute_action(action, current, target)
                 update_info(action, current, target)
                 self._reset_menus()
-                check_game_over()
-                if self._gameover:
-                    running = False
             cooldown += 1
             update()
+            check_game_over()
+            if self._gameover:
+                running = False
 
         self._game_over()
 
