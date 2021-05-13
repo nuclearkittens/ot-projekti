@@ -22,8 +22,19 @@
 | 02/05/21 | 10 | more docstringing, rewriting battle & demo classes, changed back to keyboard only input |
 | 03/05/21 | 8 | building the menus, buttons class, player action & battle loop |
 | 04/05/21 | 6 | docstring, unit tests, updated documentation |
-| 05/05/21 | 3 | unit testing, mock database, fixed error creating characters w/o image directories 
+| 05/05/21 | 3 | unit testing, mock database, fixed error creating characters w/o image directories |
+| 06/05/21 | 2 | database method refactoring, actually fixing abovementioned image error |
+| 07/05/21 | 3 | docstringing, minor refactoring, clean up |
+| 08/05/21 | 3 | more docstringing, started on buttons showing damage |
+| 08/05/21 | 3 | refactoring: battle class/player action, breaking things and troubleshooting them |
+| 08/05/21 | 4 | troubleshooting jam & some refactoring/clean up
+| 10/05/21 | 4 | still working on battle loops, queue system seems to have fixe some issues |
+| 10/05/21 | 4 | info panel for battle screen |
+| 11/05/21 | 5 | fixing some known issues, hunting bugs, testing in how many ways I can crash or freeze the program |
+| 12/05/21 | 2 | refactoring and implementing the title screen menu system from a month ago |
+| 13/05/21 | 3 | battling with Pygame surface transparencies; updated game over screen & pausing is now a thing |
+| 13/05/21 | 3 | docstring jam |
 
-total hours (05/05/21): 150
+total hours (13/05/21): 186
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
