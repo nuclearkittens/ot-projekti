@@ -34,7 +34,8 @@
 | 12/05/21 | 2 | refactoring and implementing the title screen menu system from a month ago |
 | 13/05/21 | 3 | battling with Pygame surface transparencies; updated game over screen & pausing is now a thing |
 | 13/05/21 | 3 | docstring jam |
+| 13/05/21 | 4 | unit tests, lots of trial & error re: test db; catching exceptions |
 
-total hours (13/05/21): 186
+total hours (13/05/21): 190
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
