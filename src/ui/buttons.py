@@ -36,6 +36,7 @@ class MenuButton(Button):
     '''Button subclass for action buttons in a battle menu.
 
     attr:
+        action: str; action associated with the button
         size: int; font size
         name: str; name of the button action
         text: str; text to be drawn on the button image
@@ -48,7 +49,7 @@ class MenuButton(Button):
 
         args:
             action: str; action associated with the button; can be
-                a menu action or skill identifier
+                a menu action or a skill identifier
             name: str: name of the button action
             text: str: text to be shown on the button
         '''
@@ -83,6 +84,7 @@ class ItemButton(Button):
         size: int; font size
         name: str; item name
         qty: int; item quantity in character's inventory
+        character: Character object; character associated with the menu/inventory
         text: str; text to be drawn on the button
         pressed: bool; indicator of whether the button has been pressed
         passive_img: Surface: button to be drawn on screen when it is not pressed
@@ -152,7 +154,7 @@ class DamageText(Button):
 
     def update(self):
         '''Moves the button up and makes it disappear when
-        it hits the top of the screen.'''
+        it hits the top quarter of the screen.'''
         self.rect.y -= 1
         if self.rect.y == SCREEN_H // 4:
             self.kill()

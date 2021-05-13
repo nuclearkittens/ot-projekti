@@ -26,7 +26,7 @@ class Item:
         self._effects = load_item_effects(self._id)
 
     def use(self, target):
-        '''Use an item. Takes a character object (target) as the argument.
+        '''Use an item. Takes a Character object (target) as the argument.
 
         return:
             info: lst; info for creating a DamageText object

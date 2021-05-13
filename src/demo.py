@@ -14,12 +14,15 @@ class Demo:
     '''A class that functions as the demo itself.
 
     attr:
+        clock: Pygame Clock object
         keys: Keys object
         eventhandler: EventHandler object
         screen: Pygame display
         renderer: Renderer object
+        titlescreen: TitleScreen object
         party: lst; party formation used in the demo
         battle: bool; tells whether the demo is on battle state
+        title: bool; tells whether the demo is on title state
     '''
     def __init__(self):
         '''Constructor for the Demo class.'''
@@ -49,9 +52,7 @@ class Demo:
                 self._title_loop()
             if self.battle:
                 self._new_battle()
-            self._render()
             self._keys.reset_keys()
-            self._clock.tick(FPS)
         conn = get_db_connection()
         drop_tables(conn)
         conn.close()
@@ -61,6 +62,7 @@ class Demo:
         self._renderer.update_display()
 
     def _new_battle(self):
+        '''Creates a new Battle object, and runs the battle loop.'''
         battle = Battle(
             self._clock, self._renderer,
             self._eventhandler, self._party
@@ -72,6 +74,7 @@ class Demo:
             self._party = create_demo_party()
 
     def _title_loop(self):
+        '''Loops the title screen menu if on title status.'''
         self._titlescreen.menu.active = True
         self._titlescreen.menu.reset_cursor()
         self._keys.reset_keys()
@@ -88,7 +91,6 @@ class Demo:
             elif action == 'help':
                 self._titlescreen.menu.reset_buttons()
                 self._titlescreen.menu.active = True
-                # self._keys.reset_keys()
             elif action == 'quit':
                 self._keys.QUIT = True
             self._titlescreen.render()
@@ -96,4 +98,3 @@ class Demo:
             self._clock.tick(FPS)
 
         self._titlescreen.menu.reset_buttons()
-

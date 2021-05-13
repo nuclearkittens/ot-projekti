@@ -22,6 +22,7 @@ class Character:
             1.5: weak against element
         skills: dict; character's skills
         inventory: dict; character's items
+        battlesprite: BattleSprite object; used to represent the character in battle
         alive: bool; tells whether the character is alive or knocked out
         curr_hp: int; character's current health points
         curr_mp: int; character's current magic points
@@ -83,12 +84,12 @@ class Character:
 
     def use_skill(self, skill_id, target):
         '''Uses skill if character has enough MP to execute it,
-        otherwise raises ValueError. Reduces user's MP, and
+        otherwise gives an error message. Reduces user's MP, and
         sets both user's and target's animation statuses accordingly.
 
         args:
             skill_id: str; id for the skill to be used
-            target: character object; the character the skill is used on.
+            target: Character object; the character the skill is used on.
 
         return:
             info: lst; info for creating a DamageText object
@@ -112,42 +113,42 @@ class Character:
     # gotta do sth abt all these properties, fix this later!
     @property
     def id(self):
-        '''property: character id (str)'''
+        '''Returns the character's identifier.'''
         return self._id
 
     @property
     def max_hp(self):
-        '''property: character's HP cap (int)'''
+        '''Returns the character's HP cap.'''
         return self._stats.hp
 
     @property
     def max_mp(self):
-        '''property: character's MP cap (int)'''
+        '''Returns the character's MP cap.'''
         return self._stats.mp
 
     @property
     def atk(self):
-        '''property: character's physical attack strength (int)'''
+        '''Returns the character's physical attack strength.'''
         return self._stats.atk
 
     @property
     def defs(self):
-        '''property: character's physical attack defense (int)'''
+        '''Returns the character's physical defense.'''
         return self._stats.defs
 
     @property
     def mag(self):
-        '''property: character's magical attack strength (int)'''
+        '''Returns the character's magical attack strength.'''
         return self._stats.mag
 
     @property
     def mdef(self):
-        '''property: character's magical defense (int)'''
+        '''Returns the character's magical defense.'''
         return self._stats.mdef
 
     @property
     def res(self):
-        '''property: character's resistance to different attack types
+        '''Character's resistance to different attack types.
 
         return:
             dict: key: element (str), value: resistance (float)
@@ -156,17 +157,17 @@ class Character:
 
     @property
     def skills(self):
-        '''property: character's skills (dict)'''
+        '''Returns a dictionary of character's skills.'''
         return self._skills
 
     @property
     def inventory(self):
-        '''property: character's inventory (dict)'''
+        '''Returns the character's inventory.'''
         return self._inventory
 
     @inventory.setter
     def inventory(self, new_inv):
-        '''setter: replace character's inventory with a new one
+        '''Replaces the character's inventory with a new one.
 
         args:
             new_inv: dict

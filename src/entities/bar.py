@@ -26,15 +26,11 @@ class Bar:
         self._top = pg.Surface((self._w, self._h))
         self.rect = self._base.get_rect()
 
-    # def update(self):
-    #     '''Hook for subclasses, not functional on itself.'''
-    #     pass
-
     def draw(self, renderer):
         '''Blits the bar on the display.
 
         args:
-            renderer: game renderer object
+            renderer: Renderer object
         '''
         renderer.blit(self._base, self.rect)
         renderer.blit(self._top, self.rect)
@@ -45,7 +41,7 @@ class HPBar(Bar):
         '''Class constructor for HP bars.
 
         args:
-            character: character object; specifies the character associated with the bar
+            character: Character object; specifies the character associated with the bar
             colour: colour tuple; colour of the bar
         '''
         Bar.__init__(self, w, h)
@@ -75,7 +71,7 @@ class MPBar(Bar):
         '''Class constructor for MP bars.
 
         args:
-            character: character object; specifies the character associated with the bar
+            character: Character object; specifies the character associated with the bar
             colour: colour tuple; colour of the bar
         '''
         Bar.__init__(self, w, h)
@@ -103,9 +99,13 @@ class InfoBar(Bar):
         self.update(' ')
 
     def update(self, text):
+        '''Updates the info shown on info panel.
+
+        args:
+            text: str; info to be displayed
+        '''
         self._base.fill(POWDER_ROSE)
         font = pg.font.Font(FONT, FONT_SIZE)
         self._top = font.render(text, False, DARK_PURPLE)
         if self._top.get_width() > self._w:
             self._top = pg.transform.scale(self._top, (self._w, self._h))
-        # self._top = pg.transform.scale(surf, (self._w, self._h))

@@ -1,10 +1,10 @@
 import os.path
 import pygame as pg
 
-from config import DIRNAME, FONT, DARK_PURPLE, POWDER_ROSE
+from config import DIRNAME, FONT, DARK_PURPLE, POWDER_ROSE, SCREEN_W, SCREEN_H
 
 class Renderer:
-    '''A class for handling all rendering on screen.
+    '''A class for handling all rendering methods.
 
     attr:
         display: Pygame display
@@ -55,28 +55,20 @@ class Renderer:
         font = pg.font.Font(os.path.join(DIRNAME, FONT), size)
         return font.render(text, False, colour)
 
-    # def draw_text(self, text, size, pos, colour):
-    #     '''Blits a text surface on screen.
-
-    #     args:
-    #         text: str; text to be rendered
-    #         size: int; font size;
-    #         pos: tuple; coordinates for the center of the text
-    #         colour: font colour
-    #     '''
-    #     text_surf = self.create_text(text, size, colour)
-    #     text_rect = text_surf.get_rect()
-    #     text_rect.center = pos
-    #     self.blit(text_surf, text_rect)
-
-    def draw_cursor(self, cursor, dest):
-        '''Draws cursor on the surface specified.
+    def create_transparent_surface(self, colour=DARK_PURPLE, size=(SCREEN_W, SCREEN_H)):
+        '''Returns a Surface object with 50% opacity.
 
         args:
-            cursor: Cursor object (sprite)
-            dest: Surface; destination surface
+            colour: tuple; colour of the surface (defaults to dark purple)
+            size: tuple; size of the surface (defaults to display size)
+
+        return:
+            surf: Surface
         '''
-        dest.blit(cursor.image, cursor.rect)
+        surf = pg.Surface(size).convert()
+        surf.set_alpha(128)
+        self.fill(surf, colour)
+        return surf
 
     def draw_sprites(self, spritegroup):
         '''Draws a sprite Group on the display.

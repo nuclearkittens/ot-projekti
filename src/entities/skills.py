@@ -5,9 +5,9 @@ class Skill:
 
     attr:
         info: namedtuple; contains the name, category,
-        subcategory and description of the skill
+            subcategory and description of the skill
         attr: namedtuple; contains the element, hits, MP cost,
-        multiplier, and critical rate of the skill
+            multiplier, and critical rate of the skill
     '''
     def __init__(self, skill_id):
         '''Constructor for the skill class, Imports database methods to
@@ -58,7 +58,7 @@ class Skill:
             atk: int; user's physical/magical strength
             defs: int; target's physical/magical defense
             mult: float; multiplier based on the skill's element and
-            the target's resistance to that element
+                the target's resistance to that element
         '''
         rand = uniform(0.8, 1.2)
         if self._is_critical():
@@ -71,7 +71,7 @@ class Skill:
 
     @property
     def mp_cost(self):
-        '''Returns the MP cost of a skill.'''
+        '''Returns the MP cost of the skill.'''
         return self._attr.mp_cost
 
     @property

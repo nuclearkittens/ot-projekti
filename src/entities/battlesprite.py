@@ -9,6 +9,7 @@ class BattleSprite(pg.sprite.Sprite):
     attr:
         update_time: int; keeps track of animation update time
         anim_list: lst; nested list for animation frames, grouped by action
+        frame_idx: int; index of the current frame
         action: int; current animation state; possible values:
             0: idle, 1: attack, 2: hurt, 3: dead
         image: Surface; current image
@@ -48,8 +49,6 @@ class BattleSprite(pg.sprite.Sprite):
             self._update_time = pg.time.get_ticks()
             self._frame_idx += 1
         if self._frame_idx >= len(self._anim_list[self._action]):
-            # if self._action == 3:
-            #     self.kill()
             self._idle()
 
         for bar in self._bars.values():
@@ -74,11 +73,9 @@ class BattleSprite(pg.sprite.Sprite):
         self._update_time = pg.time.get_ticks()
 
     def dead(self):
-        '''Changes the sprite animation to dead.'''
-        # self._damage.empty()
-        # self._action = 3
-        # self._frame_idx = 0
-        # self._update_time = pg.time.get_ticks()
+        '''Kills the sprite (i.e. removes it from all Groups).
+
+        TO DO: Fix the death animation.'''
         self.kill()
 
     def set_position(self, x, y):
@@ -97,8 +94,8 @@ class BattleSprite(pg.sprite.Sprite):
         '''Sets the position of the HP and MP bars.
 
         args:
-            x: x-coordinate for HP bar
-            y: y-coordinate for HP bar
+            x: int; x-coordinate for HP bar
+            y: int; y-coordinate for HP bar
             center: bool
         '''
         for attr, bar in self._bars.items():
@@ -137,5 +134,5 @@ class BattleSprite(pg.sprite.Sprite):
 
     @property
     def character(self):
-        '''property: Character object'''
+        '''Returns the character associated with the sprite.'''
         return self._character

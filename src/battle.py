@@ -1,11 +1,28 @@
 from collections import deque
-import pygame as pg
 
 from config import FPS
 from ui.battlegraphics import BattleGFX
 
 class Battle:
+    '''Class for handling all the battle action.
+
+    attr:
+        keys: Keys object
+        gfx: BattleGFX object; handles the graphic elements of battle
+        turns: dict; keeps track of whose turn it is
+        gameover: bool; tells if the battle is over
+        victory: bool; tells if the party won the battle
+        demo: bool; True if running demo
+    '''
     def __init__(self, clock, renderer, eventhandler, party):
+        '''Battle class constructor.
+
+        args:
+            clock: Pygame Clock
+            renderer: Renderer object
+            eventhandler: EventHandler object
+            party: list; list of party members available for battle
+        '''
         self._clock = clock
         self._renderer = renderer
         self._eventhandler = eventhandler
@@ -20,7 +37,16 @@ class Battle:
         self.demo = False
 
     def loop(self):
+        '''The main battle loop.'''
         def execute_action(action, current, target):
+            '''Executes an action, and relays info to either update the
+            info panel or create DamageText buttons.
+
+            args:
+                action: str; action to be executed; skill or item identifier
+                current: sprite; the character battlesprite whose turn it is
+                target: sprite; target of the action
+            '''
             info = None
             if action in current.character.inventory:
                 info = current.character.use_item(action, target.character)
@@ -33,6 +59,13 @@ class Battle:
                     self._gfx.create_dmg_txt_button(elem[0], elem[1], target)
 
         def update_info(action, current, target):
+            '''Updates text to be blitted on the info panel.
+
+            args:
+                action: str; current action
+                current: sprite; character whose turn it is
+                target: sprite; target of the action
+            '''
             try:
                 name_curr = current.character.name.upper()
                 name_target = target.character.name.upper()
@@ -49,6 +82,9 @@ class Battle:
             self._gfx.update_info(text)
 
         def tick():
+            '''Decreases the turn counter for every character. Sets count to -1 if
+            character is not alive.
+            '''
             for char in self._turns:
                 if not char.alive():
                     self._turns[char] = -1
@@ -56,6 +92,12 @@ class Battle:
                     self._turns[char] -= 1
 
         def check_turn():
+            '''Checks whose turn it is, and resets the counter if it hits 0.
+
+            return:
+                char: sprite; character whose turn is next or
+                    None if no counters have hit zero
+            '''
             for char in self._turns:
                 if self._turns[char] == 0:
                     self._turns[char] = char.character.set_tick_speed()
@@ -63,6 +105,9 @@ class Battle:
             return None
 
         def check_game_over():
+            '''Checks if the any sprites are alive in either the party
+            or enemy group. Sets the gameover and victory values accordingly.
+            '''
             if not bool(self._gfx.enemies):
                 self._gameover = True
                 self._victory = True
@@ -71,12 +116,21 @@ class Battle:
                 self._gameover = True
 
         def get_current(queue):
+            '''Returns the character who has their turn next.
+
+            args:
+                queue: deque; container for the current turn order
+
+            return:
+                current: sprite
+            '''
             while True:
                 current = queue.popleft()
                 if current.character.alive:
                     return current
 
         def update():
+            '''Updates the game state and display.'''
             self._keys.reset_keys()
             self._gfx.update_sprites()
             self._gfx.update_target_list()
@@ -121,7 +175,24 @@ class Battle:
         self._game_over()
 
     def _player_action(self, current):
+        '''Loop for handling player action.
+
+        args:
+            current: sprite; party member whose turn it is
+
+        return:
+            action: str; skill or item identifier (None if player closes the window)
+            target: sprite; target of the action (None if player closes the window)
+        '''
         def set_menu_stack(current):
+            '''Creates a menu stack to handle moving between menus.
+
+            args:
+                current: sprite
+
+            return:
+                stack: list; stack containing the current character's main menu
+            '''
             stack = []
             self._reset_menus()
             for char in self._gfx.menus:
@@ -132,6 +203,9 @@ class Battle:
             return stack
 
         def get_active_menu():
+            '''Returns the menu that is currently active. If no menus are
+            active, returns None.
+            '''
             for char in self._gfx.menus:
                 for menu in self._gfx.menus[char].values():
                     if menu.active:
@@ -139,11 +213,25 @@ class Battle:
             return None
 
         def set_active_menu(current, menu_type):
+            '''Sets the current active menu.
+
+            args:
+                current: sprite
+                menu_type: str; either main, skill, magic or item
+            '''
             for char in self._gfx.menus:
                 if char == current:
                     self._gfx.menus[char][menu_type].active = True
 
         def check_menu(menu_stack):
+            '''Checks if the current active menu is in the menu stack.
+
+            args:
+                menu_stack: list; stack of menus
+
+            return:
+                menu: Menu object (or None)
+            '''
             menu = get_active_menu()
             if menu is not None:
                 if menu not in menu_stack:
@@ -152,6 +240,17 @@ class Battle:
             return menu
 
         def check_action(menu, menu_stack, current):
+            '''Handles the player action.
+
+            args:
+                menu: Menu object; menu that is currently active
+                menu_stack: list
+                current: sprite
+
+            return:
+                info: str; instructions for how to update the info panel
+                action: str; action to be executed
+            '''
             info, action = menu.update(self._keys)
             if action is not None:
                 if action == 'main' and len(menu_stack) > 1:
@@ -181,6 +280,17 @@ class Battle:
             return info, action
 
         def check_target(current, menu_stack):
+            '''Calls the target selection method, and either returns the target or sets the
+            previous menu active if player did not choose a target.
+
+            args:
+                current: sprite
+                menu_stack: list
+
+            return:
+                target: sprite
+                name: str; name of the target
+            '''
             target, name = self._gfx.target_cursor.choose_target(self._keys, self._gfx.all)
             if self._keys.BACK:
                 if len(menu_stack) > 1:
@@ -194,12 +304,24 @@ class Battle:
             return target, name
 
         def update(current, menu_stack):
+            '''Updates the sprites and keys, and renders everything on screen.
+
+            args:
+                current: sprite
+                menu_stack: list
+            '''
             self._gfx.update_sprites()
             self._render(current, menu_stack)
             self._keys.reset_keys()
             self._clock.tick(FPS)
 
         def update_info(current, info):
+            '''Updates the information to be displayed on the info panel.
+
+            args:
+                current: sprite;
+                info: str
+            '''
             if (
                     info in self._gfx.menus[current] and
                     info != 'attack'
@@ -246,6 +368,10 @@ class Battle:
         return action, target
 
     def _render(self, current=None, menu_stack=None):
+        '''Renders everything and updates the display. If it's the
+        player's turn, takes the current character sprite and its
+        menu_stack as arguments.
+        '''
         self._gfx.render(self._renderer, current)
         if menu_stack is not None:
             for menu in menu_stack:
@@ -254,15 +380,24 @@ class Battle:
         self._renderer.update_display()
 
     def _check_events(self):
+        '''Looks for user input and changes the Keys object accordingly.'''
         self._eventhandler.check_input()
 
     def _generate_turns(self):
+        '''Generates a turn count for battle participants.
+
+        return:
+            turns: dict; key: sprite, value: int (count until next turn)
+        '''
         turns = {}
         for char in self._gfx.all:
             turns[char] = char.character.set_tick_speed()
         return turns
 
     def _reset_menus(self):
+        '''Sets all menus and menu buttons to inactive/unpressed state,
+        resets keys to False.
+        '''
         for dct in self._gfx.menus.values():
             for menu in dct.values():
                 menu.active = False
@@ -270,23 +405,21 @@ class Battle:
         self._keys.reset_keys()
 
     def _game_over(self):
-        base, status, text = self._gfx.create_game_over_screen(
-            self._renderer, self._victory
-            )
+        '''Loop for a game over.'''
+        self._gfx.render_game_over(self._renderer, self._victory)
+        self._renderer.update_display()
+
         while self._gameover:
             self._check_events()
             if self._keys.QUIT or self._keys.SELECT:
                 self._gameover = False
-            self._gfx.render_game_over(
-                self._renderer, base, status, text
-            )
-            self._renderer.update_display()
+            self._clock.tick(FPS)
 
     def _pause(self):
+        '''Loop for a paused game.'''
         paused = True
         self._keys.reset_keys()
-        bg = self._renderer.screenshot()
-        self._gfx.render_pause_screen(self._renderer, bg)
+        self._gfx.render_pause_screen(self._renderer)
         self._renderer.update_display()
 
         while paused:

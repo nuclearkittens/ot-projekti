@@ -1,7 +1,7 @@
 import pygame as pg
 
 from config import (
-    SCREEN_W, SCREEN_H, BAR_W, BAR_H, DARK_PURPLE_A,
+    SCREEN_W, SCREEN_H, BAR_W, BAR_H, DARK_PURPLE,
     HP_GREEN, HP_RED, MP_BLUE, FONT_SIZE)
 from prepare import create_demo_enemies
 from util import load_img
@@ -14,13 +14,14 @@ class BattleGFX:
     '''A class for updating and handling the graphics elements in battle.
 
     attr:
-        enemies: lst; enemies to defeat in battle; currently creates a demo battle,
+        enemies: sprite Group; enemies to defeat in battle; currently creates a demo battle,
             to be updated when random battles become a reality
-        party: lst; list of available party members
+        party: sprite Group; list of available party members
         all: sprite Group; contains both enemies' and party's battle sprites
         target_cursor: Target Cursor object; used for choosing target for
             an action
         dmg_text: sprite Group; group for handling damage text buttons
+        info_panel: InfoBar object; panel for displaying info during battle
         bg_img: Surface; background image for the battle
         menus: dict; menus used in battle
         default_menu: BattleMenu object; default menu that remains drawn on the
@@ -70,7 +71,7 @@ class BattleGFX:
         button.add(self.dmg_text)
 
     def render(self, renderer, current=None):
-        '''Draws the graphic elements on screen.
+        '''Draws the graphic elements on screen during battle loop.
 
         args:
             renderer: Renderer object
@@ -86,24 +87,72 @@ class BattleGFX:
             self.default_menu.draw(renderer)
         self.info_panel.draw(renderer)
 
-    def render_game_over(self, renderer, base, status, text):
-        renderer.blit(base)
-        renderer.blit(status[0], status[1])
-        renderer.blit(text[0], text[1])
+    def render_game_over(self, renderer, victory):
+        '''Draws the game over screen.
 
-    def render_pause_screen(self, renderer, bg):
-        surf = pg.Surface((SCREEN_W, SCREEN_H)).convert()
-        surf.set_alpha(128)
-        renderer.fill(surf)
+        args:
+            renderer: Renderer object
+            victory: bool; tells if the party won
+        '''
+        colours = {}
+        colours['title'] = DARK_PURPLE
+        colours['info'] = DARK_PURPLE
+        info = 'press SELECT to return to title'
 
-        pause_text = renderer.create_text('PAUSED', 2*FONT_SIZE)
-        pause_rect = pause_text.get_rect(center=(SCREEN_W // 2, 2 * SCREEN_H // 7))
-        info_text = renderer.create_text('press P to continue', FONT_SIZE)
-        info_rect = info_text.get_rect(center=(SCREEN_W // 2, 2 * SCREEN_H // 5))
+        if victory:
+            title = 'VICTORY!'
+            colours['base'] = MP_BLUE
+        else:
+            title = 'GAME OVER )--:'
+            colours['base'] = HP_RED
+
+        self._draw_static_screen(renderer, title, info, colours)
+
+    def render_pause_screen(self, renderer):
+        '''Creates and draws the game over screen.
+
+        args:
+            renderer: Renderer object
+        '''
+        title = 'PAUSED'
+        info = 'press P to continue'
+        colours = {}
+        self._draw_static_screen(renderer, title, info, colours)
+
+    def _draw_static_screen(self, renderer, title, info, colours):
+        '''Draws a static screen with a transparent overlay, title and info.
+
+        args:
+            renderer: Renderer object
+            title: str
+            info: str
+            colours: dict; colours for the base and text to be drawn.
+        '''
+        bg = renderer.screenshot()
+
+        try:
+            base = renderer.create_transparent_surface(colours['base'])
+        except KeyError:
+            base = renderer.create_transparent_surface()
+
+        try:
+            title_text = renderer.create_text(title, 2 * FONT_SIZE, colours['title'])
+        except KeyError:
+            title_text = renderer.create_text(title, 2 * FONT_SIZE)
+
+        try:
+            info_text = renderer.create_text(info, FONT_SIZE, colours['info'])
+        except KeyError:
+            info_text = renderer.create_text(info, FONT_SIZE)
+
+        title_pos = (SCREEN_W // 2, 2 * SCREEN_H // 7)
+        title_rect = title_text.get_rect(center=title_pos)
+        info_pos = (SCREEN_W // 2, 2 * SCREEN_H // 5)
+        info_rect = info_text.get_rect(center=info_pos)
 
         renderer.blit(bg)
-        renderer.blit(surf)
-        renderer.blit(pause_text, pause_rect)
+        renderer.blit(base)
+        renderer.blit(title_text, title_rect)
         renderer.blit(info_text, info_rect)
 
     def draw_cursor(self, renderer):
@@ -146,28 +195,6 @@ class BattleGFX:
         '''
         if len(self.all) < len(self.target_cursor.pos):
             self._calc_target_cursor_pos()
-
-    def create_game_over_screen(self, renderer, victory):
-        x = SCREEN_W // 2
-        y = SCREEN_H // 3
-        if victory:
-            status = 'VICTORY!'
-        else:
-            status = 'GAME OVER )--:'
-
-        base = pg.Surface((SCREEN_W, SCREEN_H))
-        renderer.fill(base)
-
-        status_surf = renderer.create_text(status, FONT_SIZE, MP_BLUE)
-        status_rect = status_surf.get_rect()
-        status_rect.center = (x, y)
-
-        text = 'press SELECT to return to title'
-        text_surf = renderer.create_text(text, FONT_SIZE)
-        text_rect = text_surf.get_rect()
-        text_rect.center = (x, 1.5 * y)
-
-        return base, (status_surf, status_rect), (text_surf, text_rect)
 
     def _calc_sprite_placement(self):
         '''Function to calculate the sprite placement on screen. Is called when

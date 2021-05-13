@@ -2,7 +2,18 @@ from config import SCREEN_W, SCREEN_H, FONT_SIZE
 from ui.menu import Menu
 
 class TitleScreen():
+    '''A class for the title screen.
+
+    attr:
+        menu: Menu object; the start menu of the game
+        title_text: lst; list of tuples (surface, rectangle); title of the game
+    '''
     def __init__(self, renderer):
+        '''TitleScreen class constructor.
+
+        args:
+            renderer: Renderer object
+        '''
         self._renderer = renderer
 
         options = [
@@ -16,14 +27,25 @@ class TitleScreen():
         self._title_text = self._create_title_text()
 
     def render(self):
+        '''Renders the title screen.'''
         self.menu.draw(self._renderer)
         for text in self._title_text:
             self._renderer.blit(text[0], text[1])
 
     def update(self, keys):
+        '''Updates the title screen menu.
+
+        args:
+            keys: Keys object
+        '''
         return self.menu.update(keys)
 
     def _create_title_text(self):
+        '''Creates rendered text surfaces for the title screen.
+
+        return:
+            lst; tuples of surfaces and their bounding rectangles
+        '''
         top = 'untitled rpg:'
         bottom = 'turn-based battle demo'
 

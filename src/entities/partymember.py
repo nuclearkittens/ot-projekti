@@ -15,7 +15,7 @@ class PartyMember(Character):
         '''Constructor for the PartyMember class. Initialises a Character object.
 
         args:
-            char_id: str; a unique id for the character
+            char_id: str; a unique identifier for the character
         '''
         Character.__init__(self, char_id)
 

@@ -35,7 +35,7 @@ class TargetCursor(Button):
 
         args:
             keys: Keys object
-            spritegroup: sprite Group object
+            spritegroup: sprite Group
 
         return:
             target: sprite object

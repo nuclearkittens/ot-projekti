@@ -8,13 +8,13 @@ class Monster(Character):
 
     attr:
         info: namedtuple containing the monster's name, category and description
-        default_action: skill object; monster's default attack
+        default_action: Skill object; monster's default attack
     '''
     def __init__(self, char_id):
         '''Constructor for the monster class. Initialises a Character object.
 
         args:
-            char_id: str; a unique id for the monster
+            char_id: str; a unique identifier for the monster
         '''
         Character.__init__(self, char_id)
 
