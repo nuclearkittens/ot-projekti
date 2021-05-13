@@ -17,6 +17,10 @@ class Renderer:
         '''
         self._display = display
 
+    def screenshot(self):
+        '''Takes a screenshot, returning it as a Surface object.'''
+        return self._display.copy().convert()
+
     def blit(self, surf, pos=(0, 0)):
         '''Blits an image (or surface) on screen.
 

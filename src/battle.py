@@ -11,7 +11,6 @@ class Battle:
         self._eventhandler = eventhandler
         self._keys = self._eventhandler.keys
 
-        self._party = party
         self._gfx = BattleGFX(party)
         self._turns = self._generate_turns()
 
@@ -98,6 +97,8 @@ class Battle:
             self._check_events()
             if self._keys.QUIT:
                 running = False
+            if self._keys.PAUSE:
+                self._pause()
             current = check_turn()
             if current is not None:
                 queue.append(current)
@@ -223,6 +224,8 @@ class Battle:
             self._check_events()
             if self._keys.QUIT:
                 return None, None
+            if self._keys.PAUSE:
+                self._pause()
             menu = check_menu(menu_stack)
             if menu is not None:
                 info, action = check_action(menu, menu_stack, current)
@@ -281,6 +284,10 @@ class Battle:
 
     def _pause(self):
         paused = True
+        self._keys.reset_keys()
+        bg = self._renderer.screenshot()
+        self._gfx.render_pause_screen(self._renderer, bg)
+        self._renderer.update_display()
 
         while paused:
             self._check_events()
@@ -288,4 +295,4 @@ class Battle:
                 paused = False
                 if self._keys.PAUSE:
                     self._keys.reset_keys()
-
+            self._clock.tick(FPS)

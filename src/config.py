@@ -1,4 +1,5 @@
 import os.path
+import pygame as pg
 
 # rename to constants
 
@@ -9,6 +10,7 @@ DB_INIT_CMDS = os.path.join(DIRNAME, 'assets/db/init_commands.sql')
 DB_TEST_SCRIPT = os.path.join(DIRNAME, 'assets/db/test_query_script.sql')
 
 DARK_PURPLE = (66, 30, 66)
+DARK_PURPLE_A = pg.Color(66, 30, 66, 128)
 POWDER_ROSE = (201, 143, 143)
 DARK_ROSE = (189, 113, 130)
 HP_GREEN = (112, 161, 143)

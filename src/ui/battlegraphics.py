@@ -1,7 +1,7 @@
 import pygame as pg
 
 from config import (
-    SCREEN_W, SCREEN_H, BAR_W, BAR_H,
+    SCREEN_W, SCREEN_H, BAR_W, BAR_H, DARK_PURPLE_A,
     HP_GREEN, HP_RED, MP_BLUE, FONT_SIZE)
 from prepare import create_demo_enemies
 from util import load_img
@@ -90,6 +90,21 @@ class BattleGFX:
         renderer.blit(base)
         renderer.blit(status[0], status[1])
         renderer.blit(text[0], text[1])
+
+    def render_pause_screen(self, renderer, bg):
+        surf = pg.Surface((SCREEN_W, SCREEN_H)).convert()
+        surf.set_alpha(128)
+        renderer.fill(surf)
+
+        pause_text = renderer.create_text('PAUSED', 2*FONT_SIZE)
+        pause_rect = pause_text.get_rect(center=(SCREEN_W // 2, 2 * SCREEN_H // 7))
+        info_text = renderer.create_text('press P to continue', FONT_SIZE)
+        info_rect = info_text.get_rect(center=(SCREEN_W // 2, 2 * SCREEN_H // 5))
+
+        renderer.blit(bg)
+        renderer.blit(surf)
+        renderer.blit(pause_text, pause_rect)
+        renderer.blit(info_text, info_rect)
 
     def draw_cursor(self, renderer):
         '''Draws the target selection cursor if target selection is in an active state.
