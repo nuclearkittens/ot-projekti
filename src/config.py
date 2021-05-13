@@ -1,14 +1,21 @@
-'''Module for specifying the constant variables.
+'''Module for specifying the environmental variables.
 
 TO DO: Create an actual configuration file.
 '''
-import os.path
+import os
+from dotenv import load_dotenv
 
 DIRNAME = os.path.dirname(__file__)
 
-DB_PATH = os.path.join(DIRNAME, 'assets/db/gamedata.db')
-DB_INIT_CMDS = os.path.join(DIRNAME, 'assets/db/init_commands.sql')
-DB_TEST_SCRIPT = os.path.join(DIRNAME, 'assets/db/test_query_script.sql')
+try:
+    load_dotenv(dotenv_path=os.path.join(DIRNAME, '..', '.env'))
+except FileNotFoundError:
+    pass
+
+DB_NAME = os.getenv('DB_NAME') or 'gamedata.db'
+DB_CMDS = os.getenv('DB_CMDS') or 'init_commands.sql'
+DB_PATH = os.path.join(DIRNAME, 'assets/db', DB_NAME)
+DB_CMDS_PATH = os.path.join(DIRNAME, 'assets/db', DB_CMDS)
 
 DARK_PURPLE = (66, 30, 66)
 POWDER_ROSE = (201, 143, 143)
@@ -24,7 +31,7 @@ NATIVE_RESOLUTION = (512, 448)
 SCREEN_W = 512 * SCALE
 SCREEN_H = 448 * SCALE
 
-TILE_SIZE = (32, 32)
+TILE_SIZE = (32 * SCALE, 32 * SCALE)
 
 FPS = 60
 

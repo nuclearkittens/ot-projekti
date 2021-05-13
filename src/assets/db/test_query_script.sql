@@ -27,5 +27,8 @@ INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_co
 INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ("test_magic", "magic", "blk", "Test Spell", "A skill for testing", "fire", 1, 5, 1.2, 0.5); INSERT INTO Skills (id, category, subcategory, name, descr, element, hits, mp_cost, multiplier, crit_rate) VALUES ("test_other", "other", "other", "Unspecified Skill", "A skill for testing", "dark", 0, 0, 0.0, 0.0);
 INSERT INTO Stats (char_id, hp, mp, atk, defs, mag, mdef, agi) VALUES ("bob", 100, 10, 10, 10, 5, 5, 20);
 INSERT INTO Resistance (char_id, physical, fire, ice, lightning, wind, light, dark) VALUES ("bob", 1.0, 0.0, 1.5, 1.0, 1.0, 0.5, -1.0);
-INSERT INTO CharSkills (char_id, skill_id) VALUES ("bob", "test_skill")
+INSERT INTO CharSkills (char_id, skill_id) VALUES ("bob", "test_skill");
+INSERT INTO Monsters (id, name, category, lvl, descr) VALUES ("bob", "Bob", "undead", 1, "Bob the test monster");
+INSERT INTO Party (id, name, lvl) VALUES ("bob", "Bob", 1);
+INSERT INTO Inventory (char_id, item_id, qty) VALUES ("bob", "test_item1", 1)
 

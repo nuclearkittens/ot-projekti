@@ -1,9 +1,9 @@
 from sqlite3 import OperationalError
 
 from database.db_connection import get_db_connection
-from config import DB_INIT_CMDS
+from config import DB_CMDS_PATH
 
-def execute_script_from_file(cursor, filename):
+def execute_script_from_file(cursor, filepath):
     '''Fetches an sql file and executes the queries specified in it.
 
     args:
@@ -11,7 +11,7 @@ def execute_script_from_file(cursor, filename):
         filename: path to the executable file
     '''
 
-    sql_file = open(filename, 'r')
+    sql_file = open(filepath, 'r')
     data = sql_file.read()
     sql_file.close()
 
@@ -25,7 +25,7 @@ def execute_script_from_file(cursor, filename):
 def populate_db(conn):
     '''Creates tables storing default information in the game database.'''
     cursor = conn.cursor()
-    execute_script_from_file(cursor, DB_INIT_CMDS)
+    execute_script_from_file(cursor, DB_CMDS_PATH)
     conn.commit()
 
 def drop_tables(conn):

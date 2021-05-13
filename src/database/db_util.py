@@ -1,4 +1,5 @@
 from collections import namedtuple
+from sqlite3 import OperationalError
 
 from database.db_connection import get_db_connection
 from entities.skills import Skill
@@ -16,19 +17,26 @@ def load_stats(char_id):
 
     args:
         char_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         stats: Stats object (namedtuple)
     '''
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute(
-        '''SELECT hp, mp, atk, defs,
-        mag, mdef, agi FROM Stats
-        WHERE char_id=?''', (char_id,)
-    )
 
-    stats = Stats._make(tuple(cur.fetchone()))
+    try:
+        cur.execute(
+            '''SELECT hp, mp, atk, defs,
+            mag, mdef, agi FROM Stats
+            WHERE char_id=?''', (char_id,)
+        )
+        stats = Stats._make(tuple(cur.fetchone()))
+    except OperationalError:
+        stats = None
+    except TypeError:
+        stats = None
+
     conn.close()
 
     return stats
@@ -39,19 +47,27 @@ def load_res(char_id):
 
     args:
         char_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         res: Res object (namedtuple)
     '''
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute(
-        '''SELECT physical, fire, ice, lightning,
-        wind, light, dark FROM Resistance
-        WHERE char_id=?''', (char_id,)
-    )
 
-    res = Res._make(tuple(cur.fetchone()))
+    try:
+        cur.execute(
+            '''SELECT physical, fire, ice, lightning,
+            wind, light, dark FROM Resistance
+            WHERE char_id=?''', (char_id,)
+        )
+
+        res = Res._make(tuple(cur.fetchone()))
+    except OperationalError:
+        res = None
+    except TypeError:
+        res = None
+
     conn.close()
 
     return res
@@ -61,17 +77,27 @@ def load_skills(char_id):
 
     args:
         char_id: str; a unique id for a character
+        db: str; path to game database, defaults to configured one
 
     return:
         skills: dict; key: skill_id (str), val: skill (Skill object)'''
     conn = get_db_connection()
     cur = conn.cursor()
     skills = {}
-    cur.execute(
-        '''SELECT skill_id FROM CharSkills
-        WHERE char_id=?''', (char_id,)
-    )
-    rows = cur.fetchall()
+
+    try:
+        cur.execute(
+            '''SELECT skill_id FROM CharSkills
+            WHERE char_id=?''', (char_id,)
+        )
+        rows = cur.fetchall()
+    except OperationalError:
+        conn.close()
+        return skills
+    except TypeError:
+        conn.close()
+        return skills
+
     conn.close()
 
     for row in rows:
@@ -86,14 +112,22 @@ def load_party_info(char_id):
 
     args:
         char_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         info: SQLite Row object
     '''
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT name, lvl FROM Party WHERE id=?', (char_id,))
-    info = cur.fetchone()
+
+    try:
+        cur.execute('SELECT name, lvl FROM Party WHERE id=?', (char_id,))
+        info = cur.fetchone()
+    except OperationalError:
+        info = None
+    except TypeError:
+        info = None
+
     conn.close()
     return info
 
@@ -102,18 +136,27 @@ def load_monster_info(char_id):
 
     args:
         char_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         info: MonsterInfo object (namedtuple)
     '''
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute(
-        '''SELECT name, category, descr FROM Monsters
-        WHERE id=?''', (char_id,)
-    )
 
-    info = MonsterInfo._make(tuple(cur.fetchone()))
+    try:
+        cur.execute(
+            '''SELECT name, category, descr FROM Monsters
+            WHERE id=?''', (char_id,)
+        )
+        info = MonsterInfo._make(tuple(cur.fetchone()))
+    except OperationalError:
+        info = None
+    except TypeError:
+        info = None
+
+    conn.close()
+
     return info
 
 def load_inventory(char_id):
@@ -121,6 +164,7 @@ def load_inventory(char_id):
 
     args:
         char_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         inv: dict;
@@ -130,16 +174,23 @@ def load_inventory(char_id):
     cur = conn.cursor()
     inv = {}
 
-    cur.execute(
-        '''SELECT item_id, qty FROM Inventory
-        WHERE char_id=?''', (char_id,)
-    )
-    rows = cur.fetchall()
+    try:
+        cur.execute(
+            '''SELECT item_id, qty FROM Inventory
+            WHERE char_id=?''', (char_id,)
+        )
+        rows = cur.fetchall()
+    except OperationalError:
+        conn.close()
+        return inv
+
     conn.close()
+
     for row in rows:
         item_id, qty = row[0], row[1]
         new_item = Item(item_id)
         inv[item_id] = [new_item, qty]
+
     return inv
 
 def load_item_info(item_id):
@@ -147,14 +198,20 @@ def load_item_info(item_id):
 
     args:
         item_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         info: SQLite Row object
     '''
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT name, descr FROM Items WHERE id=?', (item_id,))
-    info = cur.fetchone()
+
+    try:
+        cur.execute('SELECT name, descr FROM Items WHERE id=?', (item_id,))
+        info = cur.fetchone()
+    except OperationalError:
+        info = None
+
     conn.close()
     return info
 
@@ -163,6 +220,7 @@ def load_item_effects(item_id):
 
     args:
         item_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         effects: lst (of tuples)
@@ -170,16 +228,24 @@ def load_item_effects(item_id):
     conn = get_db_connection()
     cur = conn.cursor()
     effects = []
-    cur.execute(
-        '''SELECT E.effect, E.target_attr, E.amount
-        FROM Effects E, ItemEffects I
-        WHERE E.id=I.effect_id AND I.item_id=?''', (item_id,)
-        )
-    rows = cur.fetchall()
-    for row in rows:
-        effects.append(tuple(row))
+
+    try:
+        cur.execute(
+            '''SELECT E.effect, E.target_attr, E.amount
+            FROM Effects E, ItemEffects I
+            WHERE E.id=I.effect_id AND I.item_id=?''', (item_id,)
+            )
+        rows = cur.fetchall()
+        try:
+            for row in rows:
+                effects.append(tuple(row))
+        except TypeError:
+            pass
+    except OperationalError:
+        pass
 
     conn.close()
+
     return effects
 
 def load_skill_info(skill_id):
@@ -187,18 +253,27 @@ def load_skill_info(skill_id):
 
     args:
         skill_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         info: SkillInfo object (namedtuple)
     '''
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute(
-        '''SELECT name, category, subcategory, descr
-        FROM Skills WHERE Skills.id=?''', (skill_id,)
-    )
-    info = SkillInfo._make(tuple(cur.fetchone()))
+
+    try:
+        cur.execute(
+            '''SELECT name, category, subcategory, descr
+            FROM Skills WHERE Skills.id=?''', (skill_id,)
+        )
+        info = SkillInfo._make(tuple(cur.fetchone()))
+    except OperationalError:
+        info = None
+    except TypeError:
+        info = None
+
     conn.close()
+
     return info
 
 def load_skill_attr(skill_id):
@@ -206,16 +281,25 @@ def load_skill_attr(skill_id):
 
     args:
         skill_id: str
+        db: str; path to game database, defaults to configured one
 
     return:
         attr: SkillAttributes object (namedtuple)
     '''
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute(
-        '''SELECT element, hits, mp_cost, multiplier, crit_rate
-        FROM Skills WHERE Skills.id=?''', (skill_id,)
-    )
-    attr = SkillAttributes._make(tuple(cur.fetchone()))
+
+    try:
+        cur.execute(
+            '''SELECT element, hits, mp_cost, multiplier, crit_rate
+            FROM Skills WHERE Skills.id=?''', (skill_id,)
+        )
+        attr = SkillAttributes._make(tuple(cur.fetchone()))
+    except OperationalError:
+        attr = None
+    except TypeError:
+        attr = None
+
     conn.close()
+
     return attr
