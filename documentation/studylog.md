@@ -35,7 +35,8 @@
 | 13/05/21 | 3 | battling with Pygame surface transparencies; updated game over screen & pausing is now a thing |
 | 13/05/21 | 3 | docstring jam |
 | 13/05/21 | 4 | unit tests, lots of trial & error re: test db; catching exceptions |
+| 14/05/21 | 4 | unit tests: battlesprite, items & skills |
 
-total hours (13/05/21): 190
+total hours (13/05/21): 194
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
