@@ -66,7 +66,7 @@ class Monster(Character):
                 action = self._default_action
                 target = choice(target_list)
         else:
-            choices = [key for key in self._skills]
+            choices = list(self._skills.keys())
             action = choice(choices)
             if self.curr_mp < self._skills[action].mp_cost:
                 action = self._default_action
