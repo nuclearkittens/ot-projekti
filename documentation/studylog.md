@@ -11,7 +11,7 @@
 | 12/04/21 | 2 | refactoring (and fixing all I broke) |
 | 13/04/21 | 3 | refactoring the spaghetti | 
 | 13/04/21 | 5 | writing tests, updating documentation, initialising invoke etc |
-| 20/04/21 | 8 | trying to write the actual battle demo but failed miserably |
+| 20/04/21 | 8 | tried to write the actual battle demo but failed miserably |
 | 22/04/21 | 7 | another try on the battle demo |
 | 23/04/21 | 12 | started building the demo from scratch - twice |
 | 24/04/21 | 11 | refactoring, maths: battle mechanics, json files |
@@ -27,8 +27,8 @@
 | 07/05/21 | 3 | docstringing, minor refactoring, clean up |
 | 08/05/21 | 3 | more docstringing, started on buttons showing damage |
 | 08/05/21 | 3 | refactoring: battle class/player action, breaking things and troubleshooting them |
-| 08/05/21 | 4 | troubleshooting jam & some refactoring/clean up
-| 10/05/21 | 4 | still working on battle loops, queue system seems to have fixe some issues |
+| 08/05/21 | 4 | troubleshooting jam & some refactoring/clean up |
+| 10/05/21 | 4 | still working on battle loops, queue system seems to have fixed some issues |
 | 10/05/21 | 4 | info panel for battle screen |
 | 11/05/21 | 5 | fixing some known issues, hunting bugs, testing in how many ways I can crash or freeze the program |
 | 12/05/21 | 2 | refactoring and implementing the title screen menu system from a month ago |
