@@ -47,6 +47,3 @@ def initialise_db():
     conn = get_db_connection()
     drop_tables(conn)
     populate_db(conn)
-
-if __name__ == '__main__':
-    initialise_db()

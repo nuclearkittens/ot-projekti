@@ -44,7 +44,11 @@ class BattleSprite(pg.sprite.Sprite):
         self._character.check_mp()
 
         anim_cooldown = 200
-        self.image = self._anim_list[self._action][self._frame_idx]
+        try:
+            self.image = self._anim_list[self._action][self._frame_idx]
+        except IndexError:
+            self.image = self._anim_list[self._action][-1]
+
         if pg.time.get_ticks() - self._update_time > anim_cooldown:
             self._update_time = pg.time.get_ticks()
             self._frame_idx += 1
