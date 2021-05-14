@@ -24,7 +24,7 @@ class StubCharacter:
 class TestBattleSprite(unittest.TestCase):
     def setUp(self):
         pg.init()
-        pg.display.set_mode(NATIVE_RESOLUTION)
+        pg.display.set_mode(NATIVE_RESOLUTION, pg.HIDDEN)
         self.char = StubCharacter('bob')
         self.sprite = BattleSprite(self.char)
 

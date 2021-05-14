@@ -1,5 +1,4 @@
 import unittest
-import pygame as pg
 
 from database.initialise_db import initialise_db
 from entities.skills import Skill

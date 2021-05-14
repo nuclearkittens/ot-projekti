@@ -63,7 +63,7 @@ class Character:
             self.curr_mp = self._stats.mp
 
     def use_item(self, item_id, target):
-        '''Uses item if it is in character's inventory, otherwise raises ValueError.
+        '''Uses item if it is in character's inventory, otherwise returns ValueError.
         Also performs a HP check for the target.
 
         args:
@@ -80,7 +80,7 @@ class Character:
                 target.check_hp()
                 return info
             return f'Not enough {self._inventory[item_id][0].name.upper()}s in inventory!'
-        raise ValueError(f'no item "{item_id}" in inventory!')
+        return ValueError(f'no item "{item_id}" in inventory!')
 
     def use_skill(self, skill_id, target):
         '''Uses skill if character has enough MP to execute it,
