@@ -37,8 +37,8 @@
 | 13/05/21 | 4 | unit tests, lots of trial & error re: test db; catching exceptions |
 | 14/05/21 | 4 | unit tests: battlesprite, items & skills |
 | 14/05/21 | 2 | unit tests: character |
-| 14/05/21 | 1 | unit tests: monster & party member; finished unit tests for entities |
+| 14/05/21 | 1 | finished unit tests for entities |
 
-total hours (13/05/21): 197
+total hours (14/05/21): 197
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
