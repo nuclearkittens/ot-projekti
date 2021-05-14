@@ -36,7 +36,8 @@
 | 13/05/21 | 3 | docstring jam |
 | 13/05/21 | 4 | unit tests, lots of trial & error re: test db; catching exceptions |
 | 14/05/21 | 4 | unit tests: battlesprite, items & skills |
+| 14/05/21 | 2 | unit tests: character |
 
-total hours (13/05/21): 194
+total hours (13/05/21): 196
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
