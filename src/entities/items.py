@@ -53,7 +53,7 @@ class Item:
                 heal_info = heal(target, target_attr, amount)
                 for elem in heal_info:
                     info.append(elem)
-            return info
+        return info
 
     @property
     def name(self):
