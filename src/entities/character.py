@@ -71,7 +71,7 @@ class Character:
             target: character object; the character the item is used on.
 
         return:
-            info: lst; list for creating a DamageText object
+            info: list; list for creating a DamageText object
         '''
         if item_id in self._inventory:
             if self._inventory[item_id][1] > 0:
@@ -92,8 +92,10 @@ class Character:
             target: Character object; the character the skill is used on.
 
         return:
-            info: lst; info for creating a DamageText object
+            info: list; info for creating a DamageText object
         '''
+        if skill_id not in self._skills:
+            return f'{self._id} does not know skill {skill_id}!'
         if self._skills[skill_id].mp_cost > self.curr_mp:
             return 'Not enough MP!'
         self.curr_mp -= self._skills[skill_id].mp_cost
@@ -104,11 +106,17 @@ class Character:
 
     def get_item_qty(self, item_id):
         '''Returns how many of the specified item the character has left.'''
-        return self._inventory[item_id][1]
+        try:
+            return self._inventory[item_id][1]
+        except KeyError:
+            return f'no item {item_id} in inventory!'
 
     def get_skill_cost(self, skill_id):
         '''Returns the MP cost of the specified skill.'''
-        return self._skills[skill_id].mp_cost
+        try:
+            return self._skills[skill_id].mp_cost
+        except KeyError:
+            return f'{self._id} does not know skill {skill_id}!'
 
     # gotta do sth abt all these properties, fix this later!
     @property
