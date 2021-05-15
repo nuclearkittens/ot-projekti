@@ -31,7 +31,7 @@ class BattleGFX:
         '''Constructor for the BattleGFX class.
 
         args:
-            party: lst; list of current party members
+            party: list; list of current party members
         '''
         self.enemies = pg.sprite.Group(
             [enem.battlesprite for enem in create_demo_enemies()]
@@ -291,8 +291,8 @@ class BattleGFX:
                 char: Character object
             '''
             temp = []
-            for item_id, lst in char.inventory.items():
-                temp.append((item_id, lst[0].name, lst[1]))
+            for item_id, list in char.inventory.items():
+                temp.append((item_id, list[0].name, list[1]))
             return temp
 
         item_menu = None

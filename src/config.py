@@ -17,6 +17,16 @@ DB_CMDS = os.getenv('DB_CMDS') or 'init_commands.sql'
 DB_PATH = os.path.join(DIRNAME, 'assets/db', DB_NAME)
 DB_CMDS_PATH = os.path.join(DIRNAME, 'assets/db', DB_CMDS)
 
+DEMO_PARTY = (
+    [elem for elem in os.getenv('DEMO_PARTY').split(',')]
+    or ['ej', 'witch']
+    )
+DEMO_ENEMIES = (
+    [elem for elem in os.getenv('DEMO_ENEMIES').split(',')]
+    or ['ikorni', 'ikorni']
+    )
+PARTY_INV = os.getenv('PARTY_INV') or 'party'
+
 DARK_PURPLE = (66, 30, 66)
 POWDER_ROSE = (201, 143, 143)
 DARK_ROSE = (189, 113, 130)
@@ -30,6 +40,7 @@ NATIVE_RESOLUTION = (512, 448)
 
 SCREEN_W = 512 * SCALE
 SCREEN_H = 448 * SCALE
+SCREEN_CAPTION = 'battle demo v666'
 
 TILE_SIZE = (32 * SCALE, 32 * SCALE)
 
