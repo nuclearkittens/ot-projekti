@@ -1,6 +1,6 @@
 from collections import deque
 
-from config import FPS
+from config import FPS, BATTLE_WAIT
 from combat.player_action import PlayerAction
 from ui.battle_graphics import BattleGFX
 
@@ -42,6 +42,8 @@ class Battle:
 
     def loop(self):
         '''The main battle loop.'''
+        self._keys.reset_keys()
+
         running = True
         current = None
         action = None
@@ -49,7 +51,6 @@ class Battle:
         queue = deque()
 
         cooldown = 0
-        wait = 50
 
         while running:
             self._check_events()
@@ -60,7 +61,7 @@ class Battle:
             current = self._check_turn()
             if current is not None:
                 queue.append(current)
-            if cooldown > wait:
+            if cooldown > BATTLE_WAIT:
                 cooldown = 0
                 current = self._get_current(queue)
                 if current in self._gfx.party:
@@ -69,7 +70,6 @@ class Battle:
                     action, target = current.character.make_decision(self._gfx.party.sprites())
                 self._execute_action(action, current, target)
                 self._update_info(action, current, target)
-                # self._reset_menus()
             cooldown += 1
             self._update()
             self._check_game_over()
@@ -131,6 +131,7 @@ class Battle:
 
         if not bool(self._gfx.party):
             self._gameover = True
+            self._victory = False
 
     def _choose_target(self):
         '''Calls the target selection method, and returns the target.
@@ -280,7 +281,6 @@ class Battle:
                 self._render_info(text)
             if target is not None:
                 player = False
-                # self._plr.reset_menus()
             self._update(player)
 
         self._plr.reset_menus()

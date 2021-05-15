@@ -45,6 +45,7 @@ SCREEN_CAPTION = 'battle demo v666'
 TILE_SIZE = (32 * SCALE, 32 * SCALE)
 
 FPS = 60
+BATTLE_WAIT = int(os.getenv('BATTLE_WAIT')) or 50
 
 FONT = os.path.join(DIRNAME, 'assets/fonts/m5x7.ttf')
 FONT_SIZE = 32 * SCALE
