@@ -38,7 +38,8 @@
 | 14/05/21 | 4 | unit tests: battlesprite, items & skills |
 | 14/05/21 | 2 | unit tests: character |
 | 14/05/21 | 1 | finished unit tests for entities |
+| 15/05/21 | 2 | unit tests: keys & prepare; finding & fixing config issues; trouble w/ VSCode |
 
-total hours (14/05/21): 197
+total hours (15/05/21): 199
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
