@@ -57,4 +57,5 @@ MENU_CURSOR = '>'
 TARGET_CURSOR = '<'
 CURSOR_SIZE = 32 * SCALE
 
-BATTLE_BG = os.path.join(DIRNAME, 'assets/gfx/backgrounds/battlebg1.png')
+BATTLE_BG = 'assets/gfx/backgrounds/battlebg1.png'
+TEST_IMG = 'assets/gfx/test_img.png'
