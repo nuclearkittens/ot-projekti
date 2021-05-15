@@ -7,6 +7,7 @@ def main():
     '''Initialises and runs the demo.'''
     pg.init()
     demo = Demo()
+    demo.title = True
     demo.loop()
     pg.quit()
     sys.exit()

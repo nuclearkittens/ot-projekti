@@ -39,7 +39,8 @@ class Demo:
         self._party = create_demo_party()
 
         self.battle = False
-        self.title = True
+        self.title = False
+        self.help = False
 
     def loop(self):
         '''The main game loop.'''
@@ -89,6 +90,7 @@ class Demo:
                 self.battle = True
                 self.title = False
             elif action == 'help':
+                self.help = True
                 self._titlescreen.menu.reset_buttons()
                 self._titlescreen.menu.active = True
             elif action == 'quit':
