@@ -1,8 +1,8 @@
 from collections import deque
 
 from config import FPS
-from player_action import PlayerAction
-from ui.battlegraphics import BattleGFX
+from combat.player_action import PlayerAction
+from ui.battle_graphics import BattleGFX
 
 class Battle:
     '''Class for handling all the battle action.

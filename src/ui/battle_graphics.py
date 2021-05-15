@@ -6,7 +6,7 @@ from config import (
 from prepare import create_demo_enemies
 from util import load_img
 from entities.bar import InfoBar
-from ui.battlemenu import BattleMenu
+from ui.battle_menu import BattleMenu
 from ui.buttons import DamageText
 from ui.cursors import TargetCursor
 

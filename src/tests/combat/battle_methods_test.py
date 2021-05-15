@@ -5,7 +5,7 @@ import pygame as pg
 from config import NATIVE_RESOLUTION, TILE_SIZE, TEST_IMG
 from database.initialise_db import initialise_db
 from prepare import create_demo_party
-from battle import Battle
+from combat.battle import Battle
 from keys import Keys
 from ui.renderer import Renderer
 
