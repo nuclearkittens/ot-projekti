@@ -1,13 +1,14 @@
 from collections import deque
+
 import unittest
 import pygame as pg
 
-from config import NATIVE_RESOLUTION, TILE_SIZE, TEST_IMG
-from database.initialise_db import initialise_db
-from prepare import create_demo_party
 from combat.battle import Battle
-from keys import Keys
+from database.initialise_db import initialise_db
 from ui.renderer import Renderer
+from config import NATIVE_RESOLUTION
+from prepare import create_demo_party
+from keys import Keys
 
 class StubEventHandler:
     def __init__(self):

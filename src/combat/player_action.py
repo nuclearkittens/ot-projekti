@@ -19,35 +19,6 @@ class PlayerAction:
         self._curr = None
         self._menu_stack = []
 
-    def set_menu_stack(self):
-        '''Creates a menu stack to handle moving between menus.'''
-        self._menu_stack = []
-        for char in self._menus:
-            if char == self._curr:
-                main_menu = self._menus[char]['main']
-                main_menu.active = True
-                self._menu_stack.append(main_menu)
-
-    def _get_active_menu(self):
-        '''Returns the menu that is currently active. If no menus are
-        active, returns None.
-        '''
-        for char in self._menus:
-            for menu in self._menus[char].values():
-                if menu.active:
-                    return menu
-        return None
-
-    def _set_active_menu(self, menu_type):
-        '''Sets the current active menu.
-
-        args:
-            menu_type: str; either main, skill, magic or item
-        '''
-        for char in self._menus:
-            if char == self._curr:
-                self._menus[char][menu_type].active = True
-
     def check_menu(self):
         '''Checks if the current active menu is in the menu stack.
 
@@ -113,6 +84,15 @@ class PlayerAction:
             menu.update_buttons()
             menu.reset_buttons()
 
+    def set_menu_stack(self):
+        '''Creates a menu stack to handle moving between menus.'''
+        self._menu_stack = []
+        for char in self._menus:
+            if char == self._curr:
+                main_menu = self._menus[char]['main']
+                main_menu.active = True
+                self._menu_stack.append(main_menu)
+
     def reset_cursors(self):
         '''Resets the menu cursors as well as target cursor.'''
         self._cursor.reset()
@@ -134,6 +114,9 @@ class PlayerAction:
 
         args:
             info: str
+
+        return:
+            text: str
         '''
         text = ''
         try:
@@ -154,6 +137,29 @@ class PlayerAction:
             text = f' {info}'
 
         return text
+
+    def _get_active_menu(self):
+        '''Returns the menu that is currently active. If no menus are
+        active, returns None.
+        '''
+        for char in self._menus:
+            for menu in self._menus[char].values():
+                if menu.active:
+                    return menu
+        return None
+
+    def _set_active_menu(self, menu_type):
+        '''Sets the current active menu.
+
+        args:
+            menu_type: str; either main, skill, magic or item
+        '''
+        for char in self._menus:
+            if char == self._curr:
+                try:
+                    self._menus[char][menu_type].active = True
+                except KeyError:
+                    return
 
     @property
     def menu_stack(self):

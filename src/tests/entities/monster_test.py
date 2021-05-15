@@ -13,6 +13,7 @@ class TestMonster(unittest.TestCase):
         pg.init()
         pg.display.set_mode(NATIVE_RESOLUTION, pg.HIDDEN)
         self.char = Monster('bob')
+        self.char._skills.pop('attack', None)
 
     def tearDown(self):
         pg.quit()
