@@ -96,12 +96,13 @@ class Battle:
             queue: deque; container for the current turn order
 
         return:
-            current: sprite
+            current: sprite (or None)
         '''
-        while True:
+        while queue:
             current = queue.popleft()
             if current.character.alive:
                 return current
+        return None
 
     def _check_events(self):
         '''Looks for user input and changes the Keys object accordingly.'''
@@ -191,7 +192,7 @@ class Battle:
     def _update(self, player=False):
         '''Updates the game state and display, plus updates menus
         if player's turn and turn count if not.
-        
+
         args:
             player: bool; True if it is player's turn
         '''

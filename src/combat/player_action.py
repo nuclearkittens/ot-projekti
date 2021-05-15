@@ -1,6 +1,6 @@
 class PlayerAction:
     '''A class for player action methods and functions.
-    
+
     attr:
         curr: sprite; current character
         menu_stack: list; stack of current character's menus
@@ -118,7 +118,7 @@ class PlayerAction:
         self._cursor.reset()
         for menu in self._menu_stack:
             menu.reset_cursor()
-    
+
     def reset_menus(self):
         '''Sets all menus and menu buttons to inactive/unpressed state,
         resets keys to False.
