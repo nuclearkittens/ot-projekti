@@ -3,7 +3,6 @@ from collections import deque
 import unittest
 import pygame as pg
 
-# from combat.player_action import PlayerAction
 from combat.battle import Battle
 from database.initialise_db import initialise_db
 from ui.renderer import Renderer
@@ -122,6 +121,7 @@ class TestPlayerAction(unittest.TestCase):
         menu = self.plr._get_active_menu()
         menu.active = False
         self.plr._set_active_menu('magic')
+        self.plr.check_menu()
         self.plr._curr.character.curr_mp = 0
         self.plr._keys.BACK = True
         menu = self.plr._get_active_menu()

@@ -90,20 +90,18 @@ def load_skills(char_id):
             '''SELECT skill_id FROM CharSkills
             WHERE char_id=?''', (char_id,)
         )
-        rows = cur.fetchall()
     except OperationalError:
         conn.close()
         return skills
-    except TypeError:
-        conn.close()
-        return skills
 
-    conn.close()
+    rows = cur.fetchall()
 
     for row in rows:
         skill_id = row[0]
         new_skill = Skill(skill_id)
         skills[skill_id] = new_skill
+
+    conn.close()
 
     return skills
 
@@ -124,8 +122,6 @@ def load_party_info(char_id):
         cur.execute('SELECT name, lvl FROM Party WHERE id=?', (char_id,))
         info = cur.fetchone()
     except OperationalError:
-        info = None
-    except TypeError:
         info = None
 
     conn.close()
@@ -235,14 +231,14 @@ def load_item_effects(item_id):
             FROM Effects E, ItemEffects I
             WHERE E.id=I.effect_id AND I.item_id=?''', (item_id,)
             )
-        rows = cur.fetchall()
-        try:
-            for row in rows:
-                effects.append(tuple(row))
-        except TypeError:
-            pass
     except OperationalError:
-        pass
+        conn.close()
+        return effects
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        effects.append(tuple(row))
 
     conn.close()
 
