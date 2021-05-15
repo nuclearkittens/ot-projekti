@@ -39,7 +39,9 @@
 | 14/05/21 | 2 | unit tests: character |
 | 14/05/21 | 1 | finished unit tests for entities |
 | 15/05/21 | 2 | unit tests: keys & prepare; finding & fixing config issues; trouble w/ VSCode |
+| 15/05/21 | 4 | started unit tests for battle, which made me realise how much refactoring it needed; player action class |
+| 15/05/21 | 2 | written unit tests for most of the battle class methods & functions |
 
-total hours (15/05/21): 199
+total hours (15/05/21): 205
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
