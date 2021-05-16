@@ -277,7 +277,7 @@ class Battle:
             target, name = self._choose_target()
             self._plr.check_target_selection()
             if name is not None:
-                text = self._plr.update_info(info)
+                text = self._plr.update_info(name)
                 self._render_info(text)
             if target is not None:
                 player = False
