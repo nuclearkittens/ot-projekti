@@ -1,7 +1,7 @@
 from config import SCREEN_W, SCREEN_H, FONT_SIZE
 from ui.menu import Menu
 
-class TitleScreen():
+class TitleScreen:
     '''A class for the title screen.
 
     attr:

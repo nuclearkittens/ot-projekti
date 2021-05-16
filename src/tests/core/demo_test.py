@@ -79,6 +79,23 @@ class TestDemo(unittest.TestCase):
         self.assertFalse(self.demo.battle)
         self.assertFalse(self.demo.title)
 
+    def test_help_loop_go_back(self):
+        self.demo.help = True
+        self.demo._eventhandler.set_event_queue(
+            [('keydown', 'back'), ('keydown', 'down'),
+            ('keydown', 'down'), ('keydown', 'down'),
+            ('keydown', 'select')]
+            )
+        self.demo._help_loop()
+        self.assertFalse(self.demo.help)
+        self.assertTrue(self.demo.title)
+
+    def test_help_loop_quit(self):
+        self.demo.help = True
+        self.demo._help_loop()
+        self.assertFalse(self.demo.help)
+        self.assertTrue(self.demo._keys.QUIT)
+
     def test_title_loop_choose_battle(self):
         self.demo.title = True
         q = [('keydown', 'select') for x in range(5)]
@@ -87,30 +104,37 @@ class TestDemo(unittest.TestCase):
         self.assertTrue(self.demo.battle)
         self.assertFalse(self.demo.title)
 
+    def test_title_loop_choose_help(self):
+        self.demo.title = True
+        q = [
+            ('keydown', 'down'), ('keydown', 'select'),
+            ('keydown', 'select')
+            ]
+        self.demo._eventhandler.set_event_queue(q)
+        self.demo._title_loop()
+        self.assertFalse(self.demo.title)
+
+    def test_title_loop_choose_quit(self):
+        self.demo.title = True
+        q = [
+            ('keydown', 'down'), ('keydown', 'down'),
+            ('keydown', 'select')
+            ]
+        self.demo._eventhandler.set_event_queue(q)
+        self.demo._title_loop()
+        self.assertTrue(self.demo._keys.QUIT)
+
     def test_title_loop_quit(self):
         self.demo.title = True
         self.demo._title_loop()
         self.assertFalse(self.demo.battle)
         self.assertFalse(self.demo.title)
 
-    def test_title_loop_help_then_quit(self):
-        self.demo.title = True
-        q = [
-            ('keydown', 'down'), ('keydown', 'select'),
-            ('keydown', 'down'), ('keydown', 'select')
-        ]
-        self.demo._eventhandler.set_event_queue(q)
-        self.demo._title_loop()
-        self.assertTrue(self.demo.help)
-        self.assertFalse(self.demo.title)
-        self.assertTrue(self.demo._keys.QUIT)
-
     def test_main_loop_quit(self):
         self.demo.loop()
         self.assertTrue(self.demo._keys.QUIT)
     
     def test_main_loop_title(self):
-        self.demo.title = True
         self.demo._eventhandler.set_event_queue([(None, None)])
         self.demo.loop()
         self.assertFalse(self.demo.title)
@@ -122,4 +146,12 @@ class TestDemo(unittest.TestCase):
         self.demo._eventhandler.set_event_queue(q)
         self.demo.loop()
         self.assertFalse(self.demo.battle)
+        self.assertTrue(self.demo._keys.QUIT)
+
+    def test_main_loop_help(self):
+        self.demo.help = True
+        q = [(None, None), (None, None)]
+        self.demo._eventhandler.set_event_queue(q)
+        self.demo.loop()
+        self.assertFalse(self.demo.help)
         self.assertTrue(self.demo._keys.QUIT)
