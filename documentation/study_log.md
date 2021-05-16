@@ -1,4 +1,4 @@
-# Study Log
+# Study log
 
 | ~~star~~date | time (h) | activity |
 |:---|:---|:---|
