@@ -36,7 +36,11 @@ A [script](https://github.com/nuclearkittens/ot-projekti/blob/master/src/assets/
 
 ## Main functionality
 
-*WIP, add some sequence diagrams or idk gifs of the main functionalities, like the player action in battle or sth*
+Below is an example of how the application works when a player chooses an action (attack) and a target (Bob) in battle, shown as a sequence diagram. The diagram explains the functionality of the `_player_action()` method of the `Battle` class. Sorry for the handwritten quality, might be easier to read on light mode.
+
+![sequence diagram of player action](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/seq_diagram.png)
+
+The same logic is present in other loops and functionalities throughout the application: the core handles the loops, contacting UI elements to either handle player input or draw information on screen.
 
 ## Known issues
 
