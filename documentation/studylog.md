@@ -41,7 +41,11 @@
 | 15/05/21 | 2 | unit tests: keys & prepare; finding & fixing config issues; trouble w/ VSCode |
 | 15/05/21 | 4 | started unit tests for battle, which made me realise how much refactoring it needed; player action class |
 | 15/05/21 | 2 | written unit tests for most of the battle class methods & functions |
+| 15/05/21 | 2 | unit tests for newly refactored player action class |
+| 15/05/21 | 2 | checking coverage report, tests for operational errors in db methods & pause/game over/player action loops in battle |
+| 15/05/21 | 3 | testing main battle loop and main demo loop with several different scenarios |
+| 16/05/21 | 1 | testing scalability and fixing image scaling |
 
-total hours (15/05/21): 205
+total hours (16/05/21): 201
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
