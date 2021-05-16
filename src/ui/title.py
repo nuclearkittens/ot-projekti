@@ -46,7 +46,7 @@ class TitleScreen():
         return:
             lst; tuples of surfaces and their bounding rectangles
         '''
-        top = 'untitled rpg:'
+        top = 'fractured loop:'
         bottom = 'turn-based battle demo'
 
         top_surf = self._renderer.create_text(top, FONT_SIZE * 2)

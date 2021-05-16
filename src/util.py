@@ -2,7 +2,7 @@
 import os.path
 import pygame as pg
 
-from config import DIRNAME, TILE_SIZE
+from config import DIRNAME, TILE_SIZE, SCALE
 
 def load_img(fname):
     '''Loads an image from game files.
@@ -17,5 +17,10 @@ def load_img(fname):
     '''
     file_path = os.path.join(DIRNAME, fname)
     if os.path.exists(file_path):
-        return pg.image.load(file_path).convert_alpha()
+        img = pg.image.load(file_path)
+        if SCALE > 1:
+            new_w = img.get_width() * SCALE
+            new_h = img.get_height() * SCALE
+            img = pg.transform.scale(img, (new_w, new_h))
+        return img.convert_alpha()
     return pg.Surface(TILE_SIZE).convert()

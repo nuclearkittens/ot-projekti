@@ -40,7 +40,7 @@ NATIVE_RESOLUTION = (512, 448)
 
 SCREEN_W = 512 * SCALE
 SCREEN_H = 448 * SCALE
-SCREEN_CAPTION = 'battle demo v666'
+SCREEN_CAPTION = 'fractured loop: battle demo'
 
 TILE_SIZE = (32 * SCALE, 32 * SCALE)
 
