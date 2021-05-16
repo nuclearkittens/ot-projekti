@@ -1,13 +1,13 @@
-# User Manual
+# User manual
 Download the source code of the [latest release](https://github.com/nuclearkittens/ot-projekti/releases) (found under *assets*).
 
 ## Configuration
 The name of the database used, as well as some in-game constants are specified in an *.env* file and, as a back-up, in [config.py](https://github.com/nuclearkittens/ot-projekti/blob/master/src/config.py). If running the application on a massive display (especially 4K), changing the scale to `SCALE=2` is recommended, as the Pygame window should not be scalable on itself. The scaling variable is found in the .env file on line 13.
 
-## Installation & Starting the Application
+## Installation & starting the application
 Before trying to run the game, install dependencies using the command `poetry install`. Now you should be able to run the game by using the command `poetry run invoke start`.
 
-### User Input
+### User input
 As of now, only keyboard input is supported. The application opens up the title menu. Use the **up and down arrow keys** to move through the menu options.
 
 ![title screen](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/manual1.png)
