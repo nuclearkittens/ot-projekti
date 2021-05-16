@@ -8,7 +8,7 @@ The application is a demo version of the turn-based battle system for Fractured 
 
 ## Functionality
 
-### Title Screen
+### Title screen
 
 The title screen is displayed when the application is opened, and again when a battle ends. The user can:
 
