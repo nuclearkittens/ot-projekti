@@ -1,4 +1,4 @@
-# Requirement specification
+# Original plan/specification document
 
 A turn-based rpg(/dungeon crawler), set in a world not too unlike ours. 
 This version will most likely act as a demo, consisting of only one explorable map 
@@ -13,26 +13,26 @@ an exciting storyline in the future.
 
 ### Title screen
 
-Start/load game, see controls, check the credits **(done but accidentally removed from repo, gotta find it)**
+Start/load game, see controls, check the credits
 
 ### Exploration
 
 The player can move around the map(s) freely, finding items and encountering enemies.
 
-+ Tiled maps **(map planning: wk 6)**
-+ Random encounters **(started working on the functionality, not implemented as of wk 6)**
-+ Interacting with surroundings **(battle done: wk 6)**
-+ Keyboard (and mouse) input **(done: wk 6)**
++ Tiled maps
++ Random encounters
++ Interacting with surroundings
++ Keyboard (and mouse) input
 
 ### Battle
 
 Turn-based battle system
 
-+ Battle menu **(mostly done: wk 6)**
-	+ Physical and magical attacks **(done: wk 6)**
++ Battle menu
+	+ Physical and magical attacks
 	+ Possibility to flee the battle 
-	+ Use items **(done: wk 5)**
-+ Health point system **(done: wk 5 / fixed: wk 6)**
+	+ Use items
++ Health point system
 + Defeating enemies gives experience points
 + Boss fights (only one will be provided in the demo version)
 
@@ -52,15 +52,15 @@ will be created, keeping track of the player's stats and experience.
 
 Load info from a SQLite database
 
-+ Item/skill info **(done: wk 6)**
-+ Enemy party member stats **(done: wk 6)**
++ Item/skill info
++ Enemy party member stats
 
 ## Planned additions
 
 After the demo version is finished, more functionalities will be added, for example:
 
-+ Nicer graphics **(wk 6: placeholder hurt/attack/dead animation implemented)**
-+ NPCs, party members, monsters **(already created some)**
++ Nicer graphics
++ NPCs, party members, monsters
 + Actual storyline
 + World expansion: more explorable maps and dungeons
 + Treasures, equipment, items
