@@ -1,7 +1,7 @@
 from sqlite3 import OperationalError
 
-from database.db_connection import get_db_connection
 from config import DB_CMDS_PATH
+from database.db_connection import get_db_connection
 
 def execute_script_from_file(cursor, filepath):
     '''Fetches an sql file and executes the queries specified in it.

@@ -3,12 +3,12 @@ from collections import deque
 import unittest
 import pygame as pg
 
-from combat.battle import Battle
+from config import NATIVE_RESOLUTION
+from core.prepare import create_demo_party
+from core.keys import Keys
 from database.initialise_db import initialise_db
 from ui.renderer import Renderer
-from config import NATIVE_RESOLUTION
-from prepare import create_demo_party
-from keys import Keys
+from combat.battle import Battle
 
 class StubEventHandler:
     def __init__(self):

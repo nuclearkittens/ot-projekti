@@ -2,10 +2,10 @@ import unittest
 import pygame as pg
 
 from config import SCREEN_H, SCREEN_W, SCREEN_CAPTION
-from database.initialise_db import initialise_db
-from prepare import (
+from core.prepare import (
     initialise_demo_display, create_demo_party, create_demo_enemies
     )
+from database.initialise_db import initialise_db
 
 class TestPrepare(unittest.TestCase):
     def setUp(self):

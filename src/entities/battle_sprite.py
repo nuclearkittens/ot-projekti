@@ -1,6 +1,6 @@
 import pygame as pg
 
-from util import load_img
+from core.util import load_img
 from entities.bar import HPBar, MPBar
 
 class BattleSprite(pg.sprite.Sprite):

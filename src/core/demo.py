@@ -1,14 +1,14 @@
 import pygame as pg
 
 from config import FPS
-from prepare import initialise_demo_display, create_demo_party
-from keys import Keys
-from combat.battle import Battle
+from core.prepare import initialise_demo_display, create_demo_party
+from core.keys import Keys
 from database.initialise_db import initialise_db, drop_tables
 from database.db_util import get_db_connection
 from ui.event_handler import EventHandler
 from ui.renderer import Renderer
 from ui.title import TitleScreen
+from combat.battle import Battle
 
 class Demo:
     '''A class that functions as the demo itself.

@@ -1,6 +1,6 @@
 import unittest
 
-from keys import Keys
+from core.keys import Keys
 
 class TestKeys(unittest.TestCase):
     def setUp(self):

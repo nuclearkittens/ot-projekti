@@ -3,11 +3,11 @@ from collections import deque
 import unittest
 import pygame as pg
 
+from config import NATIVE_RESOLUTION
+from core.demo import Demo
+from core.keys import Keys
 from database.initialise_db import initialise_db
 from ui.renderer import Renderer
-from config import NATIVE_RESOLUTION
-from demo import Demo
-from keys import Keys
 
 class StubEventHandler:
     def __init__(self):

@@ -2,8 +2,8 @@ import unittest
 import pygame as pg
 
 from config import NATIVE_RESOLUTION, TILE_SIZE, TEST_IMG
+from core.util import load_img
 from database.initialise_db import initialise_db
-from util import load_img
 
 class TestPrepare(unittest.TestCase):
     def setUp(self):

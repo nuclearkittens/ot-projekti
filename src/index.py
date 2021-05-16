@@ -1,7 +1,7 @@
 import sys
 import pygame as pg
 
-from demo import Demo
+from core.demo import Demo
 
 def main():
     '''Initialises and runs the demo.'''

@@ -3,8 +3,8 @@ import pygame as pg
 from config import (
     SCREEN_W, SCREEN_H, BAR_W, BAR_H, DARK_PURPLE,
     HP_GREEN, HP_RED, MP_BLUE, FONT_SIZE, BATTLE_BG)
-from prepare import create_demo_enemies
-from util import load_img
+from core.prepare import create_demo_enemies
+from core.util import load_img
 from entities.bar import InfoBar
 from ui.battle_menu import BattleMenu
 from ui.buttons import DamageText
