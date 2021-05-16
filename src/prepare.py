@@ -8,7 +8,7 @@ from config import (
     DEMO_ENEMIES, DEMO_PARTY, PARTY_INV)
 from database.db_util import load_inventory
 from entities.monster import Monster
-from entities.partymember import PartyMember
+from entities.party_member import PartyMember
 
 def initialise_demo_display():
     '''Initialises the Pygame display used in the demo.

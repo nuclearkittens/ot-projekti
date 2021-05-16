@@ -2,7 +2,7 @@ import unittest
 import pygame as pg
 
 from config import NATIVE_RESOLUTION
-from entities.battlesprite import BattleSprite
+from entities.battle_sprite import BattleSprite
 
 class StubCharacter:
     def __init__(self, char_id):

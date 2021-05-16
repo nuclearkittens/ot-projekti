@@ -5,7 +5,7 @@ import pygame as pg
 
 from config import NATIVE_RESOLUTION
 from database.initialise_db import initialise_db
-from entities.partymember import PartyMember
+from entities.party_member import PartyMember
 
 class TestMonster(unittest.TestCase):
     def setUp(self):

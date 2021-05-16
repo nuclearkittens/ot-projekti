@@ -1,5 +1,5 @@
 from database.db_util import load_stats, load_res, load_skills
-from entities.battlesprite import BattleSprite
+from entities.battle_sprite import BattleSprite
 
 class Character:
     '''Main class for character objects.
