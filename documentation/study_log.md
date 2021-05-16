@@ -45,7 +45,10 @@
 | 15/05/21 | 2 | checking coverage report, tests for operational errors in db methods & pause/game over/player action loops in battle |
 | 15/05/21 | 3 | testing main battle loop and main demo loop with several different scenarios |
 | 16/05/21 | 1 | testing scalability and fixing image scaling |
+| 16/05/21 | 3 | created a simple help screen, updated .env config file, final tests |
+| 16/05/21 | 6 | drawing diagrams, writing testing documentation, updating architecture 
+| 16/05/21 | 3 | updating readme, user manual, new specification document, grammar things |
 
-total hours (16/05/21): 201
+total hours (16/05/21): 213
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
