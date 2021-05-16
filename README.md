@@ -22,15 +22,15 @@ This game is developed as a part of the University of Helsinki's *Ohjelmistotekn
 
 ### Installation
 
-1) install dependencies using the following command: `poetry install` 
-2) run the game: `poetry run invoke start`
+1) Install dependencies using the following command: `poetry install` 
+2) Run the game: `poetry run invoke start`
 
 ### Command line tools
 
-+ install dependencies: `poetry install`
-+ run the game: `poetry run invoke start`
-+ run tests: `poetry run invoke test`
-+ generate a test coverage report: `poetry run invoke coverage-report`
-  + report can be found in *htmlcov* directory
-+ lint: `poetry run invoke lint`
++ Install dependencies: `poetry install`
++ Run the game: `poetry run invoke start`
++ Run tests: `poetry run invoke test`
++ Generate a test coverage report: `poetry run invoke coverage-report`
+  + Report can be found in *htmlcov* directory
++ Lint: `poetry run invoke lint`
 
