@@ -1,4 +1,4 @@
-# Credits & References
+# Credits & references
 
 ## Assets
 
