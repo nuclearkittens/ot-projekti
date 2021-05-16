@@ -8,7 +8,7 @@ The structure of the application is more or less three-tiered, as shown in the i
 
 The *ui* package includes the graphic user interface (for example menus) and the `EventHandler` class that checks for user input. The application logic is contained in three separate packages, *core*, *combat*, and *entities*. All reading and writing data (apart from images) is handled by the *database* package.
 
-## User Interface
+## User interface
 
 The user interface consits mainly of different menus that the user can browse through using their keyboard. Mouse input (other than closing the window) nor other controllers are currently not supported.
 
@@ -20,7 +20,7 @@ In battle, the player has their main menu, and choosing actions are divided into
 
 Application logic and user interface could have been separated even more, as some of classes grouped here check for sprite collisions.
 
-## Application Logic
+## Application logic
 
 The application logic is divided into three packages: characters, skills, and such are contained in *entities*, battle loops and actions in *combat*, and the main demo (plus some preparatory methods and functions) in *core*.
 
@@ -34,10 +34,10 @@ As of now, the application does not utilise reading and writing data in a very t
 
 A [script](https://github.com/nuclearkittens/ot-projekti/blob/master/src/assets/db/init_commands.sql) initialising the database is provided as the database is emptied every time when the application is closed.
 
-## Main Functionality
+## Main functionality
 
 *WIP, add some sequence diagrams or idk gifs of the main functionalities, like the player action in battle or sth*
 
-## Known Issues
+## Known issues
 
 As mentioned before, the application logic and UI are not separated as well as they could be. The data reading functions need some work, too, as a workaround has been implemented in the character subclasses to avoid circular imports. Named tuples might also not be the best way to contain character data in the future, as I had several problems replacing values in them
