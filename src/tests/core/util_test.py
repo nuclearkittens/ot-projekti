@@ -1,7 +1,7 @@
 import unittest
 import pygame as pg
 
-from config import NATIVE_RESOLUTION, TILE_SIZE, TEST_IMG
+from config import NATIVE_RESOLUTION, TILE_SIZE, TEST_IMG_PATH
 from core.util import load_img
 from database.initialise_db import initialise_db
 
@@ -21,6 +21,6 @@ class TestPrepare(unittest.TestCase):
         self.assertEqual(img_size, TILE_SIZE)
 
     def test_load_existing_image(self):
-        img = load_img(TEST_IMG)
+        img = load_img(TEST_IMG_PATH)
         img_size = img.get_size()
         self.assertEqual(img_size, (64, 64))

@@ -2,7 +2,7 @@ import pygame as pg
 
 from config import (
     SCREEN_W, SCREEN_H, BAR_W, BAR_H, DARK_PURPLE,
-    HP_GREEN, HP_RED, MP_BLUE, FONT_SIZE, BATTLE_BG)
+    HP_GREEN, HP_RED, MP_BLUE, FONT_SIZE, BATTLE_BG_PATH)
 from core.prepare import create_demo_enemies
 from core.util import load_img
 from entities.bar import InfoBar
@@ -43,7 +43,7 @@ class BattleGFX:
         self.dmg_text = pg.sprite.Group()
         self.info_panel = InfoBar()
 
-        self.bg_img = load_img(BATTLE_BG)
+        self.bg_img = load_img(BATTLE_BG_PATH)
         self.menus = {}
         self.default_menu = None
 
