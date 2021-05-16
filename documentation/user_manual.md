@@ -7,7 +7,7 @@ The name of the database used, as well as some in-game constants are specified i
 ## Installation & starting the application
 Before trying to run the game, install dependencies using the command `poetry install`. Now you should be able to run the game by using the command `poetry run invoke start`.
 
-### User input
+## User input
 As of now, only keyboard input is supported. The application opens up the title menu. Use the **up and down arrow keys** to move through the menu options.
 
 ![title screen](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/manual1.png)
