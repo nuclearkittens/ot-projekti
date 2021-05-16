@@ -48,7 +48,8 @@
 | 16/05/21 | 3 | created a simple help screen, updated .env config file, final tests |
 | 16/05/21 | 6 | drawing diagrams, writing testing documentation, updating architecture 
 | 16/05/21 | 3 | updating readme, user manual, new specification document, grammar things |
+| 16/05/21 | 2 | final checks, added a sequence diagram to architecture, fixed an info panel issue |
 
-total hours (16/05/21): 213
+total hours (16/05/21): 215
 
 *countless of hours of research has been done before starting the study log on 30/03/21*
