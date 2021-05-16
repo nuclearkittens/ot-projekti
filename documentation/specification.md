@@ -2,7 +2,7 @@
 
 The application is a demo version of the turn-based battle system for Fractured Loop (working title), an RPG that has developed into a bit of a passion project for me. The aim is simple: defeat the enemies before they defeat you. As I definitely bit more than I can chew, that is all the application does at the moment (but if you are curious, be my guest and check the [original plan](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/og_specification.md) for the project
 
-## UI Diagram
+## UI diagram
 
 ![ui diagram](https://github.com/nuclearkittens/ot-projekti/blob/master/documentation/images/ui_diagram.png)
 
